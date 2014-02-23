@@ -11,6 +11,20 @@ spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
 	session_start();
 }
+if(!(empty($_SESSION)))
+{
+	/*switch ($_SESSION[sess_role])
+	{
+		case 1: header('Location: admin/main.php');
+				break;
+		case 2: header('Location: teacher/main.php');
+				break;
+		case 3: header('Location: student/main.php');
+				break;
+		case 4: header('Location: parent/main.php');
+				break;			
+	}*/
+}
 $layout = new Layout();
 $loggedIn = false;
 $database = new Database();
@@ -26,12 +40,31 @@ echo $layout->loadFixedNavBar('Home', '');
 <!-- Begin page content -->
 <div class="container">
   <form name="signin" class="form-signin" action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="post">
-		<h2 class="form-signin-heading">Existing Users</h2>
+		<h2 class="form-signin-heading">SMS Portal Login</h2>
 			<input type="text" class="form-control" name="user" id = "user" placeholder="Username" autofocus>
 			<input type="password" class="form-control" name="password" id = "password" placeholder="Password">
-			<br />
+			<br/>
+			<div class="row">
+				<div class="col-md-4">
+					<h4>Login as:</h4>
+				</div>
+				<div class="col-md-8">
+					<select id="role" name="role" class="form-control">
+					  <option selected="selected">Choose One</option>
+					  <option value="1">Administrator</option>
+					  <option value="2">Teacher</option>
+					  <option value="3">Student</option>
+					  <option value="4">Parent</option>
+					</select>
+				</div>
+			</div>
+			<br/>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button> 
 	</form>
+	<div class="container" align="center">
+		<p>Admin login: User - admin; Pass - admin</p>
+	</div>
+	
 	<?php
 		ob_start();
 		if(!isset($_SESSION)){
@@ -52,14 +85,30 @@ echo $layout->loadFixedNavBar('Home', '');
 			$user = $_POST['user'];
 			$user= mysql_real_escape_string($user);
 			$password = $_POST['password'];
-			
+			$role = $_POST['role'];
+			//echo $role;
+			switch ($role)
+			{
+				case 1: $table = 'admin';
+				break;
+				case 2: $table = 'teacher';
+				break;
+				case 3: $table = 'student';
+				break;
+				case 4: $table = 'parent';
+				break;
+				default: echo '<div class="alert alert-danger">
+									<p><strong>Error!</strong> Please specify what you are logging in as.</p>
+							   </div>';
+						return;
+			}
 			//check if user exists
-			$query = "SELECT accountID, username, role, firstName, lastName, password, email, DOB, contactNum, salt FROM admin WHERE username = '$user';";
+			$query = "SELECT accountID, username, role, firstName, lastName, password, email, DOB, contactNum, salt FROM " . $table . " WHERE username = '$user';";
 			$result = mysql_query($query);
 			if(mysql_num_rows($result) == 0) // User not found.
 			{
 				echo '<div class="alert alert-danger">
-					<p><strong>Error!</strong> Invalid Username. Please input your correct login information.</p>
+					<p><strong>Error!</strong> Invalid username or password. Please input your correct login information.</p>
 				 </div>';
 				return;
 			}
@@ -91,8 +140,7 @@ echo $layout->loadFixedNavBar('Home', '');
 		}
 	?>
 </div>
-	
-<?php
-echo $layout->loadFooter('');
-?>
+	<?php
+		echo $layout->loadFooter('');
+	?>
 </html>
