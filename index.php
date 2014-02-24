@@ -60,11 +60,9 @@ echo $layout->loadFixedNavBar('Home', '');
 			</div>
 			<br/>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button> 
-	</form>
 	<div class="container" align="center">
 		<p>Admin login: User - admin; Pass - admin</p>
 	</div>
-	
 	<?php
 		ob_start();
 		if(!isset($_SESSION)){
@@ -76,8 +74,12 @@ echo $layout->loadFixedNavBar('Home', '');
 			{
 				//echo $str;
 				echo '<div class="alert alert-danger">
-					<p><strong>Error!</strong> Please input your username and password to sign in.</p>
-					 </div>';
+							<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+							<p><strong>Error!</strong> Please input your username and password to sign in.</p>
+					 </div>
+					 </form>
+				</div>';
+				echo $layout->loadFooter('');
 				return;
 			}
 			
@@ -98,8 +100,12 @@ echo $layout->loadFixedNavBar('Home', '');
 				case 4: $table = 'parent';
 				break;
 				default: echo '<div class="alert alert-danger">
-									<p><strong>Error!</strong> Please specify what you are logging in as.</p>
-							   </div>';
+									<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+									<p><strong>Error!</strong> Please specify an account type that you wish to login in as.</p>
+							   </div>
+						</form>
+						</div>';
+						echo $layout->loadFooter('');
 						return;
 			}
 			//check if user exists
@@ -108,8 +114,12 @@ echo $layout->loadFixedNavBar('Home', '');
 			if(mysql_num_rows($result) == 0) // User not found.
 			{
 				echo '<div class="alert alert-danger">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 					<p><strong>Error!</strong> Invalid username or password. Please input your correct login information.</p>
+				 </div>
+				 </form>
 				 </div>';
+				echo $layout->loadFooter('');
 				return;
 			}
 			//check if password correct
@@ -123,7 +133,10 @@ echo $layout->loadFixedNavBar('Home', '');
 				echo '<div class="alert alert-danger alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 					<p><strong>Error!</strong> Invalid username or password. Please input your correct login information.</p>
+				 </div>
+				 </form>
 				 </div>';
+				echo $layout->loadFooter('');
 			}
 			else
 			{
@@ -140,7 +153,7 @@ echo $layout->loadFixedNavBar('Home', '');
 		}
 	?>
 </div>
-	<?php
-		echo $layout->loadFooter('');
-	?>
+<?php
+	echo $layout->loadFooter('');
+?>
 </html>

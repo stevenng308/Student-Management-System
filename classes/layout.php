@@ -223,7 +223,7 @@ class Layout
 	public function loadFooter($dir)
     {
 		$func = '
-				<div id="footer">
+			<div id="footer">
 			  <div class="container">
 				<p class="text-muted">&copy 2014 Steven Ng, Andre Vicente, Brian Kennedy, Syed Kamil.</p>
 			  </div>
