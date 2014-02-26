@@ -13,7 +13,7 @@ if(!isset($_SESSION)){
 }
 if(!(empty($_SESSION)))
 {
-	/*switch ($_SESSION[sess_role])
+	switch ($_SESSION[sess_role])
 	{
 		case 1: header('Location: admin/main.php');
 				break;
@@ -23,14 +23,11 @@ if(!(empty($_SESSION)))
 				break;
 		case 4: header('Location: parent/main.php');
 				break;			
-	}*/
+	}
 }
 $layout = new Layout();
-$loggedIn = false;
 $database = new Database();
-
 //var_dump($_SESSION);
-//need a check if already logged in
 
 echo $layout->loadFixedNavBar('Home', '');
 ?>
@@ -148,7 +145,7 @@ echo $layout->loadFixedNavBar('Home', '');
 				$_SESSION['sess_firstName'] = $userData['firstName'];
 				$_SESSION['sess_lastName'] = $userData['lastName'];
 				session_write_close();
-				header('Location: index.php');
+				header('Location: ' . $table . '/main.php');
 			}
 		}
 	?>

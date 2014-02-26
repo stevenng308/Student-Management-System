@@ -43,6 +43,20 @@ class Database
 		}
 	}
 	
+	public function runQuery($query)
+	{
+		$queryResult = mysql_query($query);
+		if ($queryResult)
+		{
+			return $queryResult;
+		}
+		else
+		{
+			echo "<p>", mysql_error($this->db_connection), "</p>";
+            return false;
+		}
+	}
+	
 	public function twitterLogin($data, $token)
 	{	
 		// Let's find the user by its ID
