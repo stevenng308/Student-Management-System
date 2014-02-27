@@ -28,7 +28,7 @@ $clean = new Clean();
 //var_dump($_SESSION);
 //var_dump($session);
 
-echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Form', '../');
+echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Form', '../');
 ?>
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/register.css" rel="stylesheet">
@@ -153,7 +153,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 		<div class="control-group">
 			<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password"/>
 		</div>
-		<br />
 		<div class="control-group">
 			<input class="form-control" name="studentid" id="studentid" placeholder="Student ID"/>
 		</div>
@@ -211,79 +210,98 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script>
 $(document).ready(function () {
-
+	 $.validator.addMethod("valueNotEquals", function(value, element, arg){
+		return arg != value;
+	 }, "Value must not equal arg.");
     $('#register-form').validate({
         rules: {
             firstname: {
                 minlength: 2,
 				maxlength: 20,
+				alphanumeric: true,
                 required: true
             },
 			lastname: {
                 minlength: 2,
 				maxlength: 25,
+				alphanumeric: true,
                 required: true
             },
 			month: {
 				digits: true,
                 minlength: 1,
 				maxlength: 2,
+				alphanumeric: true,
                 required: true
             },
 			day: {
 				digits: true,
                 minlength: 1,
 				maxlength: 2,
+				alphanumeric: true,
                 required: true
             },
 			year: {
 				digits: true,
                 minlength: 4,
 				maxlength: 4,
-                required: true,
+				alphanumeric: true,
+                required: true
             },
 			street: {
 				maxlength: 75,
-                required: true,
+				alphanumeric: true,
+                required: true
+            },
+			state: {
+                valueNotEquals: "State"
             },
 			city: {
                 minlength: 2,
 				maxlength: 20,
-                required: true,
+				alphanumeric: true,
+                required: true
             },
 			zip: {
 				digits: true,
                 minlength: 5,
 				maxlength: 5,
-                required: true,
+				alphanumeric: true,
+                required: true
             },
             email: {
                 required: true,
 				maxlength: 50,
+				alphanumeric: true,
                 email: true
             },
             contact: {
 				digits: true,
                 minlength: 10,
 				maxlength: 10,
-                required: true,
+				alphanumeric: true,
+                required: true
             },
 			username: {
                 required: true,
-				maxlength: 25,
+				alphanumeric: true,
+				maxlength: 25
             },
 			password: {
                 required: true,
+				alphanumeric: true,
 				minlength: 6
             },
 			password2: {
                 required: true,
 				minlength: 6,
+				alphanumeric: true,
 				equalTo: "#password"
             },
 			studentid: {
                 required: true,
 				digits: true,
+				alphanumeric: true,
 				maxlength: 20
             }
         },
@@ -306,7 +324,10 @@ $(document).ready(function () {
 			},
 			password2: {
 				equalTo: "Password confirmation does not match"
-			}
+			},
+			state: {
+                valueNotEquals: "Select a State"
+            }
         },
         highlight: function (element) {
             $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
