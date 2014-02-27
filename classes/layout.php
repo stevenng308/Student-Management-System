@@ -58,9 +58,9 @@ class Layout
 	
 	public function loadFixedMainNavBar($type, $title, $dir)
     {
-		if ($type = "Admin")
+		if ($type == "Admin")
 		{
-			if ($title = "Admin Main")
+			if ($title == "Admin Main")
 			{
 				$links = '
 						  <li class="active"><a href="main.php">Home</a></li>
@@ -68,7 +68,7 @@ class Layout
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="#">Add</a></li>
+							<li><a href="register.php">Add</a></li>
 							<li><a href="#">Edit</a></li>
 						  </ul>
 						  </li>
@@ -80,7 +80,7 @@ class Layout
 							  </ul>
 						  </li>';
 			}
-			else
+			else if ($title == "Email")
 			{
 				$links = '
 						  <li><a href="main.php">Home</a></li>
@@ -100,10 +100,30 @@ class Layout
 							  </ul>
 						  </li>';
 			}
+			else
+			{
+				$links = '
+						  <li><a href="main.php">Home</a></li>
+						  <li><a href="#">Email</a></li>
+						  <li class="dropdown">
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
+						  <ul class="dropdown-menu">
+							<li><a href="#">Add</a></li>
+							<li><a href="#">Edit</a></li>
+						  </ul>
+						  </li>
+						  <li class="dropdown">
+							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
+							  <ul class="dropdown-menu">
+								<li><a href="#">Add</a></li>
+								<li><a href="#">Edit</a></li>
+							  </ul>
+						  </li>';
+			}
 		}
-		else if ($type = "Teacher")
+		else if ($type == "Teacher")
 		{
-			if ($title = "Teacher Main")
+			if ($title == "Teacher Main")
 			{
 				$links = '
 						<li class="active"><a href="main.php">Home</a></li>
@@ -115,7 +135,7 @@ class Layout
 						  </ul>
 						</li>';
 			}
-			else
+			else if ($title == "Email")
 			{
 				$links = '
 						<li><a href="main.php">Home</a></li>
@@ -127,20 +147,38 @@ class Layout
 						  </ul>
 						</li>';
 			}
+			else
+			{
+				$links = '
+						<li><a href="main.php">Home</a></li>
+						<li><a href="#">Email</a></li>
+						<li class="dropdown">
+						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
+						  <ul class="dropdown-menu">
+							<li><a href="#">Edit</a></li>
+						  </ul>
+						</li>';
+			}
 		}
 		else
 		{
-			if ($title = "Student Main" || $title = "Parent Main" )
+			if ($title == "Student Main" || $title = "Parent Main" )
 			{
 				$links = '
 						<li class="active"><a href="main.php">Home</a></li>
 						<li><a href="#">Email</a></li>';
 			}
-			else
+			else if ($title == "Email")
 			{
 				$links = '
 						<li><a href="main.php">Home</a></li>
 						<li class="active"><a href="#">Email</a></li>';
+			}
+			else
+			{
+				$links = '
+						<li><a href="main.php">Home</a></li>
+						<li><a href="#">Email</a></li>';
 			}
 		}
 		$func = '<!DOCTYPE html>
