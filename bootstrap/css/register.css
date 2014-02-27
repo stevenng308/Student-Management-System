@@ -4,6 +4,10 @@ body {
   background-color: #eee;
 }
 
+.formDiv {
+  padding-top: 15px;
+  padding-bottom: 60px;
+}
 .form-signin {
   max-width: 330px;
   padding: 15px;

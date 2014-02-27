@@ -88,14 +88,14 @@ class Layout
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="#">Add</a></li>
+							<li><a href="register.php">Add</a></li>
 							<li><a href="#">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
-								<li><a href="#">Add</a></li>
+								<li><a href="register.php">Add</a></li>
 								<li><a href="#">Edit</a></li>
 							  </ul>
 						  </li>';
@@ -108,7 +108,7 @@ class Layout
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="#">Add</a></li>
+							<li><a href="register.php">Add</a></li>
 							<li><a href="#">Edit</a></li>
 						  </ul>
 						  </li>
@@ -402,7 +402,7 @@ class Layout
 	public function loadFooter($dir)
     {
 		$func = '
-			<div id="footer">
+			<div class="navbar navbar-default navbar-fixed-bottom">
 			  <div class="container">
 				<p class="text-muted">&copy 2014 Steven Ng, Andre Vicente, Brian Kennedy, Syed Kamil.</p>
 			  </div>

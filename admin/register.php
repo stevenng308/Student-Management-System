@@ -49,7 +49,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Registratio
 			</select>
 		</div>
 	</form>
-	<div id="formDiv">
+	<div id="formDiv" class="formDiv">
 	</div>
 </div>
 <?php
@@ -61,11 +61,13 @@ $(function(){
 	$('#role').bind('change', function () {
 		var role = $(this).val(); // get selected value
 			if (role != 3) { // require a URL
-				$('#formDiv').load('guardianForm.php');
+				//$('#formDiv').load('guardianForm.php');
+				window.location.href = "guardianForm.php?role=" + role;
 			}
 			else
 			{
-				$('#formDiv').load('studentForm.php');
+				//$('#formDiv').load('studentForm.php');
+				window.location.href = "studentForm.php";
 			}
 			return false;
 		});
