@@ -26,6 +26,17 @@ $session = new Session($_SESSION, $database);
 $clean = new Clean();
 
 $userType = $_GET['role'] or die("Account type not provided");
+switch ($userType)
+{
+	case 1: $table = "Admin";
+			break;
+	case 2: $table = "Teacher";
+			break;
+	case 3: $table = "Student";
+			break;
+	case 4: $table = "Parent";
+			break;
+}
 //var_dump($_SESSION);
 //var_dump($session);
 
@@ -33,8 +44,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 ?>
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/register.css" rel="stylesheet">
-	<div class="formDiv">
-	<form name ="register" id="register-form" class="form-signin" action="" method="post">
+	<div class="formDiv" id="result">
+	<form name ="register" id="register-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading">Personal Information</h2>
 		<div class="control-group">
 			<input type="text" class="form-control" name="firstname" id = "firstname" placeholder="First Name" autofocus/>
@@ -145,6 +156,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 			<input type="text" class="form-control" name="contact" id = "contact" placeholder="Contact Number"/>
 		</div>
 		<h2 class="form-signin-heading">Account Information</h2>
+		
+			<input type="text" class="form-control" name="type" id = "type" value="<?php echo $table;?>" placeholder="Account Type" readonly/>
+
 		<div class="control-group">
 			<input type="text" class="form-control" name="username" id = "username" placeholder="Username"/>
 		</div>
@@ -205,6 +219,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 		}*/
 	?>
 	</div>
+
 <?php
 	echo $layout->loadFooter('../');
 ?>
@@ -215,6 +230,43 @@ $(document).ready(function () {
 	$.validator.addMethod("valueNotEquals", function(value, element, arg){
 		return arg != value;
 	 }, "Value must not equal arg.");
+	 
+	 $.validator.addMethod("checkUsername", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkUnique.php", // script to validate in server side
+                data: {username: value},
+                success: function(data) {
+					//alert(data);
+                    result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "This username has already been taken! Try another."
+    );
+	
+	$.validator.addMethod("checkEmail", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkUnique.php", // script to validate in server side
+                data: {email: value},
+                success: function(data) {
+					//alert(data);
+                    result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "This email has already been taken! Try another."
+    );
+	
     $('#register-form').validate({
         rules: {
             firstname: {
@@ -274,8 +326,8 @@ $(document).ready(function () {
             email: {
                 required: true,
 				maxlength: 50,
-				alphanumeric: true,
-                email: true
+                email: true,
+				checkEmail: true
             },
             contact: {
 				digits: true,
@@ -287,7 +339,8 @@ $(document).ready(function () {
 			username: {
                 required: true,
 				alphanumeric: true,
-				maxlength: 25
+				maxlength: 25,
+				checkUsername: true	
             },
 			password: {
                 required: true,
@@ -318,12 +371,18 @@ $(document).ready(function () {
 			contact: {
 				digits: "Format contact number as shown (1237774567)"
 			},
+			email: {
+				checkEmail: "Email has been registered. Please make sure the User you are trying to register is not already registered."
+			},
 			password2: {
 				equalTo: "Password confirmation does not match"
 			},
 			state: {
                 valueNotEquals: "Select a State"
-            }
+            },
+			username: {
+				checkUsername: "Username not available"
+			}
         },
         highlight: function (element) {
             $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
@@ -333,7 +392,28 @@ $(document).ready(function () {
                 .closest('.control-group').removeClass('has-error').addClass('has-success');
         }
     });
-
+	
+	$(function () {
+		$('#register-form').submit(function () {
+			if($(this).valid()) {
+				//alert('Successful Validation');
+				$.post(
+					'../classes/processRegistration.php',
+					$(this).serialize(),
+					function(data){
+					  $("#result").html(data);
+					  console.log(data);
+					}
+				  );
+              return false;
+			}
+			else
+			{
+				alert('Please correct the errors indicated.');
+				return false;
+			}
+		});
+	});                   
 });
 </script>
 </html>

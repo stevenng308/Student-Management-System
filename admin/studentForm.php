@@ -33,7 +33,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/register.css" rel="stylesheet">
 	<div class="formDiv">
-	<form name ="register" id="register-form" class="form-signin" action="" method="post">
+	<form name ="register" id="register-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading">Personal Information</h2>
 		<div class="control-group">
 			<input type="text" class="form-control" name="firstname" id = "firstname" placeholder="First Name" autofocus/>
@@ -272,7 +272,7 @@ $(document).ready(function () {
             email: {
                 required: true,
 				maxlength: 50,
-				alphanumeric: true,
+				//no_special_characters: true,
                 email: true
             },
             contact: {

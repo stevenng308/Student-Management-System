@@ -21,7 +21,7 @@ class Database
 	public function insert($data)
 	{
 		// Search for user by firstname, lastname, & password to ensure no previous match before insertion
-		$query_initial = mysql_query("SELECT * FROM member WHERE email = '". mysql_real_escape_string($data['email']) ."';");
+		$query_initial = mysql_query("SELECT * FROM " . $data['type'] . " WHERE email = '". mysql_real_escape_string($data['email']) ."';");
 		$result = mysql_fetch_array($query_initial);
 		if(empty($result)){
 			$password = $data['password'];
