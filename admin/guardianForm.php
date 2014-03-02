@@ -175,7 +175,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
 	</div>
-
 <?php
 	echo $layout->loadFooter('../');
 ?>

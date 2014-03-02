@@ -15,7 +15,15 @@ $(document).ready(function () {
                 data: {username: value},
                 success: function(data) {
 					//alert(data);
-                    result = (data) ? true : false;
+					if (data.match(/true/)) //the data passed back from the checkUnique.php may contain other stuff besides exactly true and false. 
+					{						//this is somewhat less strict comparison. it ensures that the output contains the string "true" (at any position).
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
                 }
             });
             return result; 
@@ -34,7 +42,15 @@ $(document).ready(function () {
                 data: {email: value},
                 success: function(data) {
 					//alert(data);
-                    result = (data) ? true : false;
+					if (data.match(/true/))
+					{
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
                 }
             });
             return result; 

@@ -33,12 +33,12 @@ $query = "(SELECT accountID as type FROM admin WHERE " . $check . " = '" . $fiel
 $result = $database->runQuery($query);
 if (mysql_num_rows($result) == 0) //if true input is unique
 {
-	echo true;
+	echo "true";
 }
 else
 {
-	echo false;
+	echo "false";
 }
-
+//echo true;
 //var_dump($_POST);
 ?>

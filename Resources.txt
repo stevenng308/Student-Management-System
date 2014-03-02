@@ -11,5 +11,7 @@ http://jqueryvalidation.org/
 https://stackoverflow.com/questions/17359277/jquery-form-ajax-database-check-for-unique-value
 https://stackoverflow.com/questions/17392043/form-validation-a-standard-solution/17768847#17768847
 https://stackoverflow.com/questions/2410773/how-to-return-data-from-php-to-a-jquery-ajax-call
+https://stackoverflow.com/questions/6971311/comparing-strings-returned-from-php-in-jquery-doesnt-work
 https://stackoverflow.com/questions/18638753/php-explode-split-string-into-words-by-using-space-a-delimiter
 https://stackoverflow.com/questions/5659042/php-prepend-leading-zero-before-single-digit-number-on-the-fly
+http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers
