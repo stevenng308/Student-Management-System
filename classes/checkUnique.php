@@ -21,9 +21,10 @@ else if (!empty($_POST['email']))//if true checking email
 	$check = "email";
 	//echo "hello";
 }
-$database = new Database();
+//$database = new Database();
+$database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 //query is getting data from all 4 user tables and storing it in array
-$query = "(SELECT accountID as type FROM admin WHERE " . $check . " = '" . $field . "' LIMIT 1)
+/*$query = "(SELECT accountID as type FROM admin WHERE " . $check . " = '" . $field . "' LIMIT 1)
 			UNION
 		   (SELECT accountID as type FROM teacher WHERE " . $check . " = '" . $field . "' LIMIT 1)
 			UNION
@@ -31,6 +32,7 @@ $query = "(SELECT accountID as type FROM admin WHERE " . $check . " = '" . $fiel
 			UNION
 			(SELECT accountID as type FROM parent WHERE " . $check . " = '" . $field . "' LIMIT 1)";
 $result = $database->runQuery($query);
+
 if (mysql_num_rows($result) == 0) //if true input is unique
 {
 	echo "true";
@@ -39,6 +41,21 @@ else
 {
 	echo "false";
 }
-//echo true;
+*/
+$query = $database->query('(SELECT accountID as id FROM admin WHERE ' . $check .  ' = "' . $field .  '" LIMIT 1)
+							UNION (SELECT accountID as id FROM teacher WHERE ' . $check .  ' = "' . $field .  '" LIMIT 1)
+							UNION (SELECT accountID as id FROM student WHERE ' . $check .  ' = "' . $field .  '" LIMIT 1)
+							UNION (SELECT accountID as id FROM parent WHERE ' . $check .  ' = "' . $field .  '" LIMIT 1);
+							');
+if ($query->rowCount() == 0) //if true input is unique
+{
+	echo "true";
+}
+else
+{
+	echo "false";
+}						
+
+
 //var_dump($_POST);
 ?>

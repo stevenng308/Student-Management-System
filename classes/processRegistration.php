@@ -5,7 +5,8 @@ if(!isset($_SESSION)){
 	session_start();
 }
 
-$database = new Database();
+//$database = new Database();
+$database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 //var_dump($_POST);
 $first = mysql_real_escape_string($_POST['firstname']);
 $last = mysql_real_escape_string($_POST['lastname']);
@@ -60,10 +61,11 @@ else
 			VALUES ('". $username ."', '". $pass ."', '". $first ."', '". $last ."', '". $email ."', '". $birth ."', '". $number ."', '1', '". $salt ."');";
 }
 
-mysql_query($query);
+//mysql_query($query);
+$database->exec($query);
 
 //begin inserting into address table
-$queryResult = $database->runQuery("SELECT accountID, role from " . $table . " WHERE username = '" . $username ."'");
+/*$queryResult = $database->runQuery("SELECT accountID, role from " . $table . " WHERE username = '" . $username ."'");
 $result = mysql_fetch_array($queryResult, MYSQL_ASSOC);
 $account_id = $result['accountID'];
 $role = $result['role'];
@@ -84,8 +86,31 @@ if (!empty($_POST['childrenID']))//if true begin inserting into parent student a
 			VALUES ('" . $child_id . "', '" . $role . "','" . $account_id . "');";
 		mysql_query($query);
 	}
-}
+}*/
+//begin inserting into address table
+$queryResult = $database->query("SELECT accountID, role from " . $table . " WHERE username = '" . $username ."'");
+$result = $queryResult->fetchAll(PDO::FETCH_ASSOC);
+$account_id = $result[0]['accountID'];
+$role = $result[0]['role'];
+$query = "INSERT INTO address (accountID, role, street, city, state, zip)
+			VALUES ('" . $account_id . "', '" . $role . "','" . $street . "','" . $city . "','" . $state . "','" . $zip . "');";
+$database->exec($query);
 
+//begin inserting into newuser table
+$query = "INSERT INTO newuser (accountID, role, username)
+			VALUES ('" . $account_id . "', '" . $role . "','" . $username . "');";
+$database->exec($query);
+
+//begin inserting in child parent association
+if (!empty($_POST['childrenID']))//if true begin inserting into parent student assoc table
+{
+	foreach ($child_arr as $child_id)
+	{
+		$query = "INSERT INTO parent_student_assoc (studentID, role, guardianID)
+			VALUES ('" . $child_id . "', '" . $role . "','" . $account_id . "');";
+		$database->exec($query);
+	}
+}
 ?>
 <form class="form-signin">
 	<h2><?php echo $username ?> registered.</h2>

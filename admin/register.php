@@ -25,7 +25,8 @@ else
 	header('Location: ../index.php');
 }
 $layout = new Layout();
-$database = new Database();
+//$database = new Database();
+$database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 //var_dump($_SESSION);
 //var_dump($session);
