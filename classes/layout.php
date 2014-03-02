@@ -1,8 +1,10 @@
+<!-- Class for handling the template of the layout of the Views -->
+<!-- Author: Steven Ng -->
+
 <?php
-//Class for handling the template of the layout of the Views
-//Author: Steven Ng
+
 class Layout
-{
+{	
 	public function loadFixedNavBar($title, $dir)
     {
 		$func = '<!DOCTYPE html>
@@ -69,7 +71,7 @@ class Layout
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="register.php">Add</a></li>
-							<li><a href="#">Edit</a></li>
+							<li><a href="viewUser.php">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
@@ -88,14 +90,14 @@ class Layout
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="register.php">Add</a></li>
-							<li><a href="#">Edit</a></li>
+							<li><a href="../admin/register.php">Add</a></li>
+							<li><a href="../admin/viewUser.php">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
-								<li><a href="register.php">Add</a></li>
+								<li><a href="#">Add</a></li>
 								<li><a href="#">Edit</a></li>
 							  </ul>
 						  </li>';
@@ -109,7 +111,7 @@ class Layout
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="register.php">Add</a></li>
-							<li><a href="#">Edit</a></li>
+							<li><a href="viewUser.php">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
@@ -235,7 +237,7 @@ class Layout
 		return $func;
 	}
 	
-	public function loadNarrowNav($title, $dir)
+	/*public function loadNarrowNav($title, $dir)
 	{
 		if ($title == "Home")
 		{
@@ -397,7 +399,7 @@ class Layout
 			</div>';
 			
 			return $func;
-	}
+	}*/
 	
 	public function loadFooter($dir)
     {
@@ -415,6 +417,33 @@ class Layout
 			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 			<script src="'. $dir .'bootstrap/js/bootstrap.js"></script>
 		  </body>';
+		
+		return $func;
+	}
+	
+	public function loadUserRow($user)
+	{
+		$func = '
+			<tr>
+				<td>
+					' . $user['accountID'] . '
+				</td>
+				<td>
+					' . $user['username'] . '
+				</td>
+				<td>
+					' . $user['firstname'] . '
+				</td>
+				<td>
+					' . $user['lastname'] . '
+				</td>
+				<td>
+					' . $user['role'] . '
+				</td>
+				<td>
+				</td>
+			</tr>
+		';
 		
 		return $func;
 	}
