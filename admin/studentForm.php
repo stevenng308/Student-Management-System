@@ -32,7 +32,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 ?>
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/register.css" rel="stylesheet">
-	<div class="formDiv">
+	<div class="formDiv" id="result">
 	<form name ="register" id="register-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading">Personal Information</h2>
 		<div class="control-group">
@@ -144,11 +144,13 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 			<input type="text" class="form-control" name="contact" id = "contact" placeholder="Contact Number"/>
 		</div>
 		<h2 class="form-signin-heading">Account Information</h2>
+		<input type="text" class="form-control" name="type" id = "type" value="Student" placeholder="Account Type" readonly/>
+
 		<div class="control-group">
 			<input type="text" class="form-control" name="username" id = "username" placeholder="Username"/>
 		</div>
 		<div class="control-group">
-			<input type="password" class="form-control" name="password" id="password" placeholder="Password (no symbols)"/>
+			<input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
 		</div>
 		<div class="control-group">
 			<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password"/>
@@ -159,185 +161,11 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
 
-	<?php
-		/*$escape = true;
-		if (isset($_POST['submit'])) 
-		{
-			foreach($_POST as &$str)
-			{
-				if (empty($str))
-				{
-					echo '<div class="alert alert-danger">
-							<p><strong>Error!</strong> Please completely fill out the registration form.</p>
-						  </div>
-						  </form>
-						  </div>';
-					echo $layout->loadFooter('../');	  
-					$escape = false;
-					return;	
-				}
-				$str = $clean->cleanString($str);
-			}
-		
-			/*if ($_POST['password'] != $_POST['password2'] && $escape)
-			{
-				echo '<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<p><strong>Error!</strong> The passwords do not match. Please check your input.</p>
-					 </div>';
-				echo $layout->loadFooter('../');	 
-			}
-			else if (strlen($_POST['firstname']) > 20 || strlen($_POST['lastname']) > 25 || strlen($_POST['email']) > 50  || strlen($_POST['username']) > 25)
-			{
-				echo '<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<p><strong>Error!</strong> First Name, Last Name, Email or Username is too long.</p>
-					 </div>';
-				echo $layout->loadFooter('../');	 
-			}
-			else
-			{	
-				//$database->insert($_POST);
-				//header('location: login.php');	
-			}
-		}*/
-	?>
 	</div>
 <?php
 	echo $layout->loadFooter('../');
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
-<script>
-$(document).ready(function () {
-	 $.validator.addMethod("valueNotEquals", function(value, element, arg){
-		return arg != value;
-	 }, "Value must not equal arg.");
-    $('#register-form').validate({
-        rules: {
-            firstname: {
-                minlength: 2,
-				maxlength: 20,
-				alphanumeric: true,
-                required: true
-            },
-			lastname: {
-                minlength: 2,
-				maxlength: 25,
-				alphanumeric: true,
-                required: true
-            },
-			month: {
-				digits: true,
-                minlength: 1,
-				maxlength: 2,
-				alphanumeric: true,
-                required: true
-            },
-			day: {
-				digits: true,
-                minlength: 1,
-				maxlength: 2,
-				alphanumeric: true,
-                required: true
-            },
-			year: {
-				digits: true,
-                minlength: 4,
-				maxlength: 4,
-				alphanumeric: true,
-                required: true
-            },
-			street: {
-				maxlength: 75,
-				alphanumeric: true,
-                required: true
-            },
-			state: {
-                valueNotEquals: "State"
-            },
-			city: {
-                minlength: 2,
-				maxlength: 20,
-				alphanumeric: true,
-                required: true
-            },
-			zip: {
-				digits: true,
-                minlength: 5,
-				maxlength: 5,
-				alphanumeric: true,
-                required: true
-            },
-            email: {
-                required: true,
-				maxlength: 50,
-				//no_special_characters: true,
-                email: true
-            },
-            contact: {
-				digits: true,
-                minlength: 10,
-				maxlength: 10,
-				alphanumeric: true,
-                required: true
-            },
-			username: {
-                required: true,
-				alphanumeric: true,
-				maxlength: 25
-            },
-			password: {
-                required: true,
-				alphanumeric: true,
-				minlength: 6
-            },
-			password2: {
-                required: true,
-				minlength: 6,
-				alphanumeric: true,
-				equalTo: "#password"
-            },
-			studentid: {
-                required: true,
-				digits: true,
-				alphanumeric: true,
-				maxlength: 20
-            }
-        },
-		messages: {
-			month: {
-				maxlength: "2 digits max",
-				digits: "Numbers Only"
-			},
-			day: {
-				maxlength: "2 digits max",
-				digits: "Numbers Only"
-			},
-            year: {
-                minlength: "Use 4 digits",
-				maxlength: "Use 4 digits",
-				digits: "Numbers Only"
-			},
-			contact: {
-				digits: "Format contact number as shown (1237774567)"
-			},
-			password2: {
-				equalTo: "Password confirmation does not match"
-			},
-			state: {
-                valueNotEquals: "Select a State"
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.text('OK!').addClass('valid')
-                .closest('.control-group').removeClass('has-error').addClass('has-success');
-        }
-    });
-
-});
-</script>
+<script src="../bootstrap/js/validateRegister.js"></script>
 </html>

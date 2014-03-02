@@ -1,23 +1,28 @@
+<!-- Student Management System -->
+<!-- Author: Steven Ng -->
+<!-- Check for uniqueness in the email and username with 
+jquery valdiation passing the data in the POST variable -->
+
 <?php
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
 	session_start();
 }
-if (!empty($_POST['username']))
+if (!empty($_POST['username']))//if true checking username
 {
 	$field = mysql_real_escape_string($_POST['username']);
 	$check = "username";
 	//echo "hello1";
 }
-else if (!empty($_POST['email']))
+else if (!empty($_POST['email']))//if true checking email
 {
 	$field = mysql_real_escape_string($_POST['email']);
 	$check = "email";
 	//echo "hello";
 }
 $database = new Database();
-
+//query is getting data from all 4 user tables and storing it in array
 $query = "(SELECT accountID as type FROM admin WHERE " . $check . " = '" . $field . "' LIMIT 1)
 			UNION
 		   (SELECT accountID as type FROM teacher WHERE " . $check . " = '" . $field . "' LIMIT 1)
@@ -26,7 +31,7 @@ $query = "(SELECT accountID as type FROM admin WHERE " . $check . " = '" . $fiel
 			UNION
 			(SELECT accountID as type FROM parent WHERE " . $check . " = '" . $field . "' LIMIT 1)";
 $result = $database->runQuery($query);
-if (mysql_num_rows($result) == 0)
+if (mysql_num_rows($result) == 0) //if true input is unique
 {
 	echo true;
 }

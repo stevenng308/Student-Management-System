@@ -61,7 +61,7 @@ $(function(){
 	$('#role').bind('change', function () {
 		var role = $(this).val(); // get selected value
 			if (role != 3) { // require a URL
-				//$('#formDiv').load('guardianForm.php');
+				//need to keep role for the table this user will be inserted
 				window.location.href = "guardianForm.php?role=" + role;
 			}
 			else

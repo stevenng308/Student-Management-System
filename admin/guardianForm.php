@@ -157,13 +157,13 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 		</div>
 		<h2 class="form-signin-heading">Account Information</h2>
 		
-			<input type="text" class="form-control" name="type" id = "type" value="<?php echo $table;?>" placeholder="Account Type" readonly/>
+		<input type="text" class="form-control" name="type" id = "type" value="<?php echo $table;?>" placeholder="Account Type" readonly/>
 
 		<div class="control-group">
 			<input type="text" class="form-control" name="username" id = "username" placeholder="Username"/>
 		</div>
 		<div class="control-group">
-			<input type="password" class="form-control" name="password" id="password" placeholder="Password (no symbols)"/>
+			<input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
 		</div>
 		<div class="control-group">
 			<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password"/>
@@ -174,50 +174,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 		</div>
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
-
-	<?php
-		/*$escape = true;
-		if (isset($_POST['submit'])) 
-		{
-			foreach($_POST as &$str)
-			{
-				if (empty($str))
-				{
-					echo '<div class="alert alert-danger">
-							<p><strong>Error!</strong> Please completely fill out the registration form.</p>
-						  </div>
-						  </form>
-						  </div>';
-					echo $layout->loadFooter('../');	  
-					$escape = false;
-					return;	
-				}
-				$str = $clean->cleanString($str);
-			}
-		
-			/*if ($_POST['password'] != $_POST['password2'] && $escape)
-			{
-				echo '<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<p><strong>Error!</strong> The passwords do not match. Please check your input.</p>
-					 </div>';
-				echo $layout->loadFooter('../');	 
-			}
-			else if (strlen($_POST['firstname']) > 20 || strlen($_POST['lastname']) > 25 || strlen($_POST['email']) > 50  || strlen($_POST['username']) > 25)
-			{
-				echo '<div class="alert alert-danger alert-dismissable">
-					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<p><strong>Error!</strong> First Name, Last Name, Email or Username is too long.</p>
-					 </div>';
-				echo $layout->loadFooter('../');	 
-			}
-			else
-			{	
-				//$database->insert($_POST);
-				//header('location: login.php');	
-			}
-		}*/
-	?>
 	</div>
 
 <?php
@@ -225,195 +181,5 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
-<script>
-$(document).ready(function () {
-	$.validator.addMethod("valueNotEquals", function(value, element, arg){
-		return arg != value;
-	 }, "Value must not equal arg.");
-	 
-	 $.validator.addMethod("checkUsername", 
-        function(value, element) {
-            var result = false;
-            $.ajax({
-                type:"POST",
-                async: false,
-                url: "../classes/checkUnique.php", // script to validate in server side
-                data: {username: value},
-                success: function(data) {
-					//alert(data);
-                    result = (data) ? true : false;
-                }
-            });
-            return result; 
-        }, 
-        "This username has already been taken! Try another."
-    );
-	
-	$.validator.addMethod("checkEmail", 
-        function(value, element) {
-            var result = false;
-            $.ajax({
-                type:"POST",
-                async: false,
-                url: "../classes/checkUnique.php", // script to validate in server side
-                data: {email: value},
-                success: function(data) {
-					//alert(data);
-                    result = (data) ? true : false;
-                }
-            });
-            return result; 
-        }, 
-        "This email has already been taken! Try another."
-    );
-	
-    $('#register-form').validate({
-        rules: {
-            firstname: {
-                minlength: 2,
-				maxlength: 20,
-				alphanumeric: true,
-                required: true
-            },
-			lastname: {
-                minlength: 2,
-				maxlength: 25,
-				alphanumeric: true,
-                required: true
-            },
-			month: {
-				digits: true,
-                minlength: 1,
-				maxlength: 2,
-				alphanumeric: true,
-                required: true
-            },
-			day: {
-				digits: true,
-                minlength: 1,
-				maxlength: 2,
-				alphanumeric: true,
-                required: true
-            },
-			year: {
-				digits: true,
-                minlength: 4,
-				maxlength: 4,
-				alphanumeric: true,
-                required: true
-            },
-			street: {
-				maxlength: 75,
-				alphanumeric: true,
-                required: true
-            },
-			state: {
-                valueNotEquals: "State"
-            },
-			city: {
-                minlength: 2,
-				maxlength: 20,
-				alphanumeric: true,
-                required: true
-            },
-			zip: {
-				digits: true,
-                minlength: 5,
-				maxlength: 5,
-				alphanumeric: true,
-                required: true
-            },
-            email: {
-                required: true,
-				maxlength: 50,
-                email: true,
-				checkEmail: true
-            },
-            contact: {
-				digits: true,
-                minlength: 10,
-				maxlength: 10,
-				alphanumeric: true,
-                required: true
-            },
-			username: {
-                required: true,
-				alphanumeric: true,
-				maxlength: 25,
-				checkUsername: true	
-            },
-			password: {
-                required: true,
-				alphanumeric: true,
-				minlength: 6
-            },
-			password2: {
-                required: true,
-				minlength: 6,
-				alphanumeric: true,
-				equalTo: "#password"
-            }
-        },
-		messages: {
-			month: {
-				maxlength: "2 digits max",
-				digits: "Numbers Only"
-			},
-			day: {
-				maxlength: "2 digits max",
-				digits: "Numbers Only"
-			},
-            year: {
-                minlength: "Use 4 digits",
-				maxlength: "Use 4 digits",
-				digits: "Numbers Only"
-			},
-			contact: {
-				digits: "Format contact number as shown (1237774567)"
-			},
-			email: {
-				checkEmail: "Email has been registered. Please make sure the User you are trying to register is not already registered."
-			},
-			password2: {
-				equalTo: "Password confirmation does not match"
-			},
-			state: {
-                valueNotEquals: "Select a State"
-            },
-			username: {
-				checkUsername: "Username not available"
-			}
-        },
-        highlight: function (element) {
-            $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
-        },
-        success: function (element) {
-            element.text('OK!').addClass('valid')
-                .closest('.control-group').removeClass('has-error').addClass('has-success');
-        }
-    });
-	
-	$(function () {
-		$('#register-form').submit(function () {
-			if($(this).valid()) {
-				//alert('Successful Validation');
-				$.post(
-					'../classes/processRegistration.php',
-					$(this).serialize(),
-					function(data){
-					  $("#result").html(data);
-					  console.log(data);
-					}
-				  );
-              return false;
-			}
-			else
-			{
-				alert('Please correct the errors indicated.');
-				return false;
-			}
-		});
-	});                   
-});
-</script>
+<script src="../bootstrap/js/validateRegister.js"></script>
 </html>

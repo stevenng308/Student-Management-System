@@ -1,0 +1,15 @@
+https://stackoverflow.com/questions/4451222/clean-safe-string-in-php
+https://stackoverflow.com/questions/2901125/jquery-validate-required-select
+https://stackoverflow.com/questions/14460925/how-to-add-validation-rules-with-messages-in-jquery-validation
+https://stackoverflow.com/questions/14179417/jquery-validation-rules-and-messages
+https://stackoverflow.com/questions/18296267/form-validation-with-bootstrap-jquery
+https://stackoverflow.com/questions/5052315/how-to-fire-jquery-function-only-if-form-is-valid
+https://stackoverflow.com/questions/5772839/jquery-post-form-data
+https://stackoverflow.com/questions/15173965/serializing-and-submitting-a-form-with-jquery-post-and-php
+https://stackoverflow.com/questions/14708978/jquery-post-to-php-page
+http://jqueryvalidation.org/
+https://stackoverflow.com/questions/17359277/jquery-form-ajax-database-check-for-unique-value
+https://stackoverflow.com/questions/17392043/form-validation-a-standard-solution/17768847#17768847
+https://stackoverflow.com/questions/2410773/how-to-return-data-from-php-to-a-jquery-ajax-call
+https://stackoverflow.com/questions/18638753/php-explode-split-string-into-words-by-using-space-a-delimiter
+https://stackoverflow.com/questions/5659042/php-prepend-leading-zero-before-single-digit-number-on-the-fly
