@@ -68,32 +68,10 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 				</tr>
 			</thead>
 			<tbody>
-				<?php 
-					foreach ($database->query('SELECT accountID, username, firstname, lastname, role FROM admin') as $row)
-					{
-						$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
-						$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-						$row['role'] = $result[0]['description'];
-						//var_dump($row);
-						echo $layout->loadUserRow($row);
-					}
-					foreach ($database->query('SELECT accountID, username, firstname, lastname, role FROM teacher') as $row)
-					{
-						$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
-						$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-						$row['role'] = $result[0]['description'];
-						//var_dump($row);
-						echo $layout->loadUserRow($row);
-					}
-					foreach ($database->query('SELECT accountID, username, firstname, lastname, role FROM student') as $row)
-					{
-						$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
-						$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-						$row['role'] = $result[0]['description'];
-						//var_dump($row);
-						echo $layout->loadUserRow($row);
-					}
-					foreach ($database->query('SELECT accountID, username, firstname, lastname, role FROM parent') as $row)
+				<?php foreach ($database->query('(SELECT accountID, username, firstname, lastname, role FROM admin)
+								UNION(SELECT accountID, username, firstname, lastname, role FROM teacher)
+								UNION(SELECT accountID, username, firstname, lastname, role FROM student)
+								UNION(SELECT accountID, username, firstname, lastname, role FROM parent);') as $row)
 					{
 						$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
 						$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
