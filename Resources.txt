@@ -15,3 +15,4 @@ https://stackoverflow.com/questions/6971311/comparing-strings-returned-from-php-
 https://stackoverflow.com/questions/18638753/php-explode-split-string-into-words-by-using-space-a-delimiter
 https://stackoverflow.com/questions/5659042/php-prepend-leading-zero-before-single-digit-number-on-the-fly
 http://wiki.hashphp.org/PDO_Tutorial_for_MySQL_Developers
+https://stackoverflow.com/questions/14713622/twitter-bootstrap-row-filter-search-box

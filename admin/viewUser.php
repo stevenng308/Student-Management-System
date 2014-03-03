@@ -42,6 +42,13 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 				<tr>
 					<th style='text-align: center;' colspan="6">
 						<h3>All Users in the Student Management System</h3>
+						<div class=row>
+							<div class="col-xs-6 col-md-4"></div>
+							<div class="input-group input-group-lg col-xs-6 col-md-4">
+								  <span class="input-group-addon">Filter</span>
+								  <input type="text" class="form-control" id="filter" placeholder="Search Term">
+							</div>
+						</div>
 					</th>
 				</tr>
 			</thead>
@@ -67,7 +74,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 					</th>
 				</tr>
 			</thead>
-			<tbody>
+			<tbody class="searchable">
 				<?php foreach ($database->query('(SELECT accountID, username, firstname, lastname, role FROM admin)
 								UNION(SELECT accountID, username, firstname, lastname, role FROM teacher)
 								UNION(SELECT accountID, username, firstname, lastname, role FROM student)
@@ -87,4 +94,5 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 <?php
 	echo $layout->loadFooter('../');
 ?>
+<script src="../bootstrap/js/searchFilter.js"></script>
 </html>
