@@ -53,44 +53,44 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 	<form name ="register" id="register-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading">Personal Information</h2>
 		<div class="control-group">
-			<input type="text" class="form-control" name="firstname" id = "firstname" placeholder="First Name" autofocus/>
+			<input type="text" class="form-control" name="firstname" id = "firstname" placeholder="<?php echo $user->getFirstName(); ?>" autofocus/>
 		</div>
 		<div class="control-group">
-			<input type="text" class="form-control" name="lastname" id = "lastname" placeholder="Last Name"/>
+			<input type="text" class="form-control" name="lastname" id = "lastname" placeholder="<?php echo $user->getLastName(); ?>"/>
 		</div>
 		<br />
 		<!--<label for="birthday">Birthdate: 01-01-1970</label>-->
 		<div class="row">
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
-					<input type="text" class="form-control" name="month" id="month" placeholder="Month"/>
+					<input type="text" class="form-control" name="month" id="month" placeholder="<?php echo $user->getMonth(); ?>"/>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
-					<input type="text" class="form-control" name="day" id="day" placeholder="Day"/>
+					<input type="text" class="form-control" name="day" id="day" placeholder="<?php echo $user->getDay(); ?>"/>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
-					<input type="text" class="form-control" name="year" id="year" placeholder="Year"/>
+					<input type="text" class="form-control" name="year" id="year" placeholder="<?php echo $user->getYear(); ?>"/>
 				</div>
 			</div>
 		</div>
 		<br />
 		<div class="control-group">
-			<input type="text" class="form-control" name="street" id = "street" placeholder="Street Address"/>
+			<input type="text" class="form-control" name="street" id = "street" placeholder="<?php echo $user->getStreet(); ?>"/>
 		</div>
 		<div class="row">
 			<div class="col-xs-6 col-md-7">
 				<div class="control-group">
-					<input type="text" class="form-control" name="city" id="city" placeholder="City"/>
+					<input type="text" class="form-control" name="city" id="city" placeholder="<?php echo $user->getCity(); ?>"/>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-5">
 				<div class="control-group">
 					<select id="state" name="state" class="form-control">
-						<option selected="selected">State</option>
+						<option selected="selected" value="<?php echo $user->getState(); ?>"><?php echo $user->getState(); ?></option>
 							<option value="AL">AL</option>
 							<option value="AK">AK</option>
 							<option value="AZ">AZ</option>
@@ -149,34 +149,36 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 		<div class="row">
 			<div class="col-xs-6 col-md-7">
 				<div class="control-group">
-					<input type="text" class="form-control" name="zip" id="zip" placeholder="Zip"/>
+					<input type="text" class="form-control" name="zip" id="zip" placeholder="<?php echo $user->getZip(); ?>"/>
 				</div>
 			</div>
 		</div>
 		<br />
 		<div class="control-group">
-			<input type="text" class="form-control" name="email" id = "email" placeholder="Email Address"/>
+			<input type="text" class="form-control" name="email" id = "email" placeholder="<?php echo $user->getEmail(); ?>"/>
 		</div>
 		<div class="control-group">
-			<input type="text" class="form-control" name="contact" id = "contact" placeholder="Contact Number"/>
+			<input type="text" class="form-control" name="contact" id = "contact" placeholder="<?php echo $user->getContact(); ?>"/>
 		</div>
 		<h2 class="form-signin-heading">Account Information</h2>
 		
 		<input type="text" class="form-control" name="type" id = "type" value="<?php echo $table;?>" placeholder="Account Type" readonly/>
 
 		<div class="control-group">
-			<input type="text" class="form-control" name="username" id = "username" placeholder="Username"/>
+			<input type="text" class="form-control" name="username" id = "username" placeholder="<?php echo $user->getUserName(); ?>"/>
 		</div>
 		<div class="control-group">
 			<input type="password" class="form-control" name="password" id="password" placeholder="Password"/>
 		</div>
 		<div class="control-group">
 			<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password"/>
+			<label for="password">Leave password fields blank if not changing the password</label>
 		</div>
 		<br />
 		<div class="control-group">
-			<textarea class="form-control" rows="3" cols="7" name="childrenID" id="childrenID" placeholder="Enter The Child's Student ID Number. If there are more than one, separate them with a comma (1234,5678)."></textarea>
+			<textarea class="form-control" rows="3" cols="7" name="childrenID" id="childrenID"><?php echo $user->getChildID(); ?></textarea>
 		</div>
+		<label for="password">Add more student IDs if needed. Separate each ID with commas (1234,5678). Remove the student IDs that are not needed.</label>
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
 	</div>
@@ -185,5 +187,5 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
-<script src="../bootstrap/js/validateRegister.js"></script>
+<script src="../bootstrap/js/validateEditRegister.js"></script>
 </html>

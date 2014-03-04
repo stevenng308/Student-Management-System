@@ -35,7 +35,7 @@ if (!empty($_POST['childrenID']))//true if the account being registered has (a) 
 	function parseChildID($input)
 	{
 		$input = str_replace(" ", "", $input); //strip spaces
-		$input = preg_split("/,+/", $input); //delimiter using commas
+		$input = preg_split("/,+/", $input, NULL, PREG_SPLIT_NO_EMPTY); //delimiter using commas
 		return $input;
 	}
 	$child_id = mysql_real_escape_string($_POST['childrenID']);
@@ -116,9 +116,18 @@ if (!empty($_POST['childrenID']))//if true begin inserting into parent student a
 	}
 }
 ?>
-<form class="form-signin">
-	<h2><?php echo $username ?> registered.</h2>
-	<a class="btn btn-primary" href="../admin/register.php" role="button">Register More Users</a>
-	<a class="btn btn-default" href="../admin/main.php" role="button">Return Home</a>
-</form>
+<style media="screen" type="text/css">
+	div#form-wrapper {
+		position:absolute;
+		top:30%;
+		right:0;
+		left:0;
+	}
+</style>
+<div id="form-wrapper" style="text-align:center; vertical-align:middle">
+	<form class="form-signin" style="text-valign:center">
+		<h2><?php echo $username ?> registered.</h2>
+		<a class="btn btn-primary" href="../admin/register.php" role="button">Register More Users</a>
+		<a class="btn btn-default" href="../admin/main.php" role="button">Return Home</a>
+	</form>
 </div>

@@ -5,7 +5,7 @@
 <?php
 class User
 {
-	private $userID, $studentID, $password, $userName, $firstName, $lastName, $role, $email, $DOB, $contact, $status, $salt, $street, $city, $state, $zip, $studentArray = array(), $database;
+	private $userID, $studentID, /*$password,*/ $userName, $firstName, $lastName, $role, $email, $DOB, $contact, $status, $salt, $street, $city, $state, $zip, $studentArray = array(), $database;
 	public function __construct(PDO $db, $id, $table)
 	{
 		$this->database = $db;
@@ -15,15 +15,16 @@ class User
 		$result = $queryResults->fetchAll(PDO::FETCH_ASSOC);
 		$this->userID = $result[0]['accountID'];
 		$this->userName = $result[0]['username'];
-		$this->password = $result[0]['password'];
+		//$this->password = $result[0]['password'];
 		$this->role = $result[0]['role'];
 		$this->firstName = $result[0]['firstName'];
 		$this->lastName = $result[0]['lastName'];
 		$this->email = $result[0]['email'];
 		$this->DOB = $result[0]['DOB'];
+		$this->DOB = DateTime::createFromFormat('Y-m-d', $this->DOB);
 		$this->contact = $result[0]['contactNum'];
 		$this->status = $result[0]['status'];
-		$this->salt = $result[0]['salt'];
+		//$this->salt = $result[0]['salt'];
 		if (!empty($result[0]['studentID']))
 		{
 			$this->studentID = $result[0]['studentID'];
@@ -67,11 +68,6 @@ class User
 		return $this->studentID;
 	}
 	
-	public function getPassword()
-	{
-		
-	}
-	
 	public function getUserName()
 	{
 		return $this->userName;
@@ -106,17 +102,18 @@ class User
 	
 	public function getMonth()
 	{
-		
+		//$newFormat = DateTime::createFromFormat('Y-m-d', $this->DOB);
+		return date_format($this->DOB, "m");
 	}
 	
 	public function getDay()
 	{
-	
+		return date_format($this->DOB, "d");
 	}
 	
 	public function getYear()
 	{
-	
+		return date_format($this->DOB, "Y");
 	}
 	
 	public function getContact()
@@ -151,7 +148,20 @@ class User
 	
 	public function getChildID()
 	{
-	
+		$str = "";
+		foreach ($this->studentArray as &$student)
+		{
+			$next = current($this->studentArray);
+			if ($next == NULL)
+			{
+				$str = $str . $student;
+			}
+			else
+			{
+				$str = $str . $student . ",";
+			}
+		}
+		return $str;
 	}
 }
 ?>

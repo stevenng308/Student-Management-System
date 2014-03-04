@@ -187,12 +187,12 @@ $(document).ready(function () {
 				checkUsername: true	
             },
 			password: {
-                required: true,
+                //required: true,
 				alphanumeric: true,
 				minlength: 6
             },
 			password2: {
-                required: true,
+                //required: true,
 				minlength: 6,
 				alphanumeric: true,
 				equalTo: "#password"
