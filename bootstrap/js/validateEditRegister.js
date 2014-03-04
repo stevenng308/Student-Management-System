@@ -1,6 +1,6 @@
 /*
 * Author: Steven Ng
-* Javascript to handle validating registration form
+* Javascript to handle validating edit form
 */
 $(document).ready(function () {
 	//rule for checking password confirmation
