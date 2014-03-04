@@ -1,3 +1,7 @@
+<!-- Student Management System -->
+<!-- Author: Steven Ng -->
+<!-- register guardians form -->
+
 <html>
 <?php
 //Auto loads all the class files in the classes folder
@@ -24,7 +28,6 @@ $layout = new Layout();
 //$database = new Database();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-$clean = new Clean();
 
 $userType = $_GET['role'] or die("Account type not provided");
 switch ($userType)
@@ -33,9 +36,9 @@ switch ($userType)
 			break;
 	case 2: $table = "Teacher";
 			break;
-	case 3: $table = "Student";
-			break;
 	case 4: $table = "Parent";
+			break;
+	default: header('Location: error.php');
 			break;
 }
 //var_dump($_SESSION);

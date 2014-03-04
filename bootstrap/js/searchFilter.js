@@ -1,3 +1,7 @@
+/*
+* Author: Steven Ng
+* Javascript to handle filtering all users
+*/
 $(document).ready(function () {
 
     (function ($) {

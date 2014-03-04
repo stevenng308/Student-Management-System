@@ -421,8 +421,17 @@ class Layout
 		return $func;
 	}
 	
-	public function loadUserRow($user)
+	public function loadUserRow($user, $num)
 	{
+		if ($num != 3)
+		{
+			$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'editGuardian.php?accountid=' . $user['accountID'] . '&role=' . $num . '\';">Edit</button>';
+		}
+		else
+		{
+			$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'editStudent.php?accountid=' . $user['accountID'] . '&role=' . $num . '\';">Edit</button>';
+		}
+		
 		$func = '
 			<tr>
 				<td>
@@ -439,6 +448,9 @@ class Layout
 				</td>
 				<td>
 					' . $user['role'] . '
+				</td>
+				<td>
+					' . $edit . '
 				</td>
 				<td>
 				</td>

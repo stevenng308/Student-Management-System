@@ -1,6 +1,6 @@
 <!-- Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- admin main -->
+<!-- view all users in the system -->
 
 <html>
 <?php
@@ -70,7 +70,10 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 						Role
 					</th>
 					<th>
-						
+						<!-- Empty for button coloumn -->
+					</th>
+					<th>
+						<!-- Empty for button coloumn -->
 					</th>
 				</tr>
 			</thead>
@@ -82,9 +85,10 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 					{
 						$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
 						$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+						$roleNum = $row['role'];
 						$row['role'] = $result[0]['description'];
 						//var_dump($row);
-						echo $layout->loadUserRow($row);
+						echo $layout->loadUserRow($row, $roleNum);
 					}
 				?>
 			</tbody>

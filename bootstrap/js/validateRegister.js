@@ -1,3 +1,7 @@
+/*
+* Author: Steven Ng
+* Javascript to handle validating registration form
+*/
 $(document).ready(function () {
 	//rule for checking password confirmation
 	$.validator.addMethod("valueNotEquals", function(value, element, arg){

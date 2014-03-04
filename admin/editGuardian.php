@@ -1,6 +1,6 @@
 <!-- Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- register students form -->
+<!-- edit guardians form -->
 
 <html>
 <?php
@@ -29,10 +29,23 @@ $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 
-//var_dump($_SESSION);
-//var_dump($session);
+$account_id = $_GET['accountid'] or die("Account ID not provided");
+$userType = $_GET['role'] or die("Account type not provided");
+switch ($userType)
+{
+	case 1: $table = "Admin";
+			break;
+	case 2: $table = "Teacher";
+			break;
+	case 4: $table = "Parent";
+			break;
+	default: header('Location: error.php');
+			break;
+}
 
-echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Form', '../');
+$user= new user($database, $account_id, $table);
+var_dump($user);
+echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardian Form', '../');
 ?>
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/register.css" rel="stylesheet">
@@ -148,7 +161,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 			<input type="text" class="form-control" name="contact" id = "contact" placeholder="Contact Number"/>
 		</div>
 		<h2 class="form-signin-heading">Account Information</h2>
-		<input type="text" class="form-control" name="type" id = "type" value="Student" placeholder="Account Type" readonly/>
+		
+		<input type="text" class="form-control" name="type" id = "type" value="<?php echo $table;?>" placeholder="Account Type" readonly/>
 
 		<div class="control-group">
 			<input type="text" class="form-control" name="username" id = "username" placeholder="Username"/>
@@ -159,12 +173,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 		<div class="control-group">
 			<input type="password" class="form-control" name="password2" id="password2" placeholder="Confirm Password"/>
 		</div>
+		<br />
 		<div class="control-group">
-			<input class="form-control" name="studentid" id="studentid" placeholder="Student ID"/>
+			<textarea class="form-control" rows="3" cols="7" name="childrenID" id="childrenID" placeholder="Enter The Child's Student ID Number. If there are more than one, separate them with a comma (1234,5678)."></textarea>
 		</div>
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
-
 	</div>
 <?php
 	echo $layout->loadFooter('../');
