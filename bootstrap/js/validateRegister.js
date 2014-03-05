@@ -157,7 +157,7 @@ $(document).ready(function () {
 			city: {
                 minlength: 2,
 				maxlength: 20,
-				alphanumeric: true,
+				noSpecialChars: true,
                 required: true
             },
 			zip: {

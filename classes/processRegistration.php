@@ -123,6 +123,9 @@ if (!empty($_POST['childrenID']))//if true begin inserting into parent student a
 		right:0;
 		left:0;
 	}
+	body {
+	  background-color: #fff;
+	}
 </style>
 <div id="form-wrapper" style="text-align:center; vertical-align:middle">
 	<form class="form-signin" style="text-valign:center">

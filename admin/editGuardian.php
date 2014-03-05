@@ -44,7 +44,7 @@ switch ($userType)
 }
 
 $user= new user($database, $account_id, $table);
-var_dump($user);
+//var_dump($user);
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardian Form', '../');
 ?>
 	<!-- Custom styles for this template -->
@@ -53,38 +53,38 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 	<form name ="register" id="register-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading">Personal Information</h2>
 		<div class="control-group">
-			<input type="text" class="form-control" name="firstname" id = "firstname" placeholder="<?php echo $user->getFirstName(); ?>" autofocus/>
+			<input type="text" class="form-control" name="firstname" id = "firstname" value="<?php echo $user->getFirstName(); ?>" autofocus/>
 		</div>
 		<div class="control-group">
-			<input type="text" class="form-control" name="lastname" id = "lastname" placeholder="<?php echo $user->getLastName(); ?>"/>
+			<input type="text" class="form-control" name="lastname" id = "lastname" value="<?php echo $user->getLastName(); ?>"/>
 		</div>
 		<br />
 		<!--<label for="birthday">Birthdate: 01-01-1970</label>-->
 		<div class="row">
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
-					<input type="text" class="form-control" name="month" id="month" placeholder="<?php echo $user->getMonth(); ?>"/>
+					<input type="text" class="form-control" name="month" id="month" value="<?php echo $user->getMonth(); ?>"/>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
-					<input type="text" class="form-control" name="day" id="day" placeholder="<?php echo $user->getDay(); ?>"/>
+					<input type="text" class="form-control" name="day" id="day" value="<?php echo $user->getDay(); ?>"/>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
-					<input type="text" class="form-control" name="year" id="year" placeholder="<?php echo $user->getYear(); ?>"/>
+					<input type="text" class="form-control" name="year" id="year" value="<?php echo $user->getYear(); ?>"/>
 				</div>
 			</div>
 		</div>
 		<br />
 		<div class="control-group">
-			<input type="text" class="form-control" name="street" id = "street" placeholder="<?php echo $user->getStreet(); ?>"/>
+			<input type="text" class="form-control" name="street" id = "street" value="<?php echo $user->getStreet(); ?>"/>
 		</div>
 		<div class="row">
 			<div class="col-xs-6 col-md-7">
 				<div class="control-group">
-					<input type="text" class="form-control" name="city" id="city" placeholder="<?php echo $user->getCity(); ?>"/>
+					<input type="text" class="form-control" name="city" id="city" value="<?php echo $user->getCity(); ?>"/>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-5">
@@ -149,23 +149,43 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 		<div class="row">
 			<div class="col-xs-6 col-md-7">
 				<div class="control-group">
-					<input type="text" class="form-control" name="zip" id="zip" placeholder="<?php echo $user->getZip(); ?>"/>
+					<input type="text" class="form-control" name="zip" id="zip" value="<?php echo $user->getZip(); ?>"/>
 				</div>
 			</div>
 		</div>
 		<br />
 		<div class="control-group">
-			<input type="text" class="form-control" name="email" id = "email" placeholder="<?php echo $user->getEmail(); ?>"/>
+			<input type="text" class="form-control" name="email" id = "email" value="<?php echo $user->getEmail(); ?>"/>
 		</div>
 		<div class="control-group">
-			<input type="text" class="form-control" name="contact" id = "contact" placeholder="<?php echo $user->getContact(); ?>"/>
+			<input type="text" class="form-control" name="contact" id = "contact" value="<?php echo $user->getContact(); ?>"/>
 		</div>
 		<h2 class="form-signin-heading">Account Information</h2>
 		
-		<input type="text" class="form-control" name="type" id = "type" value="<?php echo $table;?>" placeholder="Account Type" readonly/>
+		<select id="type" name="type" class="form-control">
+			  <option selected="selected" value=<?php echo $user->getRole(); ?>><?php echo $table; ?></option>
+			  <?php 
+				for ($i = 1; $i < 4; $i++)
+				{
+					if ($i != $user->getRole())
+					{
+						switch ($i)
+						{
+							case 1: $text = "Administrator";
+									break;
+							case 2: $text = "Teacher";
+									break;
+							case 3: $text = "Parent";
+									break;
+						}
+						echo '<option value="' . $i . '">' . $text . '</option>';
+					}
+				}
+			  ?>
+			</select>
 
 		<div class="control-group">
-			<input type="text" class="form-control" name="username" id = "username" placeholder="<?php echo $user->getUserName(); ?>"/>
+			<input type="text" class="form-control" name="username" id = "username" value="<?php echo $user->getUserName(); ?>" readonly/>
 		</div>
 		<div class="control-group">
 			<input type="password" class="form-control" name="password" id="password" placeholder="Password"/>

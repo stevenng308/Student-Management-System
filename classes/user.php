@@ -5,7 +5,7 @@
 <?php
 class User
 {
-	private $userID, $studentID, /*$password,*/ $userName, $firstName, $lastName, $role, $email, $DOB, $contact, $status, $salt, $street, $city, $state, $zip, $studentArray = array(), $database;
+	private $userID, $studentID, /*$password,*/ $userName, $firstName, $lastName, $role, $email, $DOB, $contact, $status, /*$salt,*/ $street, $city, $state, $zip, $studentArray = array(), $database;
 	public function __construct(PDO $db, $id, $table)
 	{
 		$this->database = $db;
@@ -73,14 +73,36 @@ class User
 		return $this->userName;
 	}
 	
+	public function setPassword($pass)
+	{
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET password='" . $pass . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
+	public function setSalt($salt)
+	{
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET salt='" . $salt . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
 	public function getFirstName()
 	{
 		return $this->firstName;
 	}
 	
+	public function setFirstName($first)
+	{
+		$this->firstName = $first;
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET firstName='" . $first . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
 	public function getLastName()
 	{
 		return $this->lastName;
+	}
+	
+	public function setLastName($last)
+	{
+		$this->lastName = $last;
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET lastName='" . $last . "' WHERE accountID='" . $this->userID . "'");
 	}
 	
 	public function getRole()
@@ -98,6 +120,23 @@ class User
 	public function getEmail()
 	{
 		return $this->email;
+	}
+	
+	public function setEmail($tempEmail)
+	{
+		$this->email = $tempEmail;
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET email='" . $tempEmail . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
+	public function getDOB()
+	{
+		return $this->DOB;
+	}
+	
+	public function setDOB($tempDOB, $DOB2)
+	{
+		$this->DOB = $DOB2;
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET DOB='" . $tempDOB . "' WHERE accountID='" . $this->userID . "'");
 	}
 	
 	public function getMonth()
@@ -121,6 +160,12 @@ class User
 		return $this->contact;
 	}
 	
+	public function setcontact($num)
+	{
+		$this->contact = $num;
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET contactNum='" . $num . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
 	public function getStatus()
 	{
 		return $this->status;
@@ -131,9 +176,21 @@ class User
 		return $this->street;
 	}
 	
+	public function setStreet($tempStreet)
+	{
+		$this->street = $tempStreet;
+		$this->database->exec("UPDATE address SET street='" . $tempStreet . "' WHERE accountID='" . $this->userID . "' AND role='" . $this->role . "'");
+	}
+	
 	public function getCity()
 	{
 		return $this->city;
+	}
+	
+	public function setCity($tempCity)
+	{
+		$this->city = $tempCity;
+		$this->database->exec("UPDATE address SET city='" . $tempCity . "' WHERE accountID='" . $this->userID . "' AND role='" . $this->role . "'");
 	}
 	
 	public function getState()
@@ -141,9 +198,21 @@ class User
 		return $this->state;
 	}
 	
+	public function setState($tempState)
+	{
+		$this->state = $tempState;
+		$this->database->exec("UPDATE address SET state='" . $tempState . "' WHERE accountID='" . $this->userID . "' AND role='" . $this->role . "'");
+	}
+	
 	public function getZip()
 	{
 		return $this->zip;
+	}
+	
+	public function setZip($tempZip)
+	{
+		$this->zip = $tempZip;
+		$this->database->exec("UPDATE address SET zip='" . $tempZip . "' WHERE accountID='" . $this->userID . "' AND role='" . $this->role . "'");
 	}
 	
 	public function getChildID()
@@ -162,6 +231,37 @@ class User
 			}
 		}
 		return $str;
+	}
+	
+	public function setChildID(array $tempArray)
+	{
+		if (empty($tempArray) && !empty($this->studentArray)) //if the user had children associated but now erased all of them just drop the rows if true
+		{
+			$this->database->exec("DELETE FROM parent_student_assoc WHERE guardianID='" . $this->userID . "' AND role='" . $this->role . "'");
+			$this->studentArray = $tempArray;
+		}
+		else
+		{
+			$query = $this->database->query("SELECT studentID from parent_student_assoc WHERE guardianID='" . $this->userID . "' AND role='" . $this->role . "'");
+			$numRows = $query->rowCount();
+			if ($numRows == 0)
+			{
+				foreach ($tempArray as $child)
+				{
+					$this->database->exec("INSERT INTO parent_student_assoc(studentID, guardianID, role) VALUES('" . $child . "', '" . $this->userID . "', '" . $this->role . "')");
+				}
+				$this->studentArray = $tempArray;
+			}
+			else
+			{
+				$this->database->exec("DELETE FROM parent_student_assoc WHERE guardianID='" . $this->userID . "' AND role='" . $this->role . "'");
+				foreach ($tempArray as $child)
+				{
+					$this->database->exec("INSERT INTO parent_student_assoc(studentID, guardianID, role) VALUES('" . $child . "', '" . $this->userID . "', '" . $this->role . "')");
+				}
+				$this->studentArray = $tempArray;
+			}
+		}
 	}
 }
 ?>

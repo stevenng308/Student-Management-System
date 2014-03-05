@@ -3,6 +3,8 @@
 * Javascript to handle validating edit form
 */
 $(document).ready(function () {
+
+	var email = document.getElementById('email').value;
 	//rule for checking password confirmation
 	$.validator.addMethod("valueNotEquals", function(value, element, arg){
 		return arg != value;
@@ -46,7 +48,7 @@ $(document).ready(function () {
                 data: {email: value},
                 success: function(data) {
 					//alert(data);
-					if (data.match(/true/))
+					if (data.match(/true/) || value === email)
 					{
 						result = true;
 					}
@@ -157,7 +159,7 @@ $(document).ready(function () {
 			city: {
                 minlength: 2,
 				maxlength: 20,
-				alphanumeric: true,
+				noSpecialChars: true,
                 required: true
             },
 			zip: {
@@ -180,12 +182,12 @@ $(document).ready(function () {
 				alphanumeric: true,
                 required: true
             },
-			username: {
+			/*username: {
                 required: true,
 				alphanumeric: true,
 				maxlength: 25,
 				checkUsername: true	
-            },
+            },*/
 			password: {
                 //required: true,
 				alphanumeric: true,
@@ -247,7 +249,7 @@ $(document).ready(function () {
 			if($(this).valid()) {
 				//alert('Successful Validation');
 				$.post(
-					'../classes/processRegistration.php',
+					'../classes/processEdit.php',
 					$(this).serialize(),
 					function(data){
 					  $("#result").html(data);
