@@ -117,6 +117,13 @@ class User
 		return $result[0]['description'];
 	}
 	
+	/*public function setRole($tempRole)
+	{
+		$this->database->exec("UPDATE address SET role='" . $tempRole . "' WHERE accountID='" . $this->userID . "' AND role='" . $this->role . "';
+								UPDATE address SET role='" . $tempRole . "' WHERE accountID='" . $this->userID . "' AND role='" . $this->role . "';
+								");
+	}*/
+	
 	public function getEmail()
 	{
 		return $this->email;

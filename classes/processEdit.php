@@ -32,7 +32,7 @@ if ($_POST['type'] == "Student")//if true, editing a student account
 $username = mysql_real_escape_string($_POST['username']);
 $pass = mysql_real_escape_string($_POST['password']);
 
-if ($newType != "Student")//true if the account being registered is not a student
+if ($newType != "Student")//true if the account being edited is not a student
 {	
 	function parseChildID($input)
 	{
@@ -112,13 +112,18 @@ if (!empty($pass))
 	$pass = hash('sha256', $salt . $hash); //salting password
 	$user->setPassword($pass);
 	$user->setSalt($salt);
-	//pass: edca0812dac5ee15faa694e8a061c13c275e121914538045b8e6c1075ae0fe77
-	//salt: eec
 }
-if ($child_id != $user->getChildID())
+if ($newType != "Student")//true if the account being edited is not a student
+{	
+	if ($child_id != $user->getChildID())
+	{
+		$user->setChildID($child_arr);
+	}
+}
+/*if ($newType != $user->getRole())
 {
-	$user->setChildID($child_arr);
-}
+	
+}*/
 ?>
 <!-- Custom styles for this template -->
 <link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">

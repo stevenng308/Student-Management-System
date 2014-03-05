@@ -31,17 +31,7 @@ $session = new Session($_SESSION, $database);
 
 $account_id = $_GET['accountid'] or die("Account ID not provided");
 $userType = $_GET['role'] or die("Account type not provided");
-switch ($userType)
-{
-	case 1: $table = "Admin";
-			break;
-	case 2: $table = "Teacher";
-			break;
-	case 4: $table = "Parent";
-			break;
-	default: header('Location: error.php');
-			break;
-}
+$table = "Student";
 
 $user= new user($database, $account_id, $table);
 //var_dump($user);
@@ -197,9 +187,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 		</div>
 		<br />
 		<div class="control-group">
-			<textarea class="form-control" rows="3" cols="7" name="childrenID" id="childrenID"><?php echo $user->getChildID(); ?></textarea>
+			<input class="form-control" name="studentid" id="studentid" value="<?php echo $user->getStudentID(); ?>" readonly/>
 		</div>
-		<label for="password">Add more student IDs if needed. Separate each ID with commas (1234,5678). Remove the student IDs that are not needed.</label>
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
 	</div>
