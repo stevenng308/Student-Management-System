@@ -15,8 +15,9 @@ if(!(empty($_SESSION)))
 {
 	if($_SESSION['sess_role'] != 1)
 	{
+		header('Location: ../index.php');
 		echo '
-			<div><p color="red">You do not have the correct privileges to acces this page.</p></div>
+			<div><p color="red">You do not have the correct privileges to access this page.</p></div>
 		';
 	}
 }

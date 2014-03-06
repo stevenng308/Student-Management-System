@@ -15,8 +15,15 @@ if(!(empty($_SESSION)))
 {
 	if($_SESSION['sess_role'] != 1)
 	{
+		header('Location: ../index.php');
 		echo '
-			<div><p color="red">You do not have the correct privileges to acces this page.</p></div>
+			<html>
+				<body style="background-color: white; font-size: 20px; font-weight: bold;">
+					<div style="text-align: center;">
+						<p color="red">You do not have the correct privileges to access this page.</p>
+					</div>
+				</body>
+			</html>
 		';
 	}
 }

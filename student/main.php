@@ -1,6 +1,6 @@
 <!-- Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- admin main -->
+<!-- student main -->
 
 <html>
 <?php
@@ -13,11 +13,11 @@ if(!isset($_SESSION)){
 }
 if(!(empty($_SESSION)))
 {
-	if($_SESSION['sess_role'] != 1)
+	if($_SESSION['sess_role'] != 3)
 	{
 		header('Location: ../index.php');
 		echo '
-			<div><p color="red">You do not have the correct privileges to acces this page.</p></div>
+			<div><p color="red">You do not have the correct privileges to access this page.</p></div>
 		';
 	}
 }
@@ -32,14 +32,14 @@ $session = new Session($_SESSION, $database);
 //var_dump($_SESSION);
 //var_dump($session);
 
-echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Error', '../');
+echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Main', '../');
 ?>
 
 <!-- Begin page content -->
 <div class="container">
-		<div class="alert alert-danger">
-			 <strong>Error!</strong> Something went wrong. Please try again.
-		</div>
+	<h3>Hello <?php echo $session->getFirstName(); ?>.</h3>
+	<div class="jumbotron">
+	</div>
 </div>
 <?php
 	echo $layout->loadFooter('../');
