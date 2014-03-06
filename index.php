@@ -67,7 +67,7 @@ echo $layout->loadFixedNavBar('Home', '');
 		}
 		if (isset($_POST['submit'])) 
 		{		
-			if (empty($_POST['user']) || empty($_POST['password']))
+			if (empty($_POST['user']) || empty($_POST['password']))//check if username and password field is empty
 			{
 				//echo $str;
 				echo '<div class="alert alert-danger">
@@ -106,7 +106,7 @@ echo $layout->loadFixedNavBar('Home', '');
 						return;
 			}
 			//check if user exists
-			$query = "SELECT accountID, username, role, firstName, lastName, password, email, DOB, contactNum, salt FROM " . $table . " WHERE username = '$user';";
+			$query = "SELECT accountID, username, role, firstName, lastName, password, email, DOB, contactNum, status, salt FROM " . $table . " WHERE username = '$user';";
 			$result = mysql_query($query);
 			if(mysql_num_rows($result) == 0) // User not found.
 			{
@@ -130,6 +130,17 @@ echo $layout->loadFixedNavBar('Home', '');
 				echo '<div class="alert alert-danger alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 					<p><strong>Error!</strong> Invalid username or password. Please input your correct login information.</p>
+				 </div>
+				 </form>
+				 </div>';
+				echo $layout->loadFooter('');
+			}
+			//check if the account is active
+			else if ($userData['status'] == 0) //true if not active
+			{
+				echo '<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+					<p><strong>Error!</strong> This account has been deactivated. Please contact your school\'s SMS administrator about this issue.</p>
 				 </div>
 				 </form>
 				 </div>';

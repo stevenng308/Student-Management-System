@@ -15,10 +15,10 @@ if(!(empty($_SESSION)))
 {
 	if($_SESSION['sess_role'] != 4)
 	{	
-		header('Location: ../index.php');
-		echo '
-			<div><p color="red">You do not have the correct privileges to access this page.</p></div>
-		';
+		header('Refresh: 1.5; url=../index.php');
+		echo '<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+		style="text-align: center; vertical-align:middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
 	}
 }
 else

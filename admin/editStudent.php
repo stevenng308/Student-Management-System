@@ -15,10 +15,10 @@ if(!(empty($_SESSION)))
 {
 	if($_SESSION['sess_role'] != 1)
 	{
-		header('Location: ../index.php');
-		echo '
-			<div><p color="red">You do not have the correct privileges to access this page.</p></div>
-		';
+		header('Refresh: 1.5; url=../index.php');
+		echo '<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
 	}
 }
 else
@@ -190,7 +190,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 		<div class="control-group">
 			<input class="form-control" name="studentid" id="studentid" value="<?php echo $user->getStudentID(); ?>" readonly/>
 		</div>
-		<br />
+		<div class="checkbox"">
+			<label>
+				<?php ($user->getStatus() ? $check = '<input name="status" id="status" type="checkbox" checked> Active Account' : $check = '<input name="status" id="status" type="checkbox"> Active Account');
+				echo $check;?>
+			</label>
+		</div>
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
 	</div>
 <?php

@@ -15,10 +15,10 @@ if(!(empty($_SESSION)))
 {
 	if($_SESSION['sess_role'] != 1)
 	{
-		header('Location: ../index.php');
-		echo '
-			<div><p color="red">You do not have the correct privileges to access this page.</p></div>
-		';
+		header('Refresh: 1.5; url=../index.php');
+		echo '<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
 	}
 }
 else
@@ -73,23 +73,30 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 					<th>
 						<!-- Empty for button coloumn -->
 					</th>
-					<th>
-						<!-- Empty for button coloumn -->
-					</th>
 				</tr>
 			</thead>
-			<tbody class="searchable">
-				<?php foreach ($database->query('(SELECT accountID, username, firstname, lastname, role FROM admin)
-								UNION(SELECT accountID, username, firstname, lastname, role FROM teacher)
-								UNION(SELECT accountID, username, firstname, lastname, role FROM student)
-								UNION(SELECT accountID, username, firstname, lastname, role FROM parent);') as $row)
+			<tbody>
+				<?php 
+					$count = 0;
+					/*foreach ($database->query('(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM admin)
+						UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM teacher)
+						UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM student)
+						UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM parent);') as $row)
+						{
+							$roleNum = $row['role'];
+							$row['role'] = $result[0]['description'];
+						}*/
+					foreach ($database->query('(SELECT accountID, role FROM admin)
+						UNION(SELECT accountID, role FROM teacher)
+						UNION(SELECT accountID, role FROM student)
+						UNION(SELECT accountID, role FROM parent);') as $row)
 					{
 						$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
 						$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-						$roleNum = $row['role'];
-						$row['role'] = $result[0]['description'];
-						//var_dump($row);
-						echo $layout->loadUserRow($row, $roleNum);
+						$user = new User($database, $row['accountID'], $result[0]['description']);
+						//echo $layout->loadUserRow($row, $roleNum, $count);
+						echo $layout->loadUserRow($user, $count);
+						$count++;
 					}
 				?>
 			</tbody>

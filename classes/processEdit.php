@@ -44,6 +44,14 @@ if ($newType != "Student")//true if the account being edited is not a student
 	$child_arr = parseChildID($child_id); //store the parsed student id's into an array
 }
 
+if (isset($_POST['status']))
+{
+	$status = 1;
+}
+else
+{
+	$status = 0;
+}
 //get the id and role of the user account being edited
 $query = $database->query('(SELECT accountID, role FROM admin WHERE username="' . $username . '")
 							UNION (SELECT accountID, role FROM teacher WHERE username="' . $username . '")
@@ -119,6 +127,10 @@ if ($newType != "Student")//true if the account being edited is not a student
 	{
 		$user->setChildID($child_arr);
 	}
+}
+if ($status != $user->getStatus())
+{
+	$user->setStatus($status);
 }
 /*if ($newType != $user->getRole())
 {

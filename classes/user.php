@@ -178,6 +178,20 @@ class User
 		return $this->status;
 	}
 	
+	public function getStatusFormatted()
+	{
+		if ($this->status == 0)
+			return "False";
+		else
+			return "True";
+	}
+	
+	public function setStatus($tempStatus)
+	{
+		$this->status = $tempStatus;
+		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET status='" . $tempStatus . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
 	public function getStreet()
 	{
 		return $this->street;
@@ -235,6 +249,31 @@ class User
 			else
 			{
 				$str = $str . $student . ",";
+			}
+		}
+		return $str;
+	}
+	
+	public function getChildIDFormatted()
+	{
+		$str = "";
+		if (empty($this->studentArray))
+		{
+			$str = "N/A";
+		}
+		else
+		{
+			foreach ($this->studentArray as &$student)
+			{
+				$next = current($this->studentArray);
+				if ($next == NULL)
+				{
+					$str = $str . $student;
+				}
+				else
+				{
+					$str = $str . $student . ",";
+				}
 			}
 		}
 		return $str;
