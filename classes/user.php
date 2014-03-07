@@ -5,7 +5,7 @@
 <?php
 class User
 {
-	private $userID, $studentID, /*$password,*/ $userName, $firstName, $lastName, $role, $email, $DOB, $contact, $status, /*$salt,*/ $street, $city, $state, $zip, $studentArray = array(), $database;
+	private $userID, $studentID, /*$password,*/ $userName, $firstName, $lastName, $role, $email, $DOB, $contact, $status, $balance, /*$salt,*/ $street, $city, $state, $zip, $studentArray = array(), $database;
 	public function __construct(PDO $db, $id, $table)
 	{
 		$this->database = $db;
@@ -28,6 +28,7 @@ class User
 		if (!empty($result[0]['studentID']))
 		{
 			$this->studentID = $result[0]['studentID'];
+			$this->balance = $result[0]['balance'];
 		}
 		
 		if ($table == "Student")
@@ -175,7 +176,7 @@ class User
 	
 	public function getStatus()
 	{
-		return $this->status;
+			
 	}
 	
 	public function getStatusFormatted()
@@ -190,6 +191,22 @@ class User
 	{
 		$this->status = $tempStatus;
 		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET status='" . $tempStatus . "' WHERE accountID='" . $this->userID . "'");
+	}
+	
+	public function getBalance()
+	{
+		return number_format($this->balance, 2);
+	}
+	
+	public function getBalanceFormatted()
+	{
+		return "$" . number_format($this->balance, 2);
+	}
+	
+	public function setBalance($tempBalance)
+	{
+		$this->balance = $tempBalance;
+		$this->database->exec("UPDATE student SET balance='" . $tempBalance . "' WHERE accountID='" . $this->userID . "'");
 	}
 	
 	public function getStreet()

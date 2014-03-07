@@ -601,6 +601,12 @@ class Layout
 											</td>
 										</tr>
 										<tr>
+											<td>Account Balance</td>
+											<td>
+												' . $user->getBalanceFormatted() . '
+											</td>
+										</tr>
+										<tr>
 											<td>First Name</td>
 											<td>
 												' . $user->getFirstName() . '
