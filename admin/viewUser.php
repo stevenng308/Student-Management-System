@@ -71,6 +71,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 						Role
 					</th>
 					<th>
+						Active
+					</th>
+					<th>
 						<!-- Empty for button coloumn -->
 					</th>
 				</tr>

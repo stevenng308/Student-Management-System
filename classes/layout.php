@@ -662,6 +662,9 @@ class Layout
 					' . $user->getRoleFormatted() . '
 				</td>
 				<td>
+					' . $user->getStatusFormatted() . '
+				</td>
+				<td>
 					' . $view . '
 				</td>
 			</tr>
