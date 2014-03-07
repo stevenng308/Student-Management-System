@@ -211,6 +211,18 @@ textarea {
   vertical-align: top;
 }
 
+.childrenID
+{
+	resize: none;
+}
+
+.emailMessage
+{
+	resize: none;
+	width: 400px;
+	height: 600px;
+}
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
