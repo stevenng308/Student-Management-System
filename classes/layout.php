@@ -65,13 +65,13 @@ class Layout
 			if ($title == "Admin Main")
 			{
 				$links = '
-						  <li class="active"><a href="main.php">Home</a></li>
-						  <li><a href="#">Email</a></li>
+						  <li class="active"><a href="'. $dir .'admin/main.php">Home</a></li>
+						  <li><a href="'. $dir .'emailPage.php">Email</a></li>
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="register.php">Add</a></li>
-							<li><a href="viewUser.php">Edit</a></li>
+							<li><a href="'. $dir .'admin/register.php">Add</a></li>
+							<li><a href="'. $dir .'admin/viewUser.php">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
@@ -85,13 +85,13 @@ class Layout
 			else if ($title == "Email")
 			{
 				$links = '
-						  <li><a href="main.php">Home</a></li>
-						  <li class="active"><a href="#">Email</a></li>
+						  <li><a href="'. $dir .'admin/main.php">Home</a></li>
+						  <li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="../admin/register.php">Add</a></li>
-							<li><a href="../admin/viewUser.php">Edit</a></li>
+							<li><a href="'. $dir .'admin/register.php">Add</a></li>
+							<li><a href="'. $dir .'admin/viewUser.php">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
@@ -105,13 +105,13 @@ class Layout
 			else
 			{
 				$links = '
-						  <li><a href="main.php">Home</a></li>
-						  <li><a href="#">Email</a></li>
+						  <li><a href="'. $dir .'admin/main.php">Home</a></li>
+						  <li><a href="'. $dir .'emailPage.php">Email</a></li>
 						  <li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
-							<li><a href="register.php">Add</a></li>
-							<li><a href="viewUser.php">Edit</a></li>
+							<li><a href="'. $dir .'admin/register.php">Add</a></li>
+							<li><a href="'. $dir .'admin/viewUser.php">Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
@@ -128,8 +128,8 @@ class Layout
 			if ($title == "Teacher Main")
 			{
 				$links = '
-						<li class="active"><a href="main.php">Home</a></li>
-						<li><a href="#">Email</a></li>
+						<li class="active"><a href="'. $dir .'teacher/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>
 						<li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
@@ -140,8 +140,8 @@ class Layout
 			else if ($title == "Email")
 			{
 				$links = '
-						<li><a href="main.php">Home</a></li>
-						<li class="active"><a href="#">Email</a></li>
+						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
+						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>
 						<li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
@@ -152,8 +152,8 @@ class Layout
 			else
 			{
 				$links = '
-						<li><a href="main.php">Home</a></li>
-						<li><a href="#">Email</a></li>
+						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>
 						<li class="dropdown">
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
@@ -162,25 +162,46 @@ class Layout
 						</li>';
 			}
 		}
-		else
+		else if ($type == "Student")
 		{
-			if ($title == "Student Main" || $title = "Parent Main" )
+			if ($title == 'Student Main')
 			{
 				$links = '
-						<li class="active"><a href="main.php">Home</a></li>
-						<li><a href="#">Email</a></li>';
+						<li class="active"><a href="'. $dir .'student/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>';
 			}
 			else if ($title == "Email")
 			{
 				$links = '
-						<li><a href="main.php">Home</a></li>
-						<li class="active"><a href="#">Email</a></li>';
+						<li><a href="'. $dir .'student/main.php">Home</a></li>
+						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>';
 			}
 			else
 			{
 				$links = '
-						<li><a href="main.php">Home</a></li>
-						<li><a href="#">Email</a></li>';
+						<li><a href="'. $dir .'student/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>';
+			}
+		}
+		else if ($type == "Parent")
+		{
+			if ($title == 'Parent Main')
+			{
+				$links = '
+						<li class="active"><a href="'. $dir .'parent/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>';
+			}
+			else if ($title == "Email")
+			{
+				$links = '
+						<li><a href="'. $dir .'parent/main.php">Home</a></li>
+						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>';
+			}
+			else
+			{
+				$links = '
+						<li><a href="'. $dir .'parent/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>';
 			}
 		}
 		$func = '<!DOCTYPE html>
@@ -220,14 +241,14 @@ class Layout
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				  </button>
-				  <a class="navbar-brand" href="main.php">Student Management System</a>
+				  <a class="navbar-brand" href="'. $dir .'index.php">Student Management System</a>
 				</div>
 				<div class="collapse navbar-collapse">
 				  <ul class="nav navbar-nav">
 					' . $links . '
 				  </ul>
 				<ul class="nav navbar-nav navbar-right">
-					<li><a href="../classes/logout.php">Logout</a></li>
+					<li><a href="'. $dir .'classes/logout.php">Logout</a></li>
 				</ul>
 				</div><!--/.nav-collapse -->
 			  </div>
