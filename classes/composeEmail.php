@@ -84,7 +84,8 @@ var userNames = '';
 			})
 		},
 		select: function(event, ui) { //handles the event when user selects a suggestion from the autocomplete and concatenate the string in the "to" field
-			event.preventDefault() // ignore the default event
+			event.preventDefault(); // ignore the default event
+			//return false;
 			var username_arr = (document.getElementById("username").value).split(','); //splits the string and stores into an array
 			if (username_arr.length === 1) //true if the array contains 1 element so the user is just building the list of users
 			{
@@ -99,6 +100,10 @@ var userNames = '';
 			//var item = userNames + ui.item.value;
 			$(this).val(item); //set the username input with this string
 			userNames = document.getElementById("username").value; //update the variable with the name string value in the username field
+		},
+		focus: function(event, ui) { //stops the default action when user uses the arrow keys and press enter on a suggestion
+			event.preventDefault();
+			return false;
 		}
 	});
 });
