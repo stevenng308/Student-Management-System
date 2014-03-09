@@ -20,3 +20,4 @@ https://stackoverflow.com/questions/2487921/convert-date-format-yyyy-mm-dd-dd-mm
 http://jqueryui.com/
 http://jqueryui.com/autocomplete/#remote
 https://stackoverflow.com/questions/17764554/jquery-autocomplete-populate-with-data-from-php-json
+https://stackoverflow.com/questions/5382211/clear-form-field-after-select-for-jquery-ui-autocomplete

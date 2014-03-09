@@ -209,7 +209,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 			</label>
 		</div>
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
-	</div>
+	</form>
+</div>
 <?php
 	echo $layout->loadFooter('../');
 ?>

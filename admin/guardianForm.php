@@ -178,8 +178,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Guardian Fo
 			<textarea class="form-control childrenID" rows="4" cols="11" name="childrenID" id="childrenID" placeholder="Enter The Child's Student ID Number. If there are more than one, separate them with a comma (1234,5678). Max length for a Student ID is 10."></textarea>
 		</div>
 		<br />
-		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>				
-	</div>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>
+	</form>
+</div>
 <?php
 	echo $layout->loadFooter('../');
 ?>
