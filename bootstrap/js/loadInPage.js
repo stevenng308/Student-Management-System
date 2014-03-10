@@ -9,8 +9,22 @@ function loadIn(btnId)
 	{
 		$('#mainDiv').load('classes/composeEmail.php');
 	}
+	else if (btnId == 'inbox')
+	{
+		$('#mainDiv').load('classes/inbox.php');
+	}
+	else if (btnId == 'sent')
+	{
+		$('#mainDiv').load('classes/sent.php');
+	}
 	else
 	{
 		//$('#mainDiv').load('#');
 	}
+}
+
+function reply(email)
+{
+	$('.modal-backdrop').remove();
+	$('#mainDiv').load('classes/replyMail.php?id=' + email);
 }

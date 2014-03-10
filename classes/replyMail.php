@@ -28,6 +28,7 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
+$email = new Email($database, $session->getUserName(), $_GET['id']);
 ?>
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="bootstrap/css/jquery-ui-1.10.4.custom.css" type="text/css" /> 
@@ -43,18 +44,20 @@ $session = new Session($_SESSION, $database);
 		<div class="control-group">
 		<div class="input-group">
 		  <span class="input-group-addon">To:</span>
-		  <input id="username" name="username" type="text" class="form-control" placeholder="Username">
+		  <input id="username" name="username" type="text" class="form-control" value="<?php echo $email->getFromUser(); ?>,">
 		</div>
 		</div>
 		<div class="input-group">
 		  <span class="input-group-addon">Subject:</span>
-		  <input id="subject" name="subject" type="text" class="form-control" placeholder="">
+		  <input id="subject" name="subject" type="text" class="form-control" placeholder="" value="RE: <?php echo $email->getSubject(); ?>">
 		</div><br />
-		<pre><textarea id="message" name="message" class="emailMessage"></textarea></pre>
+		<pre><textarea id="message" name="message" class="emailMessage">&#13;&#10; --------------------------------------------------------
+From: <?php echo $email->getFromUser()  . '<' . $email->getFromFirst() . ' ' . $email->getFromLast() . '>'; ?>
+&#13;&#10;Subject: <?php echo $email->getSubject(); ?>&#13;&#10;<?php echo $email->getMessage(); ?></textarea></pre>
 		<button class="btn btn-lg btn-primary btn-block pull-right" type="submit" name="submit" value="send">Send</button>
 	</form>
 </div>
 
 <script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>	
-<script src="bootstrap/js/compose.js"></script>
+<script src="bootstrap/js/compose.js"></script>	
 </html>

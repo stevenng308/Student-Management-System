@@ -38,9 +38,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 		<div class="col-xs-6 col-md-2">
 			<ul class="nav nav-pills nav-stacked">
 				<li><a class="btn btn-default emailNav" role="button" id="compose" onclick="loadIn('compose')">Compose</a></li>
-				<li><a class="btn btn-default emailNav" role="button" id="inbox" href="#">Inbox</a></li>
-				<li><a class="btn btn-default emailNav" role="button" id="sent" href="#">Sent</a></li>
-				<li><a class="btn btn-default emailNav" role="button" id="trash" href="#">Trash</a></li>
+				<li><a class="btn btn-default emailNav" role="button" id="inbox" onclick="loadIn('inbox')">Inbox</a></li>
+				<li><a class="btn btn-default emailNav" role="button" id="sent" onclick="loadIn('sent')">Sent</a></li>
+				<li><a class="btn btn-default emailNav" role="button" id="trash" onclick="#">Trash</a></li>
 			</ul>
 		</div>
 		<div id="mainDiv" class="col-xs-12 col-sm-6 col-md-8">
@@ -55,7 +55,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script type="text/javascript">
     $(window).load(function(){
-        loadIn('compose');
+        loadIn('inbox');
     });
 </script>
 </html>

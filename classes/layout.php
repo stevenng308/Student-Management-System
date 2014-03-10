@@ -459,7 +459,7 @@ class Layout
 						<div class="modal-content">
 						  <div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h2 class="modal-title" id="myModalLabel" align="center">' . $user->getFirstName(). ' ' . $user->getLastName() . '\'s Profile</h4>
+							<h2 class="modal-title" id="myModalLabel" align="center">' . $user->getFirstName(). ' ' . $user->getLastName() . '\'s Profile</h2>
 						  </div>
 						  <div class="modal-body">
 							<div class="table-responsive">
@@ -569,7 +569,7 @@ class Layout
 						<div class="modal-content">
 						  <div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h2 class="modal-title" id="myModalLabel" align="center">' . $user->getFirstName() . ' ' . $user->getLastName() . '\'s Profile</h4>
+							<h2 class="modal-title" id="myModalLabel" align="center">' . $user->getFirstName() . ' ' . $user->getLastName() . '\'s Profile</h2>
 						  </div>
 						  <div class="modal-body">
 							<div class="table-responsive">
@@ -693,6 +693,53 @@ class Layout
 				</td>
 				<td>
 					' . $view . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+	
+	public function loadInbox(Email $mail, $modalNum)
+	{	
+		$delete = '<button class="btn btn-danger">Delete</button>';
+		$msg =  '
+					<button class="btn btn-link " data-toggle="modal" data-target="#myModal' . $modalNum . '">
+						' . $mail->getSubject() . '
+					</button>
+
+					<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3 class="modal-title" id="myModalLabel" align="center">From: ' . $mail->getFromUser() . ' &lt;' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '&gt;' . '</h3>
+							<h3 class="modal-title" id="myModalLabel" align="center">To: ' . $mail->getDestUser() . ' &lt;' . $mail->getDestFirst() . ' ' . $mail->getDestLast() . '&gt;' . '</h3>
+						  </div>
+						  <div class="modal-body">
+							<pre>' . $mail->getMessage() . '</pre>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" id="reply" class="btn btn-primary" data-dismiss="modal" onclick="reply(\'' . $mail->getID() . '\')">Reply</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				';
+		$func = '
+			<tr class="searchable">
+				<td>
+					' . $delete . '
+				</td>
+				<td>
+					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
+				</td>
+				<td>
+					' . $msg . '
+				</td>
+				<td>
+					' . $mail->getDateFormatted() . '
 				</td>
 			</tr>
 		';

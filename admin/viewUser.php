@@ -38,7 +38,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 <!-- Begin page content -->
 <div class="container">
 	<div class="table-responsive">
-		<table class="table table-hover dataTable">
+		<table class="table table-hover">
 			<thead>
 				<tr>
 					<th style='text-align: center;' colspan="6">

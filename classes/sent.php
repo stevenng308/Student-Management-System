@@ -36,25 +36,58 @@ $session = new Session($_SESSION, $database);
 <div class="container jumbotron">
 	<ol class="breadcrumb">
 	  <li><a href="#" class="btn btn-sm disabled emailNav" role="button">Email</a></li>
-	  <li><a a class="btn btn-sm emailNav" role="button" id="compose" onclick="loadIn('compose')">Compose</a></li>
+	  <li><a a class="btn btn-sm emailNav" role="button" id="compose" onclick="loadIn('sent')">Sent</a></li>
 	</ol>
-
-	<form name="compose" id="compose-form" action="#" method="post">
-		<div class="control-group">
-		<div class="input-group">
-		  <span class="input-group-addon">To:</span>
-		  <input id="username" name="username" type="text" class="form-control" placeholder="Username">
-		</div>
-		</div>
-		<div class="input-group">
-		  <span class="input-group-addon">Subject:</span>
-		  <input id="subject" name="subject" type="text" class="form-control" placeholder="">
-		</div><br />
-		<pre><textarea id="message" name="message" class="emailMessage"></textarea></pre>
-		<button class="btn btn-lg btn-primary btn-block pull-right" type="submit" name="submit" value="send">Send</button>
-	</form>
+	
+	<div class="table-responsive">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th style='text-align: center;' colspan="4">
+					<div class=row>
+						<div class="col-xs-6 col-md-4">
+							<h3><?php echo $session->getUserName() . '\'s Outbox'; ?></h3>
+						</div>
+						<div class="col-xs-6 col-md-4"></div>
+						<div class="input-group col-xs-6 col-md-4">
+							  <span class="input-group-addon">Filter</span>
+							  <input type="text" class="form-control" id="filter" placeholder="Search Term">
+						</div>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<thead>
+				<tr>
+					<th>
+						<!-- Blank for delete mechanism -->
+					</th>
+					<th>
+						From
+					</th>
+					<th>
+						Subject
+					</th>
+					<th>
+						Received
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$count = 0;
+					foreach ($database->query("SELECT dest_username, emailID FROM email WHERE from_username = '" . $session->getUserName() . "' AND box = '2' ORDER BY date_sent DESC") as $row)
+					{
+						$email = new Email($database, $row['dest_username'], $row['emailID']);
+						//var_dump($email);
+						echo $layout->loadInbox($email, $count);
+						$count++;
+					}
+				?>
+			</tbody>
+		</table>
+	</div>
 </div>
 
-<script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>	
-<script src="bootstrap/js/compose.js"></script>
+<script src="bootstrap/js/searchFilter.js"></script>
 </html>

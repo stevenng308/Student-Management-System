@@ -21,3 +21,8 @@ http://jqueryui.com/
 http://jqueryui.com/autocomplete/#remote
 https://stackoverflow.com/questions/17764554/jquery-autocomplete-populate-with-data-from-php-json
 https://stackoverflow.com/questions/5382211/clear-form-field-after-select-for-jquery-ui-autocomplete
+https://stackoverflow.com/questions/5048849/preserve-line-breaks-from-textarea-when-writing-to-mysql
+http://uk3.php.net/nl2br
+http://uk3.php.net/manual/en/function.htmlentities.php
+http://php.net/htmlspecialchars
+http://uk3.php.net/manual/en/function.htmlspecialchars-decode.php

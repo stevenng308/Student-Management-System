@@ -23,8 +23,8 @@ function parseUserNames($input)
 $usernames = mysql_real_escape_string($_POST['username']);
 $user_arr = parseUserNames($usernames); //store the parsed usernames into an array
 
-$subject = mysql_real_escape_string($_POST['subject']);
-$msg = mysql_real_escape_string($_POST['message']);
+$subject = htmlentities($_POST['subject'], ENT_QUOTES, 'UTF-8');
+$msg = htmlentities($_POST['message'], ENT_QUOTES, 'UTF-8');
 //var_dump($user_arr);
 //var_dump($subject);
 //var_dump($msg);
