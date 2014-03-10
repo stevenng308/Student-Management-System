@@ -26,3 +26,5 @@ http://uk3.php.net/nl2br
 http://uk3.php.net/manual/en/function.htmlentities.php
 http://php.net/htmlspecialchars
 http://uk3.php.net/manual/en/function.htmlspecialchars-decode.php
+
+http://stackoverflow.com/questions/12837088/javascript-how-to-get-values-from-all-selected-checkboxes-from-a-table
