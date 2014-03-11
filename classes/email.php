@@ -82,6 +82,11 @@ class Email
 		return $this->subject;
 	}
 	
+	public function getSubjectFormatted()
+	{
+		return (strlen($this->subject) > 20) ? substr($this->subject,0,18).'...' : $this->subject;
+	}
+	
 	public function getMessage()
 	{
 		return $this->content;

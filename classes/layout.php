@@ -705,7 +705,7 @@ class Layout
 		//$delete = '<button class="btn btn-danger">Delete</button>';
 		$msg =  '
 					<button class="btn btn-link " data-toggle="modal" data-target="#myModal' . $modalNum . '">
-						' . $mail->getSubject() . '
+						' . $mail->getSubjectFormatted() . '
 					</button>
 
 					<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

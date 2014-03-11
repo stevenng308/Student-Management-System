@@ -58,7 +58,7 @@ $session = new Session($_SESSION, $database);
 						<div class="row">
 							<div class="col-xs-6 col-sm-8">
 							<select id="box" name="box" class="form-control">
-								  <option selected="selected" value="0">Pick A Box</option>
+								  <option selected="selected" value="0">Move to</option>
 								  <option value="1">Inbox</option>
 								  <option value="2">Sent</option>
 								  <option value="3">Trash</option>
