@@ -176,7 +176,7 @@ class User
 	
 	public function getStatus()
 	{
-			
+		return $this->status;
 	}
 	
 	public function getStatusFormatted()

@@ -36,20 +36,23 @@ $frm_last = $result[0]['lastname'];
 $date = date('Y-m-d H:i:s');
 foreach ($user_arr as $to)
 {
-	$query = $database->query("(SELECT firstname, lastname FROM admin WHERE username = '" . $to . "' LIMIT 1)
-								UNION (SELECT firstname, lastname FROM teacher WHERE username = '" . $to . "' LIMIT 1)
-								UNION (SELECT firstname, lastname FROM student WHERE username = '" . $to . "' LIMIT 1)
-								UNION (SELECT firstname, lastname FROM parent WHERE username = '" . $to . "' LIMIT 1);
+	$query = $database->query("(SELECT firstname, lastname FROM admin WHERE username = '" . $to . "' AND status = 1 LIMIT 1)
+								UNION (SELECT firstname, lastname FROM teacher WHERE username = '" . $to . "' AND status = 1 LIMIT 1)
+								UNION (SELECT firstname, lastname FROM student WHERE username = '" . $to . "' AND status = 1 LIMIT 1)
+								UNION (SELECT firstname, lastname FROM parent WHERE username = '" . $to . "' AND status = 1 LIMIT 1);
 								");
 	$result = $query->fetchAll(PDO::FETCH_ASSOC);
 	//var_dump($result);
-	$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
-					VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '1')");
-	$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
-					VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");				
+	if (!empty($result))
+	{
+		$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
+						VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '1')");
+		$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
+						VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");				
+	}
 }
-//$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content) 
-					//VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_first . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2'");
+//$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
+//						VALUES('" . $usernames . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");
 ?>
 <!-- Custom styles for this template -->
 <!--<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">

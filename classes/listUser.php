@@ -40,10 +40,10 @@ if (!empty($_POST['term']))
 	$user_arr = parseUserName($usernames); //store the parsed student id's into an array
 	
 	$result_arr = array();
-	$stmt = $database->prepare('(SELECT username, firstname, lastname FROM admin WHERE username LIKE :term)
-								UNION(SELECT username, firstname, lastname FROM teacher WHERE username LIKE :term)
-								UNION(SELECT username, firstname, lastname FROM student WHERE username LIKE :term)
-								UNION(SELECT username, firstname, lastname FROM parent WHERE username LIKE :term)');
+	$stmt = $database->prepare('(SELECT username, firstname, lastname FROM admin WHERE username LIKE :term AND status = 1)
+								UNION(SELECT username, firstname, lastname FROM teacher WHERE username LIKE :term AND status = 1)
+								UNION(SELECT username, firstname, lastname FROM student WHERE username LIKE :term AND status = 1)
+								UNION(SELECT username, firstname, lastname FROM parent WHERE username LIKE :term AND status = 1)');
 	if (count($user_arr) === 1)
 	{
 		$userName = mysql_real_escape_string($_POST['term']);

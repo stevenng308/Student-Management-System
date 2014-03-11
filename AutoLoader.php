@@ -10,8 +10,8 @@ class AutoLoader {
 	public static function autoLoad($object){        
         //echo 'attempting to load ',$object;
         
-        if(file_exists(__DIR__."\\Classes\\".$object.".php")){
-            $class = __DIR__."\\Classes\\".$object.".php";
+        if(file_exists(__DIR__."//Classes//".$object.".php")){
+            $class = __DIR__."//Classes//".$object.".php";
             require_once $class;
             //echo $class, " loaded";
         }

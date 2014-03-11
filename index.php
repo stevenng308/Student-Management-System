@@ -6,7 +6,7 @@
 <?php
 //Auto loads all the class files in the classes folder
 //Use require_once "dirname(dirname(__FILE__)) ." without quotes in front of '\AutoLoader.php' if you need to go up 2 directories to root. "dirname(__FILE__)) ." for 1 directory up.
-require_once '\AutoLoader.php';
+require_once dirname(__FILE__) . '/AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
 	session_start();
