@@ -44,14 +44,14 @@ $session = new Session($_SESSION, $database);
 			<thead>
 				<tr>
 					<th style='text-align: center;' colspan="4">
-						<h3><?php echo $session->getUserName() . '\'s Inbox'; ?></h3>
+						<h3><?php echo $session->getUserName() . '\'s Trash Box'; ?></h3>
 					</th>
 				</tr>
 			</thead>
 			<thead>
 				<tr>
 					<td colspan="3">
-						<button class="btn btn-danger btn-sm" onclick="deleteEmail('inbox')">Delete</button>
+						<button class="btn btn-danger btn-sm" onclick="deleteEmail('trash')">Delete</button>
 					</td>
 					
 					<td>
@@ -79,11 +79,11 @@ $session = new Session($_SESSION, $database);
 			<tbody>
 				<?php
 					$count = 0;
-					foreach ($database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1' ORDER BY date_sent DESC") as $row)
+					foreach ($database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '3' ORDER BY date_sent DESC") as $row)
 					{
 						$email = new Email($database, $session->getUserName(), $row['emailID']);
 						//var_dump($email);
-						echo $layout->loadInbox($email, $count, 'inbox');
+						echo $layout->loadInbox($email, $count, 'trash');
 						$count++;
 					}
 				?>

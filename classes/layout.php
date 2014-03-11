@@ -700,9 +700,9 @@ class Layout
 		return $func;
 	}
 	
-	public function loadInbox(Email $mail, $modalNum)
+	public function loadInbox(Email $mail, $modalNum, $box)
 	{	
-		$delete = '<button class="btn btn-danger">Delete</button>';
+		//$delete = '<button class="btn btn-danger">Delete</button>';
 		$msg =  '
 					<button class="btn btn-link " data-toggle="modal" data-target="#myModal' . $modalNum . '">
 						' . $mail->getSubject() . '
@@ -720,6 +720,7 @@ class Layout
 							<pre>' . $mail->getMessage() . '</pre>
 						  </div>
 						  <div class="modal-footer">
+							<button class="btn btn-danger pull-left" onclick="deleteReadEmail(\'' . $box . '\', ' . $mail->getID() . ')">Delete</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							<button type="button" id="reply" class="btn btn-primary" data-dismiss="modal" onclick="reply(\'' . $mail->getID() . '\')">Reply</button>
 						  </div>
@@ -730,7 +731,7 @@ class Layout
 		$func = '
 			<tr class="searchable">
 				<td>
-					' . $delete . '
+					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $mail->getID() . '">
 				</td>
 				<td>
 					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '

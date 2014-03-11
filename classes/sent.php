@@ -44,29 +44,32 @@ $session = new Session($_SESSION, $database);
 			<thead>
 				<tr>
 					<th style='text-align: center;' colspan="4">
-					<div class=row>
-						<div class="col-xs-6 col-md-4">
-							<h3><?php echo $session->getUserName() . '\'s Outbox'; ?></h3>
-						</div>
-						<div class="col-xs-6 col-md-4"></div>
-						<div class="input-group col-xs-6 col-md-4">
-							  <span class="input-group-addon">Filter</span>
-							  <input type="text" class="form-control" id="filter" placeholder="Search Term">
-						</div>
-						</div>
+						<h3><?php echo $session->getUserName() . '\'s Outbox'; ?></h3>
 					</th>
 				</tr>
 			</thead>
 			<thead>
 				<tr>
+					<td colspan="3">
+						<button class="btn btn-danger btn-sm" onclick="deleteEmail('sent')">Delete</button>
+					</td>
+					
+					<td>
+						<div class="input-group col-xs-6 col-md-10">
+							<span class="input-group-addon">Filter</span>
+							<input type="text" class="form-control" id="filter" placeholder="Search Term">
+						</div>
+					</td>
+				</tr>
+				<tr>
 					<th>
-						<!-- Blank for delete mechanism -->
+						<input type="checkbox" onClick="checkAll(this)" />
 					</th>
 					<th>
 						From
 					</th>
 					<th>
-						Subject
+						&nbsp;&nbsp;Subject
 					</th>
 					<th>
 						Received
@@ -80,7 +83,7 @@ $session = new Session($_SESSION, $database);
 					{
 						$email = new Email($database, $row['dest_username'], $row['emailID']);
 						//var_dump($email);
-						echo $layout->loadInbox($email, $count);
+						echo $layout->loadInbox($email, $count, 'sent');
 						$count++;
 					}
 				?>
@@ -90,4 +93,5 @@ $session = new Session($_SESSION, $database);
 </div>
 
 <script src="bootstrap/js/searchFilter.js"></script>
+<script src="bootstrap/js/delete.js"></script>
 </html>

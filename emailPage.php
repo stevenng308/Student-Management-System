@@ -40,7 +40,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 				<li><a class="btn btn-default emailNav" role="button" id="compose" onclick="loadIn('compose')">Compose</a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="inbox" onclick="loadIn('inbox')">Inbox</a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="sent" onclick="loadIn('sent')">Sent</a></li>
-				<li><a class="btn btn-default emailNav" role="button" id="trash" onclick="#">Trash</a></li>
+				<li><a class="btn btn-default emailNav" role="button" id="trash" onclick="loadIn('trash')">Trash</a></li>
 			</ul>
 		</div>
 		<div id="mainDiv" class="col-xs-12 col-sm-6 col-md-8">

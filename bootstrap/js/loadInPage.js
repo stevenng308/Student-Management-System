@@ -17,6 +17,10 @@ function loadIn(btnId)
 	{
 		$('#mainDiv').load('classes/sent.php');
 	}
+	else if (btnId == 'trash')
+	{
+		$('#mainDiv').load('classes/trash.php');
+	}
 	else
 	{
 		//$('#mainDiv').load('#');
