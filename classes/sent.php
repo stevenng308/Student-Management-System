@@ -79,9 +79,9 @@ $session = new Session($_SESSION, $database);
 			<tbody>
 				<?php
 					$count = 0;
-					foreach ($database->query("SELECT dest_username, emailID FROM email WHERE from_username = '" . $session->getUserName() . "' AND box = '2' ORDER BY date_sent DESC") as $row)
+					foreach ($database->query("SELECT * FROM email WHERE from_username = '" . $session->getUserName() . "' AND box = '2' ORDER BY date_sent DESC") as $row)
 					{
-						$email = new Email($database, $row['dest_username'], $row['emailID']);
+						$email = new Email($row);
 						//var_dump($email);
 						echo $layout->loadInbox($email, $count, 'sent');
 						$count++;

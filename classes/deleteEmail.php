@@ -15,7 +15,7 @@ $session = new Session($_SESSION, $database);
 //var_dump($_POST);
 //var_dump($session);
 
-if ($_POST['box'] == "inbox")
+if ($_POST['box'] == "inbox" || $_POST['box'] == "sent")
 {
 	foreach ($_POST['checkbox'] as $id)
 	{

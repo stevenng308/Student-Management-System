@@ -5,28 +5,35 @@
 <?php
 class Email
 {
-	private $emailID, $destUsername, $destFirstName, $destLastName, $fromUsername, $fromFirstName, $fromLastName, $dateSent, $subject, $content, $boxNum, $database;
-	public function __construct(PDO $db, $username, $id)
+	private $emailID, $owner, $destUsername, $destFirstName, $destLastName, $fromUsername, $fromFirstName, $fromLastName, $dateSent, $subject, $content, $boxNum;
+	public function __construct($emailinfo)
 	{
-		$this->destUsername = $username;
-		$this->database = $db;
-		$this->emailID = $id;
-		$query = $this->database->query("SELECT * FROM email WHERE dest_username = '" . $this->destUsername . "' AND emailid = '" . $this->emailID . "'");
-		$result = $query->fetchAll(PDO::FETCH_ASSOC);
-		$this->destFirstName = $result[0]['dest_first'];
-		$this->destLastName = $result[0]['dest_last'];
-		$this->fromUsername = $result[0]['from_username'];
-		$this->fromFirstName = $result[0]['from_first'];
-		$this->fromLastName = $result[0]['from_last'];
-		$this->dateSent = $result[0]['date_sent'];
-		$this->subject = $result[0]['subject'];
-		$this->content = $result[0]['msg_content'];
-		$this->boxNum = $result[0]['box'];
+		$this->destUsername = $emailinfo['dest_username'];
+		//$this->database = $db;
+		$this->emailID = $emailinfo['emailID'];
+		//$query = $this->database->query("SELECT * FROM email WHERE owner = '" . $this->destUsername . "' AND emailid = '" . $this->emailID . "'");
+		//$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		//var_dump($result);
+		$this->owner = $emailinfo['owner'];
+		$this->destFirstName = $emailinfo['dest_first'];
+		$this->destLastName = $emailinfo['dest_last'];
+		$this->fromUsername = $emailinfo['from_username'];
+		$this->fromFirstName = $emailinfo['from_first'];
+		$this->fromLastName = $emailinfo['from_last'];
+		$this->dateSent = $emailinfo['date_sent'];
+		$this->subject = $emailinfo['subject'];
+		$this->content = $emailinfo['msg_content'];
+		$this->boxNum = $emailinfo['box'];
 	}
 	
 	public function getID()
 	{
 		return $this->emailID;
+	}
+	
+	public function getOwner()
+	{
+		return $this->owner;
 	}
 	
 	public function getDestUser()

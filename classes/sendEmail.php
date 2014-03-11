@@ -45,10 +45,10 @@ foreach ($user_arr as $to)
 	//var_dump($result);
 	if (!empty($result))
 	{
-		$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
-						VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '1')");
-		$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
-						VALUES('" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");				
+		$database->exec("INSERT INTO email(owner, dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
+						VALUES('" . $to . "', '" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '1')");
+		$database->exec("INSERT INTO email(owner, dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
+						VALUES('" . $session->getUserName() . "', '" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");				
 	}
 }
 //$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 

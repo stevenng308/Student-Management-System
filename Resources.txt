@@ -30,3 +30,10 @@ https://stackoverflow.com/questions/386281/how-to-implement-select-all-check-box
 http://stackoverflow.com/questions/12837088/javascript-how-to-get-values-from-all-selected-checkboxes-from-a-table
 http://www.sitepoint.com/working-with-mysql-events/
 https://stackoverflow.com/questions/9865393/how-to-delete-mysql-row-after-time-passes
+
+
+.Heelo; 'Test', "W%or!d"
+
+Testing; Test,
+
+He??o; 'World' .Test% & ** 

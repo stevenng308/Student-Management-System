@@ -51,11 +51,11 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 	echo $layout->loadFooter('');
 ?>
 <script src="bootstrap/js/loadInPage.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>-->
 <script type="text/javascript">
     $(window).load(function(){
-        loadIn('inbox');
+        loadIn('inbox'); //load inbox first when navigating to email
     });
 </script>
 </html>

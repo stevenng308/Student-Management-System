@@ -28,7 +28,9 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-$email = new Email($database, $session->getUserName(), $_GET['id']);
+$query = $database->query("SELECT * FROM email WHERE emailID = '" . $_GET['id'] . "'");
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
+$email = new Email($result[0]);
 ?>
 <!-- Custom styles for this template -->
 <link rel="stylesheet" href="bootstrap/css/jquery-ui-1.10.4.custom.css" type="text/css" /> 
