@@ -44,18 +44,19 @@ if (!empty($_POST['term']))
 								UNION(SELECT username, firstname, lastname FROM teacher WHERE username LIKE :term AND status = 1)
 								UNION(SELECT username, firstname, lastname FROM student WHERE username LIKE :term AND status = 1)
 								UNION(SELECT username, firstname, lastname FROM parent WHERE username LIKE :term AND status = 1)');
-	if (count($user_arr) === 1)
+	if (count($user_arr) === 1) //true if the list of usernames has just started being built. look using the term that was posted
 	{
 		$userName = mysql_real_escape_string($_POST['term']);
 	}
 	else
 	{
-		$index = count($user_arr) - 1;
-		$userName = mysql_real_escape_string($user_arr[$index]);
+		$index = count($user_arr) - 1; //get the index of the last element because the preceding elements have usernames that are completed and don't need to be looked up
+		$userName = mysql_real_escape_string($user_arr[$index]); //search using the term in the last element
 	}
-	$stmt->execute(array('term' => '%' . $userName . '%'));
+	$stmt->execute(array('term' => '%' . $userName . '%')); //use the prepared $stmt and fill in the term and store the results in an array
 	while($row = $stmt->fetch())
 	{
+		//construct a json format array with label, first, last, and value as the key and the $row[*] as the data to be the data from the db
 		$result_arr[] = array(
 						'label' => $row['username'],
 						'first' => $row['firstname'],
@@ -90,7 +91,7 @@ if (!empty($_POST['term']))
 else
 {
 	//header('Content-type: application/json');
-	echo '[{"label":"POST"},{"label":"VAR"},{"label":"IS"},{"label":"EMPTY"}]';
+	echo '[{"label":"POST"},{"label":"VAR"},{"label":"IS"},{"label":"EMPTY"}]'; //debug message
 	return;
 }
 

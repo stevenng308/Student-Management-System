@@ -23,7 +23,7 @@ function parseUserNames($input)
 $usernames = mysql_real_escape_string($_POST['username']);
 $user_arr = parseUserNames($usernames); //store the parsed usernames into an array
 
-$subject = htmlentities($_POST['subject'], ENT_QUOTES, 'UTF-8');
+$subject = htmlentities($_POST['subject'], ENT_QUOTES, 'UTF-8'); //need to make the message safe for storing in db. read htmlentities on their site
 $msg = htmlentities($_POST['message'], ENT_QUOTES, 'UTF-8');
 //var_dump($user_arr);
 //var_dump($subject);
@@ -43,7 +43,7 @@ foreach ($user_arr as $to)
 								");
 	$result = $query->fetchAll(PDO::FETCH_ASSOC);
 	//var_dump($result);
-	if (!empty($result))
+	if (!empty($result)) //true if the user exists and is active
 	{
 		$database->exec("INSERT INTO email(owner, dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
 						VALUES('" . $to . "', '" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '1')");

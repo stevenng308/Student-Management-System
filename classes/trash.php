@@ -50,10 +50,24 @@ $session = new Session($_SESSION, $database);
 			</thead>
 			<thead>
 				<tr>
-					<td colspan="3">
-						<button class="btn btn-danger btn-sm" onclick="deleteEmail('trash')">Delete</button>
+					<td colspan="2">
+							<button class="btn btn-danger btn-sm" onclick="deleteEmail('inbox')">Del</button>
+							<button class="btn btn-info btn-sm" onclick="moveEmail()">Move</button>
 					</td>
-					
+					<td>
+						<div class="row">
+							<div class="col-xs-6 col-sm-8">
+							<select id="box" name="box" class="form-control">
+								  <option selected="selected" value="0">Pick A Box</option>
+								  <option value="1">Inbox</option>
+								  <option value="2">Sent</option>
+								  <option value="3">Trash</option>
+							</select>
+							</div>
+							<div class="col-xs-6 col-sm-4">
+							</div>
+						</div>
+					</td>
 					<td>
 						<div class="input-group col-xs-6 col-md-10">
 							<span class="input-group-addon">Filter</span>

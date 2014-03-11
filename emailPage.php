@@ -54,8 +54,45 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 <!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>-->
 <script type="text/javascript">
-    $(window).load(function(){
-        loadIn('inbox'); //load inbox first when navigating to email
-    });
+$(window).load(function(){
+	loadIn('inbox'); //load inbox first when navigating to email
+});
+	
+function moveEmail()
+{
+	if (!values)
+	{
+		alert("No emails were selected.");
+	}
+	else if ($('#box').val() < 1)
+	{
+		alert("Please specify a box.");
+	}
+	else
+	{
+		if (window.confirm("Do you want to move to message/s?"))
+		{
+			//alert(values);
+			//alert($('#box').val());
+			$.post(
+				'classes/moveEmail.php',
+				{
+					'checkbox' : values, 
+					'box' : $('#box').val()
+				},
+				function(data){
+				  //$("#mainDiv").html(data);
+				  //console.log(data);
+				  loadIn('inbox')
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			;//do nothing
+		}
+	}
+}
 </script>
 </html>

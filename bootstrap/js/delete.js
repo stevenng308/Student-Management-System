@@ -1,5 +1,5 @@
-var values = 0;
-$('input[id^="delete"]').on('change', function() {
+var values = 0; //global array of the id's values
+$('input[id^="delete"]').on('change', function() { //adds the values to the array called values
     values = $('input:checked').map(function() {
         return this.value;
     }).get();
@@ -7,7 +7,7 @@ $('input[id^="delete"]').on('change', function() {
     //alert(values);
 });
 
-function deleteEmail(page)
+function deleteEmail(page) //deletes from the box views
 {
 	if (!values)
 	{
@@ -21,8 +21,8 @@ function deleteEmail(page)
 			$.post(
 				'classes/deleteEmail.php',
 				{
-					'checkbox' : values, 
-					'box' : page
+					'checkbox' : values, //sending the values
+					'box' : page //sending the box where these values are located
 				},
 				function(data){
 				  //$("#mainDiv").html(data);
@@ -39,9 +39,9 @@ function deleteEmail(page)
 	}
 }
 
-function deleteReadEmail(page, id)
+function deleteReadEmail(page, id) //deletes when reading the email
 {
-	var tempArray = [id];
+	var tempArray = [id]; //need to store in the array since the php script handling deletion is accepting values only in arrays
 	if (window.confirm("Do you want to delete?"))
 	{
 		//alert(values);
@@ -69,11 +69,11 @@ function deleteReadEmail(page, id)
 }
 
 function checkAll(source) {
-  var checkboxes = $('input[id^="delete"]').not(":hidden");
+  var checkboxes = $('input[id^="delete"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
   for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
+    checkboxes[i].checked = source.checked; //check all of them
 	values = $('input:checked').map(function() {
-        return this.value;
+        return this.value; //updating the global variable values
     }).get();
   }
 }

@@ -15,21 +15,11 @@ $session = new Session($_SESSION, $database);
 //var_dump($_POST);
 //var_dump($session);
 
-if ($_POST['box'] == "inbox" || $_POST['box'] == "sent") //move mail to trash if they were in inbox or sent. delete if in the trash
+foreach ($_POST['checkbox'] as $id)
 {
-	foreach ($_POST['checkbox'] as $id)
-	{
-		$database->exec("UPDATE email SET box = '3' WHERE emailID = " . $id . "");
-	}
+	$database->exec("UPDATE email SET box = '" . $_POST['box'] . "' WHERE emailID = " . $id . "");
 }
-else
-{
 
-	foreach ($_POST['checkbox'] as $id)
-	{
-		$database->exec("DELETE FROM email WHERE emailID = '" . $id . "'");
-	}
-}
 ?>
 <!-- Custom styles for this template -->
 <!--<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">
