@@ -33,11 +33,11 @@ $session = new Session($_SESSION, $database);
 <link rel="stylesheet" href="bootstrap/css/jquery-ui-1.10.4.custom.css" type="text/css" /> 
 
 <!-- Begin page content -->
-<div class="container jumbotron">
-	<ol class="breadcrumb">
+<div class="jumbotron">
+	<!--<ol class="breadcrumb">
 	  <li><a href="#" class="btn btn-sm disabled emailNav" role="button">Email</a></li>
 	  <li><a a class="btn btn-sm emailNav" role="button" id="compose" onclick="loadIn('trash')">Trash</a></li>
-	</ol>
+	</ol>-->
 	
 	<div class="table-responsive">
 		<table class="table table-hover">

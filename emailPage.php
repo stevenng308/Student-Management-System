@@ -38,7 +38,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 		<div class="col-xs-6 col-md-2">
 			<ul class="nav nav-pills nav-stacked">
 				<li><a class="btn btn-default emailNav" role="button" id="compose" onclick="loadIn('compose')">Compose</a></li>
-				<li><a class="btn btn-default emailNav" role="button" id="inbox" onclick="loadIn('inbox')">Inbox</a></li>
+				<li><a class="btn btn-default emailNav active" role="button" id="inbox" onclick="loadIn('inbox')">Inbox</a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="sent" onclick="loadIn('sent')">Sent</a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="trash" onclick="loadIn('trash')">Trash</a></li>
 			</ul>
@@ -56,6 +56,13 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 <script type="text/javascript">
 $(window).load(function(){
 	loadIn('inbox'); //load inbox first when navigating to email
+});
+
+var lastBtn = "inbox";
+$(".emailNav").click(function() {
+	$('#' + lastBtn).toggleClass("active");
+	$(this).toggleClass("active");
+	lastBtn = this.id;
 });
 	
 function moveEmail()
