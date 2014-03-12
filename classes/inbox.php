@@ -50,11 +50,14 @@ $session = new Session($_SESSION, $database);
 			</thead>
 			<thead>
 				<tr>
-					<td colspan="2">
+					<td>
 							<button class="btn btn-danger btn-sm" onclick="deleteEmail('inbox')">Del</button>
-							<button class="btn btn-info btn-sm" onclick="moveEmail()">Move</button>
+							
 					</td>
 					<td>
+							<button class="btn btn-info btn-sm" onclick="moveEmail()">Move</button>
+					</td>
+					<th style="width: 25%;">
 						<div class="row">
 							<div class="col-xs-6 col-sm-8">
 							<select id="box" name="box" class="form-control">
@@ -67,7 +70,7 @@ $session = new Session($_SESSION, $database);
 							<div class="col-xs-6 col-sm-4">
 							</div>
 						</div>
-					</td>
+					</th>
 					<td>
 						<div class="input-group col-xs-6 col-md-10">
 							<span class="input-group-addon">Filter</span>

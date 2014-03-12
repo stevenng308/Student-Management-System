@@ -84,7 +84,7 @@ class Email
 	
 	public function getSubjectFormatted()
 	{
-		return (strlen($this->subject) > 15) ? substr($this->subject,0,10).'...' : $this->subject;
+		return (strlen($this->subject) > 25) ? substr($this->subject,0,22).'...' : $this->subject;
 	}
 	
 	public function getMessage()
