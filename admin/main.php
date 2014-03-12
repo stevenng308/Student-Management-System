@@ -41,6 +41,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	<div class="jumbotron">
 	</div>
 </div>
+
+<li><a href="Messageboard.php"> Messagboard </a></li>
+
 <?php
 	echo $layout->loadFooter('../');
 ?>
