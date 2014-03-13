@@ -31,7 +31,9 @@ http://stackoverflow.com/questions/12837088/javascript-how-to-get-values-from-al
 http://www.sitepoint.com/working-with-mysql-events/
 https://stackoverflow.com/questions/9865393/how-to-delete-mysql-row-after-time-passes
 https://stackoverflow.com/questions/12863991/remove-add-class-on-click-of-a-button
-http://tablesorter.com/docs/
+http://next.datatables.net/manual/styling/bootstrap
+https://github.com/DataTables/Plugins/tree/master/integration/bootstrap/3
+http://next.datatables.net/download/
 
 
 .Heelo; 'Test', "W%or!d"

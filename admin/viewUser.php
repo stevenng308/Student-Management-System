@@ -34,11 +34,10 @@ $session = new Session($_SESSION, $database);
 
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users', '../');
 ?>
-
 <!-- Begin page content -->
-<div class="container">
+<!--<div class="container">
 	<div class="table-responsive">
-		<table class="table table-hover">
+		<table id="myTable" class="table table-hover">
 			<thead>
 				<tr>
 					<th style='text-align: center;' colspan="6">
@@ -75,12 +74,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 					</th>
 					<th>
 						<!-- Empty for button coloumn -->
-					</th>
+					<!--</th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php 
-					$count = 0;
+					//$count = 0;
 					/*foreach ($database->query('(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM admin)
 						UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM teacher)
 						UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM student)
@@ -89,7 +88,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 							$roleNum = $row['role'];
 							$row['role'] = $result[0]['description'];
 						}*/
-					foreach ($database->query('(SELECT accountID, role FROM admin)
+					/*foreach ($database->query('(SELECT accountID, role FROM admin)
 						UNION(SELECT accountID, role FROM teacher)
 						UNION(SELECT accountID, role FROM student)
 						UNION(SELECT accountID, role FROM parent);') as $row)
@@ -100,8 +99,67 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 						//echo $layout->loadUserRow($row, $roleNum, $count);
 						echo $layout->loadUserRow($user, $count);
 						$count++;
-					}
+					}*/
 				?>
+			</tbody>
+		</table>
+	</div>-->
+<!-- Custom CSS for the arrow buttons on the table columns to sort -->
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
+
+<div class="container">
+	<div class="table-responsive">
+		<h3 align="center">All Users in the Student Management System</h3>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+			<thead>
+				<tr>
+					<th style="text-align: center;">
+						ID
+					</th>
+					<th style="text-align: center;">
+						Username
+					</th>
+					<th style="text-align: center;">
+						First Name
+					</th>
+					<th style="text-align: center;">
+						Last Name
+					</th>
+					<th style="text-align: center;">
+						Role
+					</th>
+					<th style="text-align: center;">
+						Active
+					</th>
+					<th style="text-align: center;">
+						Info
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+					<?php 
+						$count = 0;
+						/*foreach ($database->query('(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM admin)
+							UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM teacher)
+							UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM student)
+							UNION(SELECT accountID, username, firstname, lastname, role, email, dob, contactNum, status FROM parent);') as $row)
+							{
+								$roleNum = $row['role'];
+								$row['role'] = $result[0]['description'];
+							}*/
+						foreach ($database->query('(SELECT accountID, role FROM admin)
+							UNION(SELECT accountID, role FROM teacher)
+							UNION(SELECT accountID, role FROM student)
+							UNION(SELECT accountID, role FROM parent);') as $row)
+						{
+							$stmt =  $database->query('SELECT description FROM role WHERE role = "' . $row['role'] . '"');
+							$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+							$user = new User($database, $row['accountID'], $result[0]['description']);
+							//echo $layout->loadUserRow($row, $roleNum, $count);
+							echo $layout->loadUserRow($user, $count);
+							$count++;
+						}
+					?>
 			</tbody>
 		</table>
 	</div>
@@ -109,5 +167,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 <?php
 	echo $layout->loadFooter('../');
 ?>
-<script src="../bootstrap/js/searchFilter.js"></script>
+<!--<script src="../bootstrap/js/searchFilter.js"></script>-->
+<script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" charset="utf-8">
+			$(document).ready(function() {
+				$('#userTable').dataTable();
+			} );
+		</script>
 </html>

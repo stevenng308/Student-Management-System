@@ -673,25 +673,25 @@ class Layout
 		
 		$func = '
 			<tr class="searchable">
-				<td>
+				<td style="text-align: center;">
 					' . $user->getUserID() . '
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $user->getUserName() . '
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $user->getFirstName() . '
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $user->getLastName() . '
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $user->getRoleFormatted() . '
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $user->getStatusFormatted() . '
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $view . '
 				</td>
 			</tr>
