@@ -6904,8 +6904,8 @@ td.visible-print {
         }
       }
 
-/*Space below the div for the email so it does not touch the footer*/  
-.emailDiv
+/*Space below the div so it does not touch the footer*/  
+.bottomMargin
 {
 	margin-bottom: 100px; 
 }

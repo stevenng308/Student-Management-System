@@ -107,7 +107,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 
-<div class="container">
+<div class="container bottomMargin">
 	<div class="table-responsive">
 		<h3 align="center">All Users in the Student Management System</h3>
 		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">

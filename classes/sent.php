@@ -34,7 +34,7 @@ $session = new Session($_SESSION, $database);
 <link rel="stylesheet" type="text/css" href="bootstrap/css/dataTables.bootstrap.css">
 
 <!-- Begin page content -->
-<div class="jumbotron emailDiv">
+<div class="jumbotron bottomMargin">
 	<!--<ol class="breadcrumb">
 	  <li><a href="#" class="btn btn-sm disabled emailNav" role="button">Email</a></li>
 	  <li><a a class="btn btn-sm emailNav" role="button" id="compose" onclick="loadIn('sent')">Sent</a></li>
