@@ -730,16 +730,16 @@ class Layout
 				';
 		$func = '
 			<tr class="searchable">
-				<td>
+				<td style="text-align: center;">
 					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $mail->getID() . '">
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
 				</td>
 				<td>
-					' . $msg . '
+					<p style="text-align: center;">' . $msg . '</p>
 				</td>
-				<td>
+				<td style="text-align: center;">
 					' . $mail->getDateFormatted() . '
 				</td>
 			</tr>

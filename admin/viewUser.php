@@ -131,7 +131,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 					<th style="text-align: center;">
 						Active
 					</th>
-					<th style="text-align: center;">
+					<th class="no-sort" style="text-align: center;">
 						Info
 					</th>
 				</tr>
@@ -171,8 +171,14 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 <script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
 <script type="text/javascript" charset="utf-8">
-			$(document).ready(function() {
-				$('#userTable').dataTable();
-			} );
-		</script>
+	$(document).ready(function() {
+		$('#userTable').dataTable(
+		{
+			"aoColumnDefs" : [ {
+				'bSortable' : false,
+				'aTargets' : [ "no-sort" ]
+			}]
+		});
+	});
+</script>
 </html>

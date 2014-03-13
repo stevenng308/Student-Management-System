@@ -30,17 +30,18 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 ?>
 <!-- Custom styles for this template -->
-<link rel="stylesheet" href="bootstrap/css/jquery-ui-1.10.4.custom.css" type="text/css" /> 
+<!-- Custom CSS for the arrow buttons on the table columns to sort -->
+<link rel="stylesheet" type="text/css" href="bootstrap/css/dataTables.bootstrap.css">
 
 <!-- Begin page content -->
-<div class="jumbotron">
+<div class="jumbotron emailDiv">
 	<!--<ol class="breadcrumb">
 	  <li><a href="#" class="btn btn-sm disabled emailNav" role="button">Email</a></li>
 	  <li><a a class="btn btn-sm emailNav" role="button" id="compose" onclick="loadIn('inbox')">Inbox</a></li>
 	</ol>-->
 	
 	<div class="table-responsive">
-		<table class="table table-hover">
+		<!--<table class="table table-hover">
 			<thead>
 				<tr>
 					<th style='text-align: center;' colspan="4">
@@ -95,8 +96,55 @@ $session = new Session($_SESSION, $database);
 			</thead>
 			<tbody>
 				<?php
-					$count = 0;
+					/*$count = 0;
 					foreach ($database->query("SELECT * FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1' ORDER BY date_sent DESC") as $row)
+					{
+						$email = new Email($row);
+						//var_dump($email);
+						echo $layout->loadInbox($email, $count, 'inbox');
+						$count++;
+					}*/
+				?>
+			</tbody>
+		</table>-->
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+			<h3 align="center"><?php echo $session->getUserName() . '\'s Inbox'; ?></h3>
+			<div class="row">
+				<div class="col-xs-3 col-sm-1">
+					<button class="btn btn-danger btn-sm" onclick="deleteEmail('inbox')">Del</button>
+				</div>
+				<div class="col-xs-3 col-sm-1">
+					<button class="btn btn-info btn-sm" onclick="moveEmail()">Move</button>
+				</div>
+				<div class="col-xs-6 col-sm-3">
+					<select id="box" name="box" class="form-control input-sm">
+						  <option selected="selected" value="0">Move to...</option>
+						  <option value="1">Inbox</option>
+						  <option value="2">Sent</option>
+						  <option value="3">Trash</option>
+					</select>
+				</div>
+			</div>
+			<thead>
+				<tr>
+					<th class="no-sort" style="text-align: center;">
+						<input type="checkbox" onClick="checkAll(this)" />
+					</th>
+					<th style="text-align: center;">
+						From
+					</th>
+					<th style="text-align: center;">
+						Subject
+					</th>
+					<th style="text-align: center;">
+						Received
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$count = 0;
+					foreach ($database->query("SELECT * FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'") as $row)
 					{
 						$email = new Email($row);
 						//var_dump($email);
@@ -109,6 +157,19 @@ $session = new Session($_SESSION, $database);
 	</div>
 </div>
 
-<script src="bootstrap/js/searchFilter.js"></script>
+<script type="text/javascript" language="javascript" src="bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		$('#userTable').dataTable(
+		{
+			"aaSorting": [[3, 'desc']],
+			"aoColumnDefs" : [ {
+				'bSortable' : false,
+				'aTargets' : [ "no-sort" ]
+			}]
+		});
+	});
+</script>
 <script src="bootstrap/js/delete.js"></script>
 </html>

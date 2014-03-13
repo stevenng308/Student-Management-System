@@ -34,6 +34,8 @@ https://stackoverflow.com/questions/12863991/remove-add-class-on-click-of-a-butt
 http://next.datatables.net/manual/styling/bootstrap
 https://github.com/DataTables/Plugins/tree/master/integration/bootstrap/3
 http://next.datatables.net/download/
+http://www.datatables.net/forums/discussion/788/sorting-enabled-when-it-should-not/p1
+https://stackoverflow.com/questions/3932587/disable-a-column-sorting-using-datatables-of-jquery
 
 
 .Heelo; 'Test', "W%or!d"
