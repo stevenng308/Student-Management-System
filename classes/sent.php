@@ -133,10 +133,10 @@ $session = new Session($_SESSION, $database);
 					<th style="text-align: center;">
 						From
 					</th>
-					<th style="text-align: center;">
+					<th>
 						Subject
 					</th>
-					<th style="text-align: center;">
+					<th>
 						Received
 					</th>
 				</tr>

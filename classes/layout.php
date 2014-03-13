@@ -737,9 +737,9 @@ class Layout
 					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
 				</td>
 				<td>
-					<p style="text-align: center;">' . $msg . '</p>
+					<p>' . $msg . '</p>
 				</td>
-				<td style="text-align: center;">
+				<td>
 					' . $mail->getDateFormatted() . '
 				</td>
 			</tr>
