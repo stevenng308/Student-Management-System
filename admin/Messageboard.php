@@ -19,11 +19,11 @@ echo <<<_END
 	<title>Admin's Message Board</title>
 	</head>
 	<body>
-	New Discussion About the increase in Cafeteria Prizes: $Message<br />
+	Message Created on 01/10/2014 by Admin : New Discussion About the increase in Cafeteria Prizes: $Message<br />
 	<form method ="post" action="Messagetest.php">
-		Submit Your Comments:
+		Create New Message, Enter here:
 		<input type="text" message="Message" />
-		<input type = "submit" />
+		<input type = "Post" />
 		</form>
 		</body>
 </html>
