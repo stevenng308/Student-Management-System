@@ -40,23 +40,22 @@ $email = new Email($result[0]);
 <button class="btn btn-success btn-xs" onclick="save()">Save as Draft</button>
 	<br />
 	<form name="compose" id="compose-form" action="#" method="post">
+		<input type="hidden" name="secret" id="hiddenField" value="<?=$_GET['id'];?>" />
 		<div class="control-group">
 		<div class="input-group">
 		  <span class="input-group-addon">To:</span>
-		  <input id="username" name="username" type="text" class="form-control" value="<?php echo $email->getFromUser(); ?>,">
+		  <input id="username" name="username" type="text" class="form-control" value="<?php echo $email->getDestUser(); ?>">
 		</div>
 		</div>
 		<div class="input-group">
 		  <span class="input-group-addon">Subject:</span>
-		  <input id="subject" name="subject" type="text" class="form-control" placeholder="" value="RE: <?php echo $email->getSubject(); ?>">
+		  <input id="subject" name="subject" type="text" class="form-control" placeholder="" value="<?php echo $email->getSubject(); ?>">
 		</div>
-		<pre><textarea id="message" name="message" class="emailMessage">&#13;&#10; --------------------------------------------------------
-From: <?php echo $email->getFromUser()  . '<' . $email->getFromFirst() . ' ' . $email->getFromLast() . '>'; ?>
-&#13;&#10;Subject: <?php echo $email->getSubject(); ?>&#13;&#10;<?php echo $email->getMessage(); ?></textarea></pre>
+		<pre><textarea id="message" name="message" class="emailMessage"><?php echo $email->getMessage(); ?></textarea></pre>
 		<button class="btn btn-lg btn-primary btn-block pull-right" type="submit" name="submit" value="send">Send</button>
 	</form>
 </div>
 
 <script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>	
-<script src="bootstrap/js/compose.js"></script>
+<script src="bootstrap/js/compose.js"></script>	
 </html>

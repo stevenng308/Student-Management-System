@@ -42,6 +42,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 				<li><a class="btn btn-default emailNav active" role="button" id="inbox" onclick="loadIn('inbox')">Inbox <span id="inboxNum" class="badge badge-success"><?php echo $inboxNum; ?></span></a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="sent" onclick="loadIn('sent')">Sent</a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="trash" onclick="loadIn('trash')">Trash</a></li>
+				<li><a class="btn btn-default emailNav" role="button" id="draft" onclick="loadIn('draft')">Draft</a></li>
 			</ul>
 		</div>
 		<div id="mainDiv" class="col-xs-12 col-sm-6 col-md-8">
@@ -57,6 +58,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 <script type="text/javascript">
 $(window).load(function(){
 	loadIn('inbox'); //load inbox first when navigating to email
+	//loadIn('compose');
 });
 
 var lastBtn = "inbox";

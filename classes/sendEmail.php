@@ -14,6 +14,11 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 //var_dump($_POST);
 //var_dump($session);
+if (isset($_POST['secret'])) //true if sending an email that was saved in draft
+{
+	$database->exec("DELETE FROM email WHERE emailID = '" . $_POST['secret'] . "'"); //delete it
+
+}
 function parseUserNames($input)
 {
 	$input = str_replace(" ", "", $input); //strip spaces

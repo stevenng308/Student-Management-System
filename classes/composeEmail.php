@@ -34,6 +34,8 @@ $session = new Session($_SESSION, $database);
 
 <!-- Begin page content -->
 <div class="container jumbotron">
+<button class="btn btn-success btn-xs" onclick="save()">Save as Draft</button>
+	<br />
 	<form name="compose" id="compose-form" action="#" method="post">
 		<div class="control-group">
 		<div class="input-group">
@@ -44,12 +46,34 @@ $session = new Session($_SESSION, $database);
 		<div class="input-group">
 		  <span class="input-group-addon">Subject:</span>
 		  <input id="subject" name="subject" type="text" class="form-control" placeholder="">
-		</div><br />
+		</div>
+
 		<pre><textarea id="message" name="message" class="emailMessage"></textarea></pre>
-		<button class="btn btn-lg btn-primary btn-block pull-right" type="submit" name="submit" value="send">Send</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="send">Send</button>
 	</form>
 </div>
 
 <script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>	
 <script src="bootstrap/js/compose.js"></script>
+<script>
+function save()
+{
+	//alert(values);
+	//alert($('#box').val());
+	$.post(
+		'classes/saveEmail.php',
+		{
+			'username' : $('#username').val(),
+			'subject' : $('#subject').val(), 
+			'message' : $('#message').val()
+		},
+		function(data){
+		  $("#mainDiv").html(data);
+		  //$('#inboxNum').text(data);
+		  //loadIn('compose');
+		}
+	  );
+  return false;
+}
+</script>
 </html>

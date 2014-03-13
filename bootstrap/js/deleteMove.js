@@ -27,7 +27,10 @@ function deleteEmail(page) //deletes from the box views
 				function(data){
 				  //$("#mainDiv").html(data);
 				  //console.log(data);
-				  $('#inboxNum').text(data);
+				  //$('#inboxNum').text(data);
+				  //$(lastBtn).toggleClass("active");
+				  //$('#inbox').toggleClass("active");
+				  //lastBtn = "inbox";
 				  loadIn(page);
 				}
 			  );
@@ -70,7 +73,7 @@ function deleteReadEmail(page, id) //deletes when reading the email
 	}
 }
 
-function moveEmail()
+function moveEmail(page)
 {
 	if (!values)
 	{
@@ -95,7 +98,7 @@ function moveEmail()
 				function(data){
 				  //$("#mainDiv").html(data);
 				  $('#inboxNum').text(data);
-				  loadIn('inbox');
+				  loadIn(page);
 				}
 			  );
 		  return false;

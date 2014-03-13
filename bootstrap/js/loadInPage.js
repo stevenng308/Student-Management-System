@@ -21,14 +21,29 @@ function loadIn(btnId)
 	{
 		$('#mainDiv').load('classes/trash.php');
 	}
+	else if (btnId == 'draft')
+	{
+		$('#mainDiv').load('classes/draft.php');
+	}
 	else
 	{
 		//$('#mainDiv').load('#');
 	}
 }
 
-function reply(email)
+function reply(box, email)
 {
 	$('.modal-backdrop').remove();
+	$('#compose').toggleClass("active")
+	$('#' + box).toggleClass("active");
+	lastBtn = 'compose';
 	$('#mainDiv').load('classes/replyMail.php?id=' + email);
+}
+
+function loadSavedMail(box, email)
+{
+	$('#compose').toggleClass("active")
+	$('#' + box).toggleClass("active");
+	lastBtn = 'compose';
+	$('#mainDiv').load('classes/loadSavedMail.php?id=' + email);
 }

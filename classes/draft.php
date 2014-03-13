@@ -108,21 +108,10 @@ $session = new Session($_SESSION, $database);
 			</tbody>
 		</table>-->
 		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
-			<h3 align="center"><?php echo $session->getUserName() . '\'s Trash Box'; ?></h3>
+			<h3 align="center"><?php echo $session->getUserName() . '\'s Draft Box'; ?></h3>
 			<div class="row">
 				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-danger btn-sm" onclick="deleteEmail('trash')">Del</button>
-				</div>
-				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-info btn-sm" onclick="moveEmail('trash')">Move</button>
-				</div>
-				<div class="col-xs-6 col-sm-3">
-					<select id="box" name="box" class="form-control input-sm">
-						  <option selected="selected" value="0">Move to...</option>
-						  <option value="1">Inbox</option>
-						  <option value="2">Sent</option>
-						  <option value="3">Trash</option>
-					</select>
+					<button class="btn btn-danger btn-sm" onclick="deleteEmail('draft')">Del</button>
 				</div>
 			</div>
 			<thead>
@@ -131,24 +120,24 @@ $session = new Session($_SESSION, $database);
 						<input type="checkbox" onClick="checkAll(this)" />
 					</th>
 					<th style="text-align: center;">
-						From
+						To
 					</th>
 					<th>
 						Subject
 					</th>
 					<th>
-						Received
+						Created On
 					</th>
 				</tr>
 			</thead>
 			<tbody>
 				<?php
 					$count = 0;
-					foreach ($database->query("SELECT * FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '3'") as $row)
+					foreach ($database->query("SELECT * FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '4'") as $row)
 					{
 						$email = new Email($row);
 						//var_dump($email);
-						echo $layout->loadInbox($email, $count, 'trash');
+						echo $layout->loadDraft($email, $count, 'draft');
 						$count++;
 					}
 				?>

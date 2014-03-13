@@ -114,7 +114,7 @@ $session = new Session($_SESSION, $database);
 					<button class="btn btn-danger btn-sm" onclick="deleteEmail('inbox')">Del</button>
 				</div>
 				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-info btn-sm" onclick="moveEmail()">Move</button>
+					<button class="btn btn-info btn-sm" onclick="moveEmail('inbox')">Move</button>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					<select id="box" name="box" class="form-control input-sm">

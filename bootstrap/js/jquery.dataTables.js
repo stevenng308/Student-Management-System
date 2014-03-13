@@ -10539,7 +10539,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": "&raquo;",
 	
 	
 				/**
@@ -10562,7 +10562,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "&laquo;"
 			},
 	
 			/**

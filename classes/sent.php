@@ -111,10 +111,10 @@ $session = new Session($_SESSION, $database);
 			<h3 align="center"><?php echo $session->getUserName() . '\'s Outbox'; ?></h3>
 			<div class="row">
 				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-danger btn-sm" onclick="deleteEmail('inbox')">Del</button>
+					<button class="btn btn-danger btn-sm" onclick="deleteEmail('sent')">Del</button>
 				</div>
 				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-info btn-sm" onclick="moveEmail()">Move</button>
+					<button class="btn btn-info btn-sm" onclick="moveEmail('sent')">Move</button>
 				</div>
 				<div class="col-xs-6 col-sm-3">
 					<select id="box" name="box" class="form-control input-sm">

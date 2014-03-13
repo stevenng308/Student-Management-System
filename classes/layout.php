@@ -722,7 +722,7 @@ class Layout
 						  <div class="modal-footer">
 							<button class="btn btn-danger pull-left" onclick="deleteReadEmail(\'' . $box . '\', ' . $mail->getID() . ')">Delete</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" id="reply" class="btn btn-primary" data-dismiss="modal" onclick="reply(\'' . $mail->getID() . '\')">Reply</button>
+							<button type="button" id="reply" class="btn btn-primary" data-dismiss="modal" onclick="reply(\'' . $box . '\', ' . $mail->getID() . ')">Reply</button>
 						  </div>
 						</div>
 					  </div>
@@ -738,6 +738,28 @@ class Layout
 				</td>
 				<td>
 					<p>' . $msg . '</p>
+				</td>
+				<td>
+					' . $mail->getDateFormatted() . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+	
+	public function loadDraft(Email $mail, $modalNum, $box)
+	{	
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $mail->getID() . '">
+				</td>
+				<td style="text-align: center;">
+					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
+				</td>
+				<td>
+					<button id="loadSavedMail" class="btn btn-link" onclick="loadSavedMail(\'' . $box . '\', ' . $mail->getID() . ')">' . $mail->getSubjectFormatted() . '</button>
 				</td>
 				<td>
 					' . $mail->getDateFormatted() . '
