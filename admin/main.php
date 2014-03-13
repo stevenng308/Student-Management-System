@@ -39,6 +39,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 <div class="container">
 	<h3>Hello <?php echo $session->getFirstName(); ?>.</h3>
 	<div class="jumbotron">
+		<li><a href="Messageboard.php"> Messageboard </a></li>
 	</div>
 </div>
 <?php
