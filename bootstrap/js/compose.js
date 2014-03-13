@@ -55,7 +55,7 @@ var userNames = '';
 
 $(function () {
 	$('#compose-form').submit(function () {
-		if(document.getElementById("message").value) {
+		if(document.getElementById("message").value && document.getElementById("subject").value && document.getElementById("username").value) {
 			//alert('Successful Validation');
 			$.post(
 				'classes/sendEmail.php',
@@ -64,6 +64,10 @@ $(function () {
 				  //$("#mainDiv").html(data);
 				  //console.log(data);
 				  alert("Email sent.");
+				  $('#inboxNum').text(data);
+				  $('#compose').toggleClass("active");
+				  $('#inbox').toggleClass("active");
+				  lastBtn = "inbox";
 				  loadIn('inbox');
 				}
 			  );
@@ -71,7 +75,7 @@ $(function () {
 		}
 		else
 		{
-			alert('Please include a message in your email.');
+			alert('Please include a username, subject and message.');
 			return false;
 		}
 	});

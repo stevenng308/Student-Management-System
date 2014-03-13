@@ -1,8 +1,7 @@
-<!-- Student Management System -->
-<!-- Author: Steven Ng -->
-<!-- session -->
-
 <?php
+/*Student Management System -->
+<!-- Author: Steven Ng -->
+<!-- session*/
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 class Session

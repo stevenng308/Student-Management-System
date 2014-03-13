@@ -27,6 +27,7 @@ function deleteEmail(page) //deletes from the box views
 				function(data){
 				  //$("#mainDiv").html(data);
 				  //console.log(data);
+				  $('#inboxNum').text(data);
 				  loadIn(page);
 				}
 			  );
@@ -57,6 +58,7 @@ function deleteReadEmail(page, id) //deletes when reading the email
 			  //console.log(data);
 			  //alert(data);
 			  $('.modal-backdrop').remove();
+			  $('#inboxNum').text(data);
 			  loadIn(page);
 			}
 		  );
@@ -65,6 +67,43 @@ function deleteReadEmail(page, id) //deletes when reading the email
 	else
 	{
 		;//do nothing
+	}
+}
+
+function moveEmail()
+{
+	if (!values)
+	{
+		alert("No emails were selected.");
+	}
+	else if ($('#box').val() < 1)
+	{
+		alert("Please specify a box.");
+	}
+	else
+	{
+		if (window.confirm("Do you want to move to message/s?"))
+		{
+			//alert(values);
+			//alert($('#box').val());
+			$.post(
+				'classes/moveEmail.php',
+				{
+					'checkbox' : values, 
+					'box' : $('#box').val()
+				},
+				function(data){
+				  //$("#mainDiv").html(data);
+				  $('#inboxNum').text(data);
+				  loadIn('inbox');
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			;//do nothing
+		}
 	}
 }
 

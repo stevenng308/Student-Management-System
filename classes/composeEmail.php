@@ -34,11 +34,6 @@ $session = new Session($_SESSION, $database);
 
 <!-- Begin page content -->
 <div class="container jumbotron">
-	<ol class="breadcrumb">
-	  <li><a href="#" class="btn btn-sm disabled emailNav" role="button">Email</a></li>
-	  <li><a a class="btn btn-sm emailNav" role="button" id="compose" onclick="loadIn('compose')">Compose</a></li>
-	</ol>
-
 	<form name="compose" id="compose-form" action="#" method="post">
 		<div class="control-group">
 		<div class="input-group">

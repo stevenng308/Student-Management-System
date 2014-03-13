@@ -28,17 +28,18 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-
+$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+$inboxNum = $query->rowCount();
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '');
 ?>
 
 <!-- Begin page content -->
 <div class="container">
-	<div class="row">
+	<div class="row">	
 		<div class="col-xs-6 col-md-2">
 			<ul class="nav nav-pills nav-stacked">
 				<li><a class="btn btn-default emailNav" role="button" id="compose" onclick="loadIn('compose')">Compose</a></li>
-				<li><a class="btn btn-default emailNav active" role="button" id="inbox" onclick="loadIn('inbox')">Inbox</a></li>
+				<li><a class="btn btn-default emailNav active" role="button" id="inbox" onclick="loadIn('inbox')">Inbox <span id="inboxNum" class="badge badge-success"><?php echo $inboxNum; ?></span></a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="sent" onclick="loadIn('sent')">Sent</a></li>
 				<li><a class="btn btn-default emailNav" role="button" id="trash" onclick="loadIn('trash')">Trash</a></li>
 			</ul>
@@ -64,42 +65,5 @@ $(".emailNav").click(function() {
 	$(this).toggleClass("active");
 	lastBtn = this.id;
 });
-	
-function moveEmail()
-{
-	if (!values)
-	{
-		alert("No emails were selected.");
-	}
-	else if ($('#box').val() < 1)
-	{
-		alert("Please specify a box.");
-	}
-	else
-	{
-		if (window.confirm("Do you want to move to message/s?"))
-		{
-			//alert(values);
-			//alert($('#box').val());
-			$.post(
-				'classes/moveEmail.php',
-				{
-					'checkbox' : values, 
-					'box' : $('#box').val()
-				},
-				function(data){
-				  //$("#mainDiv").html(data);
-				  //console.log(data);
-				  loadIn('inbox')
-				}
-			  );
-		  return false;
-		}
-		else
-		{
-			;//do nothing
-		}
-	}
-}
 </script>
 </html>

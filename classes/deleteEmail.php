@@ -1,8 +1,7 @@
-<!-- Student Management System -->
-<!-- Author: Steven Ng -->
-<!-- process registration forms -->
-
 <?php
+/*Student Management System -->
+<!-- Author: Steven Ng -->
+<!-- process deleting emails*/
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
@@ -21,6 +20,9 @@ if ($_POST['box'] == "inbox" || $_POST['box'] == "sent") //move mail to trash if
 	{
 		$database->exec("UPDATE email SET box = '3' WHERE emailID = " . $id . "");
 	}
+	$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+	$inboxNum = $query->rowCount();
+	echo $inboxNum;
 }
 else
 {
@@ -31,15 +33,3 @@ else
 	}
 }
 ?>
-<!-- Custom styles for this template -->
-<!--<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">
-
-<div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
-	<div class="jumbotron">
-		<form class="form-signin" style="text-valign:center">
-			<h2><?php //echo $username ?> registered.</h2>
-			<a class="btn btn-primary" href="../admin/register.php" role="button">Register More Users</a>
-			<a class="btn btn-default" href="../admin/main.php" role="button">Return Home</a>
-		</form>
-	</div>
-</div>-->

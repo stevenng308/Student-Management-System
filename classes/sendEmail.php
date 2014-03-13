@@ -1,8 +1,8 @@
-<!-- Student Management System -->
-<!-- Author: Steven Ng -->
-<!-- process registration forms -->
-
 <?php
+/*Student Management System -->
+<!-- Author: Steven Ng -->
+<!-- process sending emails*/
+
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
@@ -51,18 +51,9 @@ foreach ($user_arr as $to)
 						VALUES('" . $session->getUserName() . "', '" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");				
 	}
 }
+$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+$inboxNum = $query->rowCount();
+echo $inboxNum;
 //$database->exec("INSERT INTO email(dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
 //						VALUES('" . $usernames . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");
 ?>
-<!-- Custom styles for this template -->
-<!--<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">
-
-<div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
-	<div class="jumbotron">
-		<form class="form-signin" style="text-valign:center">
-			<h2><?php echo $username ?> registered.</h2>
-			<a class="btn btn-primary" href="../admin/register.php" role="button">Register More Users</a>
-			<a class="btn btn-default" href="../admin/main.php" role="button">Return Home</a>
-		</form>
-	</div>
-</div>-->

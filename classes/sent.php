@@ -171,5 +171,5 @@ $session = new Session($_SESSION, $database);
 		});
 	});
 </script>
-<script src="bootstrap/js/delete.js"></script>
+<script src="bootstrap/js/deleteMove.js"></script>
 </html>

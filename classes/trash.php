@@ -161,8 +161,15 @@ $session = new Session($_SESSION, $database);
 <script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
-		$('#userTable').dataTable();
-	} );
+		$('#userTable').dataTable(
+		{
+			"aaSorting": [[3, 'desc']],
+			"aoColumnDefs" : [ {
+				'bSortable' : false,
+				'aTargets' : [ "no-sort" ]
+			}]
+		});
+	});
 </script>
-<script src="bootstrap/js/delete.js"></script>
+<script src="bootstrap/js/deleteMove.js"></script>
 </html>
