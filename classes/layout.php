@@ -1,7 +1,6 @@
-<!-- Class for handling the template of the layout of the Views -->
-<!-- Author: Steven Ng -->
-
 <?php
+/*Class for handling the template of the layout of the Views -->
+<!-- Author: Steven Ng*/
 
 class Layout
 {	
