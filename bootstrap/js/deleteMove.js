@@ -27,10 +27,10 @@ function deleteEmail(page) //deletes from the box views
 				function(data){
 				  //$("#mainDiv").html(data);
 				  //console.log(data);
-				  //$('#inboxNum').text(data);
-				  //$(lastBtn).toggleClass("active");
-				  //$('#inbox').toggleClass("active");
-				  //lastBtn = "inbox";
+				  $('#inboxNum').text(data);
+				  $(lastBtn).toggleClass("active");
+				  $('#inbox').toggleClass("active");
+				  lastBtn = "inbox";
 				  loadIn(page);
 				}
 			  );
