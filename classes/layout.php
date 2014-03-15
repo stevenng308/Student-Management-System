@@ -70,14 +70,14 @@ class Layout
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="'. $dir .'admin/register.php">Add</a></li>
-							<li><a href="'. $dir .'admin/viewUser.php">Edit</a></li>
+							<li><a href="'. $dir .'admin/viewUser.php">View/Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
-								<li><a href="#">Add</a></li>
-								<li><a href="#">Edit</a></li>
+								<li><a href="'. $dir .'admin/classForm.php">Add</a></li>
+								<li><a href="#">View/Edit</a></li>
 							  </ul>
 						  </li>';
 			}
@@ -90,14 +90,14 @@ class Layout
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="'. $dir .'admin/register.php">Add</a></li>
-							<li><a href="'. $dir .'admin/viewUser.php">Edit</a></li>
+							<li><a href="'. $dir .'admin/viewUser.php">View/Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
-								<li><a href="#">Add</a></li>
-								<li><a href="#">Edit</a></li>
+								<li><a href="'. $dir .'admin/classForm.php">Add</a></li>
+								<li><a href="#">View/Edit</a></li>
 							  </ul>
 						  </li>';
 			}
@@ -110,14 +110,14 @@ class Layout
 						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Accounts <b class="caret"></b></a>
 						  <ul class="dropdown-menu">
 							<li><a href="'. $dir .'admin/register.php">Add</a></li>
-							<li><a href="'. $dir .'admin/viewUser.php">Edit</a></li>
+							<li><a href="'. $dir .'admin/viewUser.php">View/Edit</a></li>
 						  </ul>
 						  </li>
 						  <li class="dropdown">
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
-								<li><a href="#">Add</a></li>
-								<li><a href="#">Edit</a></li>
+								<li><a href="'. $dir .'admin/classForm.php">Add</a></li>
+								<li><a href="#">View/Edit</a></li>
 							  </ul>
 						  </li>';
 			}
@@ -129,36 +129,22 @@ class Layout
 				$links = '
 						<li class="active"><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
-						  <ul class="dropdown-menu">
-							<li><a href="#">Edit</a></li>
-						  </ul>
-						</li>';
+						<li><a href="#">Manage Classes</a></li>';
 			}
 			else if ($title == "Email")
 			{
 				$links = '
 						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
-						  <ul class="dropdown-menu">
-							<li><a href="#">Edit</a></li>
-						  </ul>
-						</li>';
+						<li><a href="#">Manage Classes</a></li>';
 			}
 			else
 			{
 				$links = '
 						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li class="dropdown">
-						  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
-						  <ul class="dropdown-menu">
-							<li><a href="#">Edit</a></li>
-						  </ul>
-						</li>';
+						<li class="active"><a href="#">Manage Classes</a></li>
+						';
 			}
 		}
 		else if ($type == "Student")

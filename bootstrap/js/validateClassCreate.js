@@ -1,0 +1,147 @@
+/*
+* Author: Steven Ng
+* Javascript to handle validating registration form
+*/
+$(document).ready(function () {
+	 //rule for checking password confirmation
+	 $.validator.addMethod("valueNotEquals", function(value, element, arg){
+		return arg != value;
+	 }, "Value must not equal arg.");
+	
+	//rule for allowing numbers and dash
+	$.validator.addMethod("allowDash", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[0-9-]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   return false;
+			}
+			return true;
+		},
+		"Only numbers and a dash allowed. The number after the dash denotes a different course section"
+	);
+	
+	//rule for allowing some symbols in the first and last name field
+	$.validator.addMethod("noSpecialChars", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[a-zA-Z '-]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   return false;
+			}
+			return true;
+		},
+		"Only alphabetic characters, space, apostrophe and dash"
+	);
+	
+	//rule for what is allowed in the date input
+	$.validator.addMethod("dateFormat", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[0-9/]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   return false;
+			}
+			return true;
+		},
+		"Format the date as mm/dd/yyyy"
+	);
+	
+    $('#register-form').validate({
+        rules: {
+            courseNum: {
+                minlength: 4,
+				maxlength: 9,
+				allowDash: true,
+                required: true
+            },
+			courseName: {
+                minlength: 2,
+				maxlength: 25,
+				noSpecialChars: true,
+                required: true
+            },
+			startDate: {
+                minlength: 10,
+				maxlength: 10,
+				dateFormat: true,
+                required: true
+            },
+			startTime: {
+                minlength: 5,
+				maxlength: 5,
+				//timeFormat: true,
+                required: true
+            },
+			endDate: {
+                minlength: 10,
+				maxlength: 10,
+				dateFormat: true,
+                required: true
+            },
+			endTime: {
+                minlength: 5,
+				maxlength: 5,
+				//timeFormat: true,
+                required: true
+            },
+			semester: {
+                valueNotEquals: "semester"
+            },
+			schoolYear: {
+                valueNotEquals: "0"
+            },
+			username: {
+                minlength: 1,
+				digits: true,
+                required: true
+            }
+        },
+		messages: {
+			semester: {
+                valueNotEquals: "Select a semester"
+            },
+			schoolYear: {
+                valueNotEquals: "Select a year"
+            },
+			username: {
+				digits: "Teacher ID is necessary. Search for the ID by typing the teacher's username." 
+			}
+        },
+        highlight: function (element) {
+            $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
+        },
+        success: function (element) {
+            element.text('OK!').addClass('valid')
+                .closest('.control-group').removeClass('has-error').addClass('has-success');
+        }
+    });
+	
+	//handles the submit button onclick action. POSTs the form for processing and 
+	//Success: loads the page into the div where the form was before
+	//Fail: alerts the user that something is not correct
+	$(function () {
+		$('#register-form').submit(function () {
+			if($(this).valid()) {
+				//alert('Successful Validation');
+				$.post(
+					'',
+					$(this).serialize(),
+					function(data){
+					  $("#result").html(data);
+					  //console.log(data);
+					}
+				  );
+              return false;
+			}
+			else
+			{
+				alert('Please correct the errors indicated.');
+				return false;
+			}
+		});
+	});                   
+});

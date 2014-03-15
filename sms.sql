@@ -230,6 +230,27 @@ CREATE TABLE IF NOT EXISTS `teacher` (
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `accountID` (`accountID`)
 )
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email`
+--
+
+CREATE TABLE IF NOT EXISTS `email` (
+  `emailID` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(25) NOT NULL,
+  `dest_username` varchar(25) NOT NULL,
+  `dest_first` varchar(20) NOT NULL,
+  `dest_last` varchar(25) NOT NULL,
+  `from_username` varchar(25) NOT NULL,
+  `from_first` varchar(20) NOT NULL,
+  `from_last` varchar(25) NOT NULL,
+  `date_sent` datetime NOT NULL,
+  `subject` text NOT NULL,
+  `msg_content` longtext NOT NULL,
+  `box` int(1) NOT NULL,
+  PRIMARY KEY (`emailID`)
+);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
