@@ -37,7 +37,7 @@ if (!empty($_POST['term']))
 		return $input;
 	}
 	$usernames = mysql_real_escape_string($_POST['term']);
-	$user_arr = parseUserName($usernames); //store the parsed student id's into an array
+	$user_arr = parseUserName($usernames); //store the parsed usernames into an array
 	
 	$result_arr = array();
 	$stmt = $database->prepare('(SELECT username, firstname, lastname FROM admin WHERE username LIKE :term AND status = 1)

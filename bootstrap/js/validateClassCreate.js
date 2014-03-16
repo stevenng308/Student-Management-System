@@ -8,6 +8,65 @@ $(document).ready(function () {
 		return arg != value;
 	 }, "Value must not equal arg.");
 	
+	//rule for checking course number uniqueness
+	 $.validator.addMethod("checkCourse", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkCourse.php", // script to validate in server side
+                data: {
+						courseNum: $("#courseNum").val(),
+						courseName: value
+					  },
+                success: function(data) {
+					//alert(data);
+					if (data.match(/true/)) //the data passed back from the checkUnique.php may contain other stuff besides exactly true and false. 
+					{						//this is somewhat less strict comparison. it ensures that the output contains the string "true" (at any position).
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "A course with the same number and name already exists. Please specify another course number or section (1001-XXXX)."
+    );
+	
+	//rule for checking course number uniqueness
+	 $.validator.addMethod("checkTeacher", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkTeacher.php", // script to validate in server side
+                data: {
+						teacherID: value
+					  },
+                success: function(data) {
+					//alert(data);
+					if (data.match(/true/)) //the data passed back from the checkUnique.php may contain other stuff besides exactly true and false. 
+					{						//this is somewhat less strict comparison. it ensures that the output contains the string "true" (at any position).
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "Teacher ID does not exist."
+    );
+	
 	//rule for allowing numbers and dash
 	$.validator.addMethod("allowDash", 
         function(value, element, regexp) {
@@ -62,6 +121,7 @@ $(document).ready(function () {
                 minlength: 2,
 				maxlength: 25,
 				noSpecialChars: true,
+				checkCourse: true,
                 required: true
             },
 			startDate: {
@@ -97,6 +157,7 @@ $(document).ready(function () {
 			username: {
                 minlength: 1,
 				digits: true,
+				checkTeacher: true,
                 required: true
             }
         },
@@ -128,7 +189,7 @@ $(document).ready(function () {
 			if($(this).valid()) {
 				//alert('Successful Validation');
 				$.post(
-					'',
+					'../classes/processNewClass.php',
 					$(this).serialize(),
 					function(data){
 					  $("#result").html(data);

@@ -19,6 +19,8 @@ https://stackoverflow.com/questions/14713622/twitter-bootstrap-row-filter-search
 https://stackoverflow.com/questions/2487921/convert-date-format-yyyy-mm-dd-dd-mm-yyyy
 http://jqueryui.com/
 http://jqueryui.com/autocomplete/#remote
+http://jqueryui.com/datepicker/
+https://fgelinas.com/code/timepicker/
 https://stackoverflow.com/questions/17764554/jquery-autocomplete-populate-with-data-from-php-json
 https://stackoverflow.com/questions/5382211/clear-form-field-after-select-for-jquery-ui-autocomplete
 https://stackoverflow.com/questions/5048849/preserve-line-breaks-from-textarea-when-writing-to-mysql

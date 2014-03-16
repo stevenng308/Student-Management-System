@@ -64,6 +64,33 @@ $(document).ready(function () {
         "Email has been registered. Please make sure the User you are trying to register is not already registered."
     );
 	
+	//rule for checking email uniqueness
+	$.validator.addMethod("checkStudentID", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkStudentID.php", // script to validate in server side
+                data: {childrenID: value},
+                success: function(data) {
+					//alert(data);
+					if (data.match(/true/))
+					{
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "The rightmost Student ID does not exist. Please make sure the student you are trying to associate with has been created and has a Student ID number."
+    );
+	
 	//rule for allowing some symbols in the first and last name field
 	$.validator.addMethod("noSpecialChars", 
         function(value, element, regexp) {
@@ -205,6 +232,7 @@ $(document).ready(function () {
 				maxlength: 20
             },
 			childrenID: {
+				checkStudentID: true,
 				allowCommas: true
 			}
         },
