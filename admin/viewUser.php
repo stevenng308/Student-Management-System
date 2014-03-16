@@ -174,6 +174,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Users'
 	$(document).ready(function() {
 		$('#userTable').dataTable(
 		{
+			"aaSorting": [[0, 'asc']],
 			"aoColumnDefs" : [ {
 				'bSortable' : false,
 				'aTargets' : [ "no-sort" ]

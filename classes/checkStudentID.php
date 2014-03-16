@@ -31,7 +31,7 @@ else
 	$child = mysql_real_escape_string($child_arr[$index]); //search using the ID in the last element
 }
 $query = $database->query('SELECT accountID FROM student WHERE studentID = "' . $child .  '" LIMIT 1');
-if ($query->rowCount() == 0) //if true input does not exist
+if ($query->rowCount() == 0 && !empty($_POST['childrenID'])) //if true input does not exist. if there is no child's Id being checked it is false
 {
 	echo "false";
 }

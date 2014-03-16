@@ -77,7 +77,7 @@ class Layout
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
 								<li><a href="'. $dir .'admin/classForm.php">Add</a></li>
-								<li><a href="#">View/Edit</a></li>
+								<li><a href="'. $dir .'admin/viewClasses.php">View/Edit</a></li>
 							  </ul>
 						  </li>';
 			}
@@ -97,7 +97,7 @@ class Layout
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
 								<li><a href="'. $dir .'admin/classForm.php">Add</a></li>
-								<li><a href="#">View/Edit</a></li>
+								<li><a href="'. $dir .'admin/viewClasses.php">View/Edit</a></li>
 							  </ul>
 						  </li>';
 			}
@@ -117,7 +117,7 @@ class Layout
 							  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Manage Classes <b class="caret"></b></a>
 							  <ul class="dropdown-menu">
 								<li><a href="'. $dir .'admin/classForm.php">Add</a></li>
-								<li><a href="#">View/Edit</a></li>
+								<li><a href="'. $dir .'admin/viewClasses.php">View/Edit</a></li>
 							  </ul>
 						  </li>';
 			}
@@ -678,6 +678,150 @@ class Layout
 				</td>
 				<td style="text-align: center;">
 					' . $view . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+	
+	public function loadClassRow(Classroom $class, $modalNum)
+	{
+		$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'\';">Edit</button>';
+		$view = '
+				<!-- Button trigger modal -->
+				<button class="btn btn-primary " data-toggle="modal" data-target="#myModal' . $modalNum . '">
+				 View
+				</button>
+
+				<!-- Modal -->
+				<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h3 class="modal-title" id="myModalLabel" align="center">' . $class->getCourseNumber(). ' ' . $class->getCourseName() . '</h3>
+					  </div>
+					  <div class="modal-body">
+						<div class="table-responsive">
+							<table class="table table-condensed">
+								<thead>
+									<tr>
+										<th style="text-align: center;" colspan="6">
+											<h3>Class Info.</h3>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>ID</td>
+										<td>
+											' . $class->getClassID() . '
+										</td>
+									</tr>
+									<tr>
+										<td>Course Number</td>
+										<td>
+											' . $class->getCourseNumber() . '
+										</td>
+									</tr>
+									<tr>
+										<td>Course Name</td>
+										<td>
+											' . $class->getCourseName() . '
+										</td>
+									</tr>
+									<tr>
+										<td>Teacher</td>
+										<td>
+											' . $class->getTeacherUser() . ' <' . $class->getTeacherFirst() . ' ' . $class->getTeacherLast() . '>' . '
+										</td>
+									</tr>
+									<tr>
+										<td>Semester</td>
+										<td>
+											' . $class->getSemester() . '
+										</td>
+									</tr>
+									<tr>
+										<td>School Year</td>
+										<td>
+											' . $class->getSchoolYear() . '
+										</td>
+									</tr>
+									<tr>
+										<td>Start Date</td>
+										<td>
+											' . $class->getStartDateFormatted() . '
+										</td>
+									</tr>
+									<tr>
+										<td>End Date</td>
+										<td>
+											' . $class->getEndDateFormatted() . '
+										</td>
+									</tr>
+									<tr>
+										<td>Start Time</td>
+										<td>
+											' . $class->getStartTime() . '
+										</td>
+									</tr>
+									<tr>
+										<td>End Time</td>
+										<td>
+											' . $class->getEndTime() . '
+										</td>
+									</tr>
+									<tr>
+										<td>Status</td>
+										<td>
+											' . $class->getStatusFormatted() . '
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						' . $edit . '
+					  </div>
+					</div>
+				  </div>
+				</div>		
+				';
+		
+		$page = '<button class="btn btn-info">Class</button>';
+		
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					<input name="status" id="status' . $modalNum . '" type="checkbox" value="' . $class->getClassID() . '">
+				</td>
+				<td style="text-align: center;">
+					' . $class->getCourseNumber() . '
+				</td>
+				<td style="text-align: center;">
+					' . $class->getCourseName() . '
+				</td>
+				<td style="text-align: center;">
+					' . $class->getTeacherFirst() . ' ' . $class->getTeacherLast() . '
+				</td>
+				<td style="text-align: center;">
+					' . $class->getSemester() . '
+				</td>
+				<td style="text-align: center;">
+					' . $class->getSchoolYear() . '
+				</td>
+				<td style="text-align: center;">
+					' . $class->getStatusFormatted() . '
+				</td>
+				<td style="text-align: center;">
+					' . $view . '
+				</td>
+				<td style="text-align: center;">
+					' . $page . '
 				</td>
 			</tr>
 		';
