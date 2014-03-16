@@ -734,7 +734,7 @@ class Layout
 									<tr>
 										<td>Teacher</td>
 										<td>
-											' . $class->getTeacherUser() . ' <' . $class->getTeacherFirst() . ' ' . $class->getTeacherLast() . '>' . '
+											' . $class->getTeacherUser() . ' &lt' . $class->getTeacherFirst() . ' ' . $class->getTeacherLast() . '&gt' . '
 										</td>
 									</tr>
 									<tr>
