@@ -9,17 +9,33 @@ spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
 	session_start();
 }
-
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
-$query = $database->query('SELECT classID FROM classroom WHERE course_number = "' . $_POST['courseNum'] .  '" AND course_name = "' . $_POST['courseName'] .  '" LIMIT 1');
-if ($query->rowCount() == 0) //if true input is unique
+
+if (empty($_POST['classID']))
 {
-	echo "true";
+	$query = $database->query('SELECT classID FROM classroom WHERE course_number = "' . $_POST['courseNum'] .  '" AND course_name = "' . $_POST['courseName'] .  '" LIMIT 1');
+	if ($query->rowCount() == 0) //if true input is unique
+	{
+		echo "true";
+	}
+	else
+	{
+		echo "false";
+	}
 }
 else
 {
-	echo "false";
-}					
+	$query = $database->query('SELECT classID FROM classroom WHERE course_number = "' . $_POST['courseNum'] .  '" AND course_name = "' . $_POST['courseName'] .  '" LIMIT 1');
+	$result = $query->fetchAll(PDO::FETCH_ASSOC);
+	if ($query->rowCount() == 0 || ($result[0]['classID'] == $_POST['classID'])) //if true input is unique
+	{
+		echo "true";
+	}
+	else
+	{
+		echo "false";
+	}
+}	
 
 
 //var_dump($_POST);

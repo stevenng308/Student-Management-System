@@ -687,7 +687,7 @@ class Layout
 	
 	public function loadClassRow(Classroom $class, $modalNum)
 	{
-		$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'\';">Edit</button>';
+		$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'../admin/editClass.php?classid=' . $class->getClassID() . '\';">Edit</button>';
 		$view = '
 				<!-- Button trigger modal -->
 				<button class="btn btn-primary " data-toggle="modal" data-target="#myModal' . $modalNum . '">
@@ -764,13 +764,13 @@ class Layout
 									<tr>
 										<td>Start Time</td>
 										<td>
-											' . $class->getStartTime() . '
+											' . $class->getStartTimeFormatted() . '
 										</td>
 									</tr>
 									<tr>
 										<td>End Time</td>
 										<td>
-											' . $class->getEndTime() . '
+											' . $class->getEndTimeFormatted() . '
 										</td>
 									</tr>
 									<tr>

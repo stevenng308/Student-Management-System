@@ -30,8 +30,8 @@ $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 
-$account_id = $_GET['accountid'] or die("Account ID not provided");
-$userType = $_GET['role'] or die("Account type not provided");
+$account_id = $_GET['accountid'] or die(header('Location: error.php'));
+$userType = $_GET['role'] or die(header('Location: error.php'));
 $table = "Student";
 
 $user= new user($database, $account_id, $table);
