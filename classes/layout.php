@@ -829,6 +829,143 @@ class Layout
 		return $func;
 	}
 	
+	public function loadStundentLunchRow(User $user, $modalNum)
+	{
+			$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'editStudent.php?accountid=' . $user->getUserID() . '&role=' . $user->getRole() . '\';">Edit</button>';
+			$view = '
+					<!-- Button trigger modal -->
+					<button class="btn btn-primary " data-toggle="modal" data-target="#myModal' . $modalNum . '">
+					 View
+					</button>
+
+					<!-- Modal -->
+					<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h2 class="modal-title" id="myModalLabel" align="center">' . $user->getFirstName() . ' ' . $user->getLastName() . '\'s Profile</h2>
+						  </div>
+						  <div class="modal-body">
+							<div class="table-responsive">
+								<table class="table table-condensed">
+									<thead>
+										<tr>
+											<th style="text-align: center;" colspan="6">
+												<h3>Account Information</h3>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>ID</td>
+											<td>
+												' . $user->getUserID() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Username</td>
+											<td>
+												' . $user->getUserName() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Account Type</td>
+											<td>
+												' . $user->getRoleFormatted() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Active</td>
+											<td>
+												' . $user->getStatusFormatted() . '
+											</td>
+										</tr>
+									</tbody>
+									<thead>
+										<tr>
+											<th style="text-align: center;" colspan="6">
+												<h3>Personal Information</h3>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>Student ID</td>
+											<td>
+												' . $user->getStudentID() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Account Balance</td>
+											<td>
+												' . $user->getBalanceFormatted() . '
+											</td>
+										</tr>
+										<tr>
+											<td>First Name</td>
+											<td>
+												' . $user->getFirstName() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Last Name</td>
+											<td>
+												' . $user->getLastName() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Birthdate</td>
+											<td>
+												' . $user->getMonth() . '-' . $user->getDay() . '-' . $user->getYear() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Contact Number</td>
+											<td>
+												' . $user->getContact() . '
+											</td>
+										</tr>
+										<tr>
+											<td>Email</td>
+											<td>
+												' . $user->getEmail() . '
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							' . $edit . '
+						  </div>
+						</div>
+					  </div>
+					</div>	
+					';
+		
+		$func = '
+				<td>
+					' . $user->getStudentID() . '
+				</td>
+				<td>
+					' . $user->getFirstName() . '
+				</td>
+				<td>
+					' . $user->getLastName() . '
+				</td>
+				<td>
+					' . $user->getBalanceFormatted() . '
+				</td>
+				<td>
+					' . $view . '
+				</td>
+		';
+		
+		return $func;
+	}
+	
 	public function loadInbox(Email $mail, $modalNum, $box)
 	{	
 		//$delete = '<button class="btn btn-danger">Delete</button>';

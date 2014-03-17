@@ -41,6 +41,30 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	<div class="jumbotron">
 		<li><a href="Messageboard.php"> Messageboard </a></li>
 	</div>
+<!-- Andre Vicente - Loading Each Student Account Lunch Account depending on Student ID 
+     We are assuming since this is the ADMIN Main page that their ROLE is automatically set to 1 -->
+<?php
+$role = $session->getUserType();
+$username = $session->getID();
+$query = "SELECT studentID FROM parent_student_assoc WHERE guardianID = '" . $username . "' AND role ='" . $role . "'";
+$count = 0;
+	if (!$database->query($query)==NULL) {
+	 echo "<tr>";
+	 echo "<th><b>Student ID</b></th>";
+	 echo "<th><b>Student Name</b></th>";
+	 echo "<th><b>Current Balance</b></th>";
+	 echo "</tr>";	
+     echo "<br>";
+	}
+			foreach ($database->query($query) as $row)
+			{
+				$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
+				$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+				$user = new User($database, $result[0]['accountID'], "student");
+				echo $layout->loadStundentLunchRow($user, $count);
+				$count++;
+			} 
+?>
 </div>
 
 <li><a href="Messageboard.php"> Messagboard </a></li>
