@@ -211,6 +211,13 @@ textarea {
   vertical-align: top;
 }
 
+.messageBoard
+{
+	resize: none;
+	width: 100%;
+	height: 15%;
+}
+
 .childrenID
 {
 	resize: none;

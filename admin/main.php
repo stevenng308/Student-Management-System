@@ -39,7 +39,10 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 <div class="container">
 	<h3>Hello <?php echo $session->getFirstName(); ?>.</h3>
 	<div class="jumbotron">
-		<li><a href="Messageboard.php"> Messageboard </a></li>
+		<form name="compose" id="compose-form" action="#" method="post">
+			<pre><textarea id="message" name="message" class="messageBoard"></textarea></pre>			
+		</form>
+		<button class="btn btn-lg btn-primary btn-block" onclick="postMsg()">Post Message</button>
 	</div>
 <!-- Andre Vicente - Loading Each Student Account Lunch Account depending on Student ID 
      We are assuming since this is the ADMIN Main page that their ROLE is automatically set to 1 -->
@@ -66,10 +69,25 @@ $count = 0;
 			} 
 ?>
 </div>
-
-<li><a href="Messageboard.php"> Messagboard </a></li>
-
 <?php
 	echo $layout->loadFooter('../');
 ?>
+<script>
+function postMsg()
+{
+	//alert("hi");
+	$.post(
+		'../classes/postMessage.php',
+		{
+			'message' : $('#message').val()
+		},
+		function(data){
+			//alert(data);
+		  //$("#mainDiv").html(data);
+		  location.reload();
+		}
+	  );
+  return false;
+}
+</script>
 </html>
