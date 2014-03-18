@@ -10540,7 +10540,7 @@
 				 *    } );
 				 */
 				"sNext": "&raquo;",
-	
+				//"sNext": "Next;",
 	
 				/**
 				 * Text to use for the 'previous' pagination button (to take the user to
@@ -10563,6 +10563,7 @@
 				 *    } );
 				 */
 				"sPrevious": "&laquo;"
+				//"sPrevious": "Previous;"
 			},
 	
 			/**
