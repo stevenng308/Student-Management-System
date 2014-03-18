@@ -89,7 +89,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 							$stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $row['teacherID'] . '"');
 							$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							$classroom = new Classroom($row, $result, $database);
-							echo $layout->loadClassRow($classroom, $count);
+							echo $layout->loadClassRow($classroom, $count, $session->getUserType());
 							$count++;
 						}
 					?>

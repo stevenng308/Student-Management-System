@@ -80,3 +80,27 @@ $(function () {
 		}
 	});
 });
+
+function save()
+{
+	//alert(values);
+	//alert($('#box').val());
+	$.post(
+		'classes/saveEmail.php',
+		{
+			'username' : $('#username').val(),
+			'subject' : $('#subject').val(), 
+			'message' : $('#message').val()
+		},
+		function(data){
+		  //$("#mainDiv").html(data);
+		  //$('#inboxNum').text(data);
+		  alert("Email saved in draft box.");
+		  $('#compose').toggleClass("active");
+		  $('#inbox').toggleClass("active");
+		  lastBtn = "inbox";
+		  loadIn('inbox');
+		}
+	  );
+  return false;
+}

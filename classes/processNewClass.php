@@ -31,8 +31,8 @@ $database->exec($query);
 
 $insertID = $database->lastInsertId();
 //begin forum table for the new class
-$query = "CREATE TABLE IF NOT EXISTS " . $insertID . "_forum (`topic_id` int(10) NOT NULL AUTO_INCREMENT, PRIMARY KEY (`topic_id`));";
-$database->exec($query);
+//$query = "CREATE TABLE IF NOT EXISTS " . $insertID . "_forum (`topic_id` int(10) NOT NULL AUTO_INCREMENT, PRIMARY KEY (`topic_id`));";
+//$database->exec($query);
 
 //begin inserting forum name into the new class
 $query = "UPDATE classroom SET forumName = '" . $insertID . "_forum' WHERE classID = " . $insertID . "";

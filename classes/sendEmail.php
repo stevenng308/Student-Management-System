@@ -27,6 +27,7 @@ function parseUserNames($input)
 }
 $usernames = mysql_real_escape_string($_POST['username']);
 $user_arr = parseUserNames($usernames); //store the parsed usernames into an array
+$user_arr = array_unique($user_arr); //remove duplicates
 
 $subject = htmlentities($_POST['subject'], ENT_QUOTES, 'UTF-8'); //need to make the message safe for storing in db. read htmlentities on their site
 $msg = htmlentities($_POST['message'], ENT_QUOTES, 'UTF-8');

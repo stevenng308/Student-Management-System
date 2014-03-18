@@ -42,6 +42,7 @@ if ($newType != "Student")//true if the account being edited is not a student
 	}
 	$child_id = mysql_real_escape_string($_POST['childrenID']);
 	$child_arr = parseChildID($child_id); //store the parsed student id's into an array
+	$child_arr = array_unique($child_arr); //remove duplicates
 }
 
 if (isset($_POST['status']))

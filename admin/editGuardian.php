@@ -200,7 +200,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 		<div class="control-group">
 			<textarea class="form-control childrenID" rows="4" cols="11" name="childrenID" id="childrenID"><?php echo $user->getChildID(); ?></textarea>
 		</div>
-		<label for="password">Add more student IDs if needed. Separate each ID with commas (1234,5678). Max length for a Student ID is 10. Remove the student IDs that are not needed. </label>
+		<label for="password">Add more student IDs if needed. Separate each ID with commas (1234,5678). Max length for a Student ID is 20. Remove the student IDs that are not needed. </label>
 		<br />
 		<div class="checkbox"">
 			<label>

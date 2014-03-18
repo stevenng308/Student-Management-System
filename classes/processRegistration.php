@@ -40,6 +40,7 @@ if (!empty($_POST['childrenID']))//true if the account being registered has (a) 
 	}
 	$child_id = mysql_real_escape_string($_POST['childrenID']);
 	$child_arr = parseChildID($child_id); //store the parsed student id's into an array
+	$child_arr = array_unique($child_arr); //remove duplicates
 }
 
 function createSalt()

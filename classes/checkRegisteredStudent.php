@@ -30,14 +30,14 @@ else
 	$index = count($child_arr) - 1; //get the index of the last element because the preceding elements have ids that are completed and don't need to be looked up
 	$child = mysql_real_escape_string($child_arr[$index]); //search using the ID in the last element
 }
-$query = $database->query('SELECT accountID FROM student WHERE studentID = "' . $child .  '" LIMIT 1');
-if ($query->rowCount() == 0 && !empty($_POST['childrenID'])) //if true input does not exist. if there is no child's Id being checked it is false
+$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = "' . $child .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1');
+if ($query->rowCount() == 0) //if true input does not exist.
 {
-	echo "false";
+	echo "true";
 }
 else
 {
-	echo "true";
+	echo "false";
 }					
 
 

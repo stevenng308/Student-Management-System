@@ -23,7 +23,7 @@ if(!(empty($_SESSION)))
 }
 else
 {
-	header('Location: ../index.php');
+	header('Location: index.php');
 }
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');

@@ -55,25 +55,4 @@ $session = new Session($_SESSION, $database);
 
 <script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>	
 <script src="bootstrap/js/compose.js"></script>
-<script>
-function save()
-{
-	//alert(values);
-	//alert($('#box').val());
-	$.post(
-		'classes/saveEmail.php',
-		{
-			'username' : $('#username').val(),
-			'subject' : $('#subject').val(), 
-			'message' : $('#message').val()
-		},
-		function(data){
-		  $("#mainDiv").html(data);
-		  //$('#inboxNum').text(data);
-		  //loadIn('compose');
-		}
-	  );
-  return false;
-}
-</script>
 </html>

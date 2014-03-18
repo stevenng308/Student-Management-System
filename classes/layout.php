@@ -685,9 +685,16 @@ class Layout
 		return $func;
 	}
 	
-	public function loadClassRow(Classroom $class, $modalNum)
+	public function loadClassRow(Classroom $class, $modalNum, $role)
 	{
-		$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'../admin/editClass.php?classid=' . $class->getClassID() . '\';">Edit</button>';
+		if ($role == 1)
+		{
+			$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'../admin/editClass.php?classid=' . $class->getClassID() . '\';">Edit</button>';
+		}
+		else
+		{
+			$edit = '<button type="button" class="btn btn-info" disabled="disabled">Edit</button>';
+		}
 		$view = '
 				<!-- Button trigger modal -->
 				<button class="btn btn-primary " data-toggle="modal" data-target="#myModal' . $modalNum . '">
