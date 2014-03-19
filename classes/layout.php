@@ -1043,8 +1043,30 @@ class Layout
 		return $func;
 	}
 	
-	public function loadRosterRow($id, $user, $first, $last, $modalNum)
+	public function loadRosterRow($id, $user, $first, $last, $class, $modalNum)
 	{	
+		$grade =  '
+					<button class="btn btn-info" data-toggle="modal" data-target="#myModal' . $modalNum . '">
+						View
+					</button>
+
+					<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3 class="modal-title" id="myModalLabel" align="center">' . $user . ' &lt;' . $first . ' ' . $last . '&gt;' . ' Grade</h3>
+						  </div>
+						  <div class="modal-body">
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				';
+	
 		$func = '
 			<tr class="searchable">
 				<td style="text-align: center;">
@@ -1063,7 +1085,13 @@ class Layout
 					' . $last . '
 				</td>
 				<td style="text-align: center;">
-					<button class="btn btn-info">View</button>
+					<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>
+				</td>
+				<td style="text-align: center;">
+					<button type="button" class="btn btn-danger" onclick="location.href=\'\'">Edit/Delete</button>
+				</td>
+				<td style="text-align: center;">
+					' . $grade . '
 				</td>
 			</tr>
 		';

@@ -111,6 +111,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 						<th class="no-sort" style="text-align: center;">
 							Grades
 						</th>
+						<th class="no-sort" style="text-align: center;">
+							Grades
+						</th>
+						<th class="no-sort" style="text-align: center;">
+							Grades
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -119,7 +125,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 						foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
 						{
 							//var_dump($row);
-							echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $count);
+							echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $classid, $count);
 							$count++;
 						}
 					?>
