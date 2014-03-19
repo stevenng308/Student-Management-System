@@ -91,6 +91,37 @@ $(document).ready(function () {
         "The rightmost Student ID does not exist. Please make sure the student you are trying to associate with has been created and has a Student ID number."
     );
 	
+	//rule for checking birthdate validity
+	$.validator.addMethod("checkBirth", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkBirthdate.php", // script to validate in server side
+                data: {
+					year: value,
+					month: $('#month').val(),
+					day: $('#day').val()
+				},
+                success: function(data) {
+					//alert(data);
+					if (data.match(/true/) || value === email)
+					{
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "Birthdate does not exist. This year does not have this date"
+    );
+	
 	//rule for allowing some symbols in the first and last name field
 	$.validator.addMethod("noSpecialChars", 
         function(value, element, regexp) {
@@ -173,6 +204,7 @@ $(document).ready(function () {
 				maxlength: 4,
 				range: [1900,2100],
 				alphanumeric: true,
+				checkBirth: true,
                 required: true
             },
 			street: {

@@ -799,7 +799,7 @@ class Layout
 				</div>		
 				';
 		
-		$page = '<button class="btn btn-info">Class</button>';
+		$page = '<button class="btn btn-info" onclick="location.href=\'../classPage.php?classid=' . $class->getClassID() . '\';">Class</button>';
 		
 		$func = '
 			<tr class="searchable">

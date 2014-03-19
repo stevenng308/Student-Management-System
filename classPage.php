@@ -117,13 +117,13 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 				<tbody>
 					<?php 
 						$count = 0;
-						foreach ($database->query('SELECT * FROM enrolled WHERE classId = "' . <?php echo $classid; ?> . '"') as $row)
+						foreach ($database->query('SELECT * FROM enrolled WHERE classId = "' . $classid . '"') as $row)
 						{
-							$stmt =  $database->query('SELECT username, firstname, lastname FROM student WHERE accountID = "' . $row['teacherID'] . '"');
-							$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-							$classroom = new Classroom($row, $result, $database);
-							echo $layout->loadClassRow($classroom, $count, $session->getUserType());
-							$count++;
+							//$stmt =  $database->query('SELECT username, firstname, lastname FROM student WHERE accountID = "' . $row['teacherID'] . '"');
+							//$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+							//$classroom = new Classroom($row, $result, $database);
+							//echo $layout->loadClassRow($classroom, $count, $session->getUserType());
+							//$count++;
 						}
 					?>
 				</tbody>
