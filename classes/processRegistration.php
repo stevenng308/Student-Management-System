@@ -111,9 +111,13 @@ if (!empty($_POST['childrenID']))//if true begin inserting into parent student a
 {
 	foreach ($child_arr as $child_id)
 	{
-		$query = "INSERT INTO parent_student_assoc (studentID, role, guardianID)
+		$query = $database->query('SELECT studentID FROM student WHERE studentID = "' . $child_id .  '" LIMIT 1');
+		if ($query->rowcount() === 1)
+		{
+			$query = "INSERT INTO parent_student_assoc (studentID, role, guardianID)
 			VALUES ('" . $child_id . "', '" . $role . "','" . $account_id . "');";
-		$database->exec($query);
+			$database->exec($query);
+		}
 	}
 }
 ?>

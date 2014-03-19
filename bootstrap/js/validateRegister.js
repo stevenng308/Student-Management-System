@@ -332,6 +332,10 @@ $(document).ready(function () {
         }
     });
 	
+	$('#childrenID').keydown(function() {
+		$('#childrenID').valid();
+	});
+	
 	//handles the submit button onclick action. POSTs the form for processing and 
 	//Success: loads the page into the div where the form was before
 	//Fail: alerts the user that something is not correct

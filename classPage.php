@@ -98,13 +98,13 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 							Student ID
 						</th>
 						<th style="text-align: center;">
+							Username
+						</th>
+						<th style="text-align: center;">
 							First Name
 						</th>
 						<th style="text-align: center;">
 							Last Name
-						</th>
-						<th style="text-align: center;">
-							Username
 						</th>
 						<th class="no-sort" style="text-align: center;">
 							Message

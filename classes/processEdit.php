@@ -43,6 +43,15 @@ if ($newType != "Student")//true if the account being edited is not a student
 	$child_id = mysql_real_escape_string($_POST['childrenID']);
 	$child_arr = parseChildID($child_id); //store the parsed student id's into an array
 	$child_arr = array_unique($child_arr); //remove duplicates
+	foreach ($child_arr as $key => $child)
+	{
+		$query = $database->query('SELECT studentID FROM student WHERE studentID = "' . $child .  '" LIMIT 1');
+		if ($query->rowcount() !== 1)
+		{
+			unset($child_arr[$key]);
+		}
+	}
+	$child_arr = array_values($child_arr);
 }
 
 if (isset($_POST['status']))

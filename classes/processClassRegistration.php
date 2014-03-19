@@ -25,8 +25,10 @@ $student_arr = array_unique($student_arr);
 //begin inserting students into enrolled table
 foreach($student_arr as $key => $student)
 {
-	$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = "' . $student .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1');
-	if ($query->rowCount() == 0) //if true input does not exist.
+	$query = $database->query('(SELECT studentID FROM enrolled WHERE studentID = "' . $student .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1)
+								UNION (SELECT studentID FROM student WHERE studentID = "' . $student .  '" LIMIT 1)
+								');
+	if ($query->rowCount() === 1) //if true input does not exist.
 	{
 		$database->exec("INSERT INTO enrolled(classid, studentid) VALUES ('" . $_POST['classID'] . "', '" . $student . "')");
 	}
