@@ -7,7 +7,7 @@ var searchRequest = null;
 var userNames = '';
 
 	$("#username").autocomplete({
-		minLength: 2,
+		minLength: 1,
 		source: function(request, response) {
 			if (searchRequest !== null) {
 				searchRequest.abort();

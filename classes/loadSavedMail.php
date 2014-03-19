@@ -28,7 +28,8 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-$query = $database->query("SELECT * FROM email WHERE emailID = '" . $_GET['id'] . "'");
+$emailid = $_GET['id'] or die(header('Location: error.php'));
+$query = $database->query("SELECT * FROM email WHERE emailID = '" . $emailid . "'");
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 $email = new Email($result[0]);
 ?>

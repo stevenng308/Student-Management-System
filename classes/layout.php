@@ -1042,5 +1042,33 @@ class Layout
 		
 		return $func;
 	}
+	
+	public function loadRosterRow($id, $user, $first, $last, $modalNum)
+	{	
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $id . '">
+				</td>
+				<td style="text-align: center;">
+					' . $id . '
+				</td>
+				<td style="text-align: center;">
+					' . $user . '
+				</td>
+				<td style="text-align: center;">
+					' . $first . '
+				</td>
+				<td style="text-align: center;">
+					' . $last . '
+				</td>
+				<td style="text-align: center;">
+					<button class="btn btn-info">View</button>
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
 }
 ?>

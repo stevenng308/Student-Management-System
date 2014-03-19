@@ -37,6 +37,8 @@ $teacher = $query->fetchAll(PDO::FETCH_ASSOC);
 $classroom = new Classroom($result[0], $teacher, $database);
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->getCourseName() . ' &middot Class Page', '');
 ?>
+<!-- Custom CSS for the arrow buttons on the table columns to sort -->
+<link rel="stylesheet" type="text/css" href="bootstrap/css/dataTables.bootstrap.css">
 
 <!-- Begin page content -->
 <div class="container">
@@ -45,7 +47,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 			  <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
 			  <li><a href="#forum" data-toggle="tab">Forum</a></li>
 			  <li class="dropdown">
-				<a href="#" id="roster" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
 				<ul class="dropdown-menu" role="menu" aria-labelledby="roster">
 				  <li><a href="#register" tabindex="-1" data-toggle="tab">Register</a></li>
 				  <li><a href="#rosterList" tabindex="-1" data-toggle="tab">Manage</a></li>
@@ -86,7 +88,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="studentTable">
 				<div class="row">
 					<div class="col-xs-3 col-sm-1">
-						<button class="btn btn-danger btn-sm" onclick="">Del</button>
+						<button class="btn btn-danger btn-sm" onclick="unregister()">Del</button>
 					</div>
 				</div>
 				<thead>
@@ -107,9 +109,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 							Last Name
 						</th>
 						<th class="no-sort" style="text-align: center;">
-							Message
-						</th>
-						<th class="no-sort" style="text-align: center;">
 							Grades
 						</th>
 					</tr>
@@ -117,13 +116,11 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 				<tbody>
 					<?php 
 						$count = 0;
-						foreach ($database->query('SELECT * FROM enrolled WHERE classId = "' . $classid . '"') as $row)
+						foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
 						{
-							//$stmt =  $database->query('SELECT username, firstname, lastname FROM student WHERE accountID = "' . $row['teacherID'] . '"');
-							//$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-							//$classroom = new Classroom($row, $result, $database);
-							//echo $layout->loadClassRow($classroom, $count, $session->getUserType());
-							//$count++;
+							//var_dump($row);
+							echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $count);
+							$count++;
 						}
 					?>
 				</tbody>
@@ -144,7 +141,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
-<script>
+<script type="text/javascript" language="javascript" src="bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
+<script  type="text/javascript" charset="utf-8">
 $(document).ready(function () {
 	//rule for checking existence of studentID
 	$.validator.addMethod("checkStudentID", 
@@ -265,6 +264,7 @@ function registerStudents()
 				  alert("Registered.");
 				  //alert(data);
 				  $('#studentID').val("");
+				  location.reload();
 				}
 			  );
 		  return false;
@@ -288,6 +288,57 @@ $('#studentTable').dataTable(
 		'bSortable' : false,
 		'aTargets' : [ "no-sort" ]
 	}]
-});          
+});
+
+var values = 0; //global array of the id's values
+$('input[id^="delete"]').on('change', function() { //adds the values to the array called values
+    values = $('input:checked').map(function() {
+        return this.value;
+    }).get();
+    
+    //alert(values);
+});
+
+function unregister()
+{
+	if (!values)
+	{
+		alert("No students were selected.");
+	}
+	else
+	{
+		if (window.confirm("Do you want to unregister?"))
+		{
+			//alert(values);
+			//alert($('#box').val());
+			$.post(
+				'classes/unregisterStudents.php',
+				{
+					'checkbox' : values, 
+				},
+				function(data){
+				  //$("#mainDiv").html(data);
+				  location.reload();
+				  //$('#roster').toggleClass("active");
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			;//do nothing
+		}
+	}
+}
+
+function checkAll(source) {
+  var checkboxes = $('input[id^="delete"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked; //check all of them
+	values = $('input:checked').map(function() {
+        return this.value; //updating the global variable values
+    }).get();
+  }
+}          
 </script>
 </html>
