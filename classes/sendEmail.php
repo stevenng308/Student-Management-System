@@ -31,6 +31,7 @@ $user_arr = array_unique($user_arr); //remove duplicates
 
 $subject = htmlentities($_POST['subject'], ENT_QUOTES, 'UTF-8'); //need to make the message safe for storing in db. read htmlentities on their site
 $msg = htmlentities($_POST['message'], ENT_QUOTES, 'UTF-8');
+$error = ", username does not exist or is inactive. Message not sent to this user. \n----------------------------------------------------------\n" . $msg;
 //var_dump($user_arr);
 //var_dump($subject);
 //var_dump($msg);
@@ -55,6 +56,11 @@ foreach ($user_arr as $to)
 						VALUES('" . $to . "', '" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '1')");
 		$database->exec("INSERT INTO email(owner, dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
 						VALUES('" . $session->getUserName() . "', '" . $to . "', '" . $result[0]['firstname'] . "', '" . $result[0]['lastname'] . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $subject . "', '" . $msg . "', '2')");				
+	}
+	else
+	{
+		$database->exec("INSERT INTO email(owner, dest_username, dest_first, dest_last, from_username, from_first, from_last, date_sent, subject, msg_content, box) 
+						VALUES('" . $session->getUserName() . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $session->getUserName() . "', 'System', 'Msg', '" . $date . "', 'Cannot Send', '" . $to . $error . "', '1')");
 	}
 }
 $query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
