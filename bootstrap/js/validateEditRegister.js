@@ -151,7 +151,7 @@ $(document).ready(function () {
 			}
 			return result;
 		}, 
-        "Birthdate not valid"
+        "Birthdate not valid. Is month, date and year correct?"
     );
 	
 	//rule for allowing some symbols in the first and last name field
