@@ -122,6 +122,38 @@ $(document).ready(function () {
         "Birthdate does not exist. This year does not have this date"
     );
 	
+	//rule for checking date validity
+	$.validator.addMethod("checkDate", 
+        function(value, element) {
+			var result = false;
+			var current = new Date();
+			if (value <= current.getFullYear())
+			{
+				if ($('#month').val() <= current.getMonth() + 1)
+				{
+					if ($('#day').val() <= current.getDate())
+					{
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+				}
+				else
+				{
+					result = false;
+				}
+			}
+			else
+			{
+				result = false;
+			}
+			return result;
+		}, 
+        "Birthdate not valid"
+    );
+	
 	//rule for allowing some symbols in the first and last name field
 	$.validator.addMethod("noSpecialChars", 
         function(value, element, regexp) {
@@ -205,6 +237,7 @@ $(document).ready(function () {
 				range: [1900,2100],
 				alphanumeric: true,
 				checkBirth: true,
+				checkDate: true,
                 required: true
             },
 			street: {
