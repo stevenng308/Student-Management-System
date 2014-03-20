@@ -1088,7 +1088,7 @@ class Layout
 					<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>
 				</td>
 				<td style="text-align: center;">
-					<button type="button" class="btn btn-danger" onclick="location.href=\'\'">Edit/Delete</button>
+					<button type="button" class="btn btn-danger" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>
 				</td>
 				<td style="text-align: center;">
 					' . $grade . '
