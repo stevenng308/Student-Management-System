@@ -1043,8 +1043,16 @@ class Layout
 		return $func;
 	}
 	
-	public function loadRosterRow($id, $user, $first, $last, $class, $modalNum)
-	{	
+	public function loadRosterRow($id, $user, $first, $last, $grade, $class, $modalNum)
+	{	$gradeRow = '';
+		for ($j = 0; $j < count($grade); $j++)
+		{
+			$gradeRow = $gradeRow . "<tr>
+										<td>" . $grade[$j]['label'] . "</td>
+										<td>" . $grade[$j]['grade'] . "</td>
+									</tr> ";
+		}
+		$change = '<button type="button" class="btn btn-danger" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
 		$grade =  '
 					<button class="btn btn-info" data-toggle="modal" data-target="#myModal' . $modalNum . '">
 						View
@@ -1058,9 +1066,17 @@ class Layout
 							<h3 class="modal-title" id="myModalLabel" align="center">' . $user . ' &lt;' . $first . ' ' . $last . '&gt;' . ' Grade</h3>
 						  </div>
 						  <div class="modal-body">
+							<div class="table-responsive">
+								<table class="table table-condensed">
+									<tbody> 
+										' . $gradeRow . '
+									</tbody>
+								</table>
+							</div>
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							' . $change . '
 						  </div>
 						</div>
 					  </div>
@@ -1088,7 +1104,7 @@ class Layout
 					<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>
 				</td>
 				<td style="text-align: center;">
-					<button type="button" class="btn btn-danger" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>
+					' .  $change . '
 				</td>
 				<td style="text-align: center;">
 					' . $grade . '

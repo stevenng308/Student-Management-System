@@ -125,7 +125,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 						foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
 						{
 							//var_dump($row);
-							echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $classid, $count);
+							$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");
+							$grade = $query->fetchAll(PDO::FETCH_ASSOC);
+							echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $grade, $classid, $count);
 							$count++;
 						}
 					?>
