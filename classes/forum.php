@@ -39,9 +39,16 @@ $class= new Classroom($result[0], $teach, $database);
 					<div class="col-xs-3 col-sm-1">
 						<button class="btn btn-primary btn-sm" onclick="">New Topic</button>
 					</div>
-					<div class="col-xs-3 col-sm-1">
-						<button class="btn btn-danger btn-sm" onclick="">Del</button>
-					</div>
+					<?php
+					if ($_SESSION['sess_role'] != 3)
+					{
+						echo '
+							<div class="col-xs-3 col-sm-1">
+								<button class="btn btn-danger btn-sm" onclick="">Del</button>
+							</div>
+							';
+					}
+					?>
 				</div>
 				<thead>
 					<tr>

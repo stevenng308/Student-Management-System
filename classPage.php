@@ -41,7 +41,30 @@ if (!$classroom->getStatus() && $_SESSION['sess_role'] == 3)
 		echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
 		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
 		style="text-align: center; vertical-align: middle"><p>Classroom is inactive. You cannot view the classroom\'s page.</p></div></body></html>');
-} 
+}
+if($_SESSION['sess_role'] == 3)
+{
+	$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = ' . $session->getID() . ' AND classID = ' . $classid . ' LIMIT 1');
+	if ($query->rowCount() == 0)
+	{
+		header('Refresh: 1.5; url=index.php');
+		echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
+	}
+}	
+if($_SESSION['sess_role'] == 2)
+{
+	$query = $database->query('SELECT teacherID FROM classroom WHERE teacherID = ' . $session->getID() . ' AND classID = ' .  $classid . ' LIMIT 1');
+	if ($query->rowCount() == 0)
+	{
+		header('Refresh: 1.5; url=index.php');
+		echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
+	}
+}	
+	
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->getCourseNumber() . ' ' . $classroom->getCourseName() . ' &middot Class Page', '');
 ?>
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
