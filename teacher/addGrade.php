@@ -129,7 +129,7 @@ $(document).ready(function () {
 	//rule for allowing spaces but no symbols
 	$.validator.addMethod("noSpecial", 
         function(value, element, regexp) {
-			var regex = new RegExp("^[A-Z0-9]+$");
+			var regex = new RegExp("^[A-Z0-9.]+$");
 			var key = value;
 			
 			if (!regex.test(key)) {
@@ -163,7 +163,7 @@ $(document).ready(function () {
 			},
 			grade0: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 
@@ -174,7 +174,7 @@ $(document).ready(function () {
 			},
 			grade1: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -185,7 +185,7 @@ $(document).ready(function () {
 			},
 			grade2: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -196,7 +196,7 @@ $(document).ready(function () {
 			},
 			grade3: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -207,7 +207,7 @@ $(document).ready(function () {
 			},
 			grade4: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -218,7 +218,7 @@ $(document).ready(function () {
 			},
 			grade5: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -229,7 +229,7 @@ $(document).ready(function () {
 			},
 			grade6: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -240,7 +240,7 @@ $(document).ready(function () {
 			},
 			grade7: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -251,7 +251,7 @@ $(document).ready(function () {
 			},
 			grade8: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -262,7 +262,7 @@ $(document).ready(function () {
 			},
 			grade9: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			},
 			
@@ -273,7 +273,7 @@ $(document).ready(function () {
 			},
 			grade10: {
 				required: true,
-				maxlength: 3,
+				maxlength: 6,
 				noSpecial: true
 			}
 		},

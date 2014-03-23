@@ -55,7 +55,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 <script src="bootstrap/js/loadInPage.js"></script>
 <!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>-->
-<script type="text/javascript">
+<script type="text/javascript" charset="utf-8">
 $(window).load(function(){
 	loadIn('inbox'); //load inbox first when navigating to email
 	//loadIn('compose');

@@ -1114,5 +1114,22 @@ class Layout
 		
 		return $func;
 	}
+	
+	public function loadGradeRow($id, $user, $first, $last, $grade)
+	{
+		$name = $first . ' ' . $last;
+		$gradeRow = '';
+		for ($j = 0; $j < count($grade); $j++)
+		{
+			$gradeRow = $gradeRow . "<tr class='searchable'>
+										<td style='text-align: center;'>" . $id . "</td>
+										<td style='text-align: center;'>" . $user . "</td>
+										<td style='text-align: center;'>" . $name . "</td>
+										<td style='text-align: center;'>" . $grade[$j]['label'] . "</td>
+										<td style='text-align: center;'>" . $grade[$j]['grade'] . "</td>
+									</tr> ";
+		}
+		return $gradeRow;
+	}
 }
 ?>

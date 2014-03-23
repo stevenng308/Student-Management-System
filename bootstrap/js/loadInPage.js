@@ -47,3 +47,15 @@ function loadSavedMail(box, email)
 	lastBtn = 'compose';
 	$('#mainDiv').load('classes/loadSavedMail.php?id=' + email);
 }
+
+function loadAllGrades(page, id)
+{
+	var tempPage = page + id;
+	$('#allGrades').load(tempPage);
+}
+
+function loadForum(page, id)
+{
+	var tempPage = page + id;
+	$('#forum').load(tempPage);
+}

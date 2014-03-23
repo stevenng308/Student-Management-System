@@ -1,6 +1,6 @@
 <!-- Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- process registration forms -->
+<!-- process adding grades -->
 
 <?php
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
