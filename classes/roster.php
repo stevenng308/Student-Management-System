@@ -26,80 +26,120 @@ $session = new Session($_SESSION, $database);
 $classid = $_GET['classid'] or die(header('Location: error.php'));
 $query = $database->query('SELECT * FROM classroom WHERE classID = "' . $classid . '"');
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
-$stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $result[0]['teacherID'] . '"');
-$teach = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$class= new Classroom($result[0], $teach, $database);
+//var_dump($result);
+$query =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $result[0]['teacherID'] . '"');
+$teacher = $query->fetchAll(PDO::FETCH_ASSOC);
+$classroom = new Classroom($result[0], $teacher, $database);
 ?>
-<div class="container">
-	<div class="row">	
-		<div>
-			<h3 align="center"><?php echo $class->getCourseNumber() . " " . $class->getCourseName(); ?> - All Grades</h3>
-			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="gradeTable">
-				<div class="row">
-					<div class="col-xs-3 col-sm-1">
-						<button class="btn btn-danger btn-sm" onclick="deleteAllGrades(<?php echo $classid ?>)">Del All</button>
-					</div>
-				</div>
-				<thead>
-					<tr>
-						<th style="text-align: center;">
-							Student ID
-						</th>
-						<th style="text-align: center;">
-							Username
-						</th>
-						<th style="text-align: center;">
-							Name
-						</th>
-						<th style="text-align: center;">
-							Label
-						</th>
-						<th style="text-align: center;">
-							Grade
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-						foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
-						{
-							$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");
-							$grade = $query->fetchAll(PDO::FETCH_ASSOC);
-							//var_dump($grade);
-							echo $layout->loadGradeRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $grade);
-						}
-					?>
-				</tbody>
-			</table>
+<div class="table-responsive">
+	<h3 align="center"><?php echo $classroom->getCourseNumber() . " " . $classroom->getCourseName(); ?> - Roster List</h3>
+	<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="studentTable">
+		<div class="row">
+			<div class="col-xs-3 col-sm-1">
+				<button class="btn btn-danger btn-sm" onclick="unregister()">Del</button>
+			</div>
 		</div>
-	</div>
+		<thead>
+			<tr>
+				<th class="no-sort" style="text-align: center;">
+					<input type="checkbox" onClick="checkAll(this)" />
+				</th>
+				<th style="text-align: center;">
+					Student ID
+				</th>
+				<th style="text-align: center;">
+					Username
+				</th>
+				<th style="text-align: center;">
+					First Name
+				</th>
+				<th style="text-align: center;">
+					Last Name
+				</th>
+				<th class="no-sort" style="text-align: center;">
+					Grades
+				</th>
+				<th class="no-sort" style="text-align: center;">
+					Grades
+				</th>
+				<th class="no-sort" style="text-align: center;">
+					Grades
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php 
+				$count = 0;
+				foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
+				{
+					//var_dump($row);
+					$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");
+					$grade = $query->fetchAll(PDO::FETCH_ASSOC);
+					echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $grade, $classid, $count);
+					$count++;
+				}
+			?>
+		</tbody>
+	</table>
 </div>
 <script type="text/javascript" language="javascript" charset="utf-8">
-$('#gradeTable').dataTable(
+$('#studentTable').dataTable(
 {
-	"aaSorting": [[0, 'asc']],
+	"aaSorting": [[1, 'asc']],
 	"aoColumnDefs" : [ {
 		'bSortable' : false,
 		'aTargets' : [ "no-sort" ]
 	}]
 });
 
-function deleteAllGrades(id)
+var values = 0; //global array of the id's values
+$('input[id^="delete"]').on('change', function() { //adds the values to the array called values
+    values = $('input:checked').map(function() {
+        return this.value;
+    }).get();
+    
+    //alert(values);
+});
+
+function unregister()
 {
-	if (window.confirm("Do you want to delete?"))
+	if (!values)
 	{
-		$.post(
-			'classes/deleteGrades.php',
-			{
-				'class' : id
-			},
-			function(data){
-			  //$("#result").html(data);
-			  //console.log(data);
-			  loadAllGrades('classes/allGrades.php?classid=', <?php echo $classid; ?>);
-			}
-		  );
-		return false;
+		alert("No students were selected.");
+	}
+	else
+	{
+		if (window.confirm("Do you want to unregister?"))
+		{
+			//alert(values);
+			//alert($('#box').val());
+			$.post(
+				'classes/unregisterStudents.php',
+				{
+					'checkbox' : values, 
+				},
+				function(data){
+				  //$("#mainDiv").html(data);
+				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>);
+				  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			;//do nothing
+		}
 	}
 }
+
+function checkAll(source) {
+  var checkboxes = $('input[id^="delete"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked; //check all of them
+	values = $('input:checked').map(function() {
+        return this.value; //updating the global variable values
+    }).get();
+  }
+}   
 </script>

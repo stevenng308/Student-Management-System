@@ -96,7 +96,8 @@ function deleteAllGrades(id)
 			function(data){
 			  //$("#result").html(data);
 			  //console.log(data);
-			  loadAllGrades('classes/allGrades.php?classid=', <?php echo $classid; ?>);
+			  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
+			  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>);
 			}
 		  );
 		return false;

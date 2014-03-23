@@ -48,14 +48,8 @@ function loadSavedMail(box, email)
 	$('#mainDiv').load('classes/loadSavedMail.php?id=' + email);
 }
 
-function loadAllGrades(page, id)
+function loadClassPages(div, page, id)
 {
 	var tempPage = page + id;
-	$('#allGrades').load(tempPage);
-}
-
-function loadForum(page, id)
-{
-	var tempPage = page + id;
-	$('#forum').load(tempPage);
+	$(div).load(tempPage);
 }

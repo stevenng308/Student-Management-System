@@ -53,17 +53,23 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 		<ul id="myTab" class="nav nav-tabs">
 			  <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
 			  <li><a href="#forum" data-toggle="tab">Forum</a></li>
-			  <li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
-				<ul class="dropdown-menu" role="menu" aria-labelledby="roster">
-				  <li><a href="#register" tabindex="-1" data-toggle="tab">Register</a></li>
-				  <li><a href="#rosterList" tabindex="-1" data-toggle="tab">Manage</a></li>
-				</ul>
-			  </li>
 			  <?php
 				if ($_SESSION['sess_role'] != 3)
 				{
-					echo '<li><a href="#allGrades" data-toggle="tab">All Grades</a></li>';
+					echo '
+						 <li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
+							<ul class="dropdown-menu" role="menu" aria-labelledby="roster">
+							  <li><a href="#register" tabindex="-1" data-toggle="tab">Register</a></li>
+							  <li><a href="#rosterList" tabindex="-1" data-toggle="tab">Manage</a></li>
+							</ul>
+						  </li>
+						 <li><a href="#allGrades" data-toggle="tab">All Grades</a></li>
+						 ';
+				}
+				else
+				{
+					echo '<li><a href="#grades" data-toggle="tab">Grades</a></li>';
 				}
 			  ?>
 		</ul>
@@ -71,11 +77,11 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 	  <div class="tab-pane fade in active" id="home">
 		<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
 	  </div>
-	  <div class="tab-pane fade" id="profile">
-		<p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
-	  </div>
 	  <div class="tab-pane fade" id="forum">
-		
+		<!-- ajax load content -->
+	  </div>
+	  <div class="tab-pane fade" id="grades">
+		<!-- ajax load content -->
 	  </div>
 	  <div class="tab-pane fade" id="register">
 		<div class="jumbotron">
@@ -89,60 +95,10 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 		</div>
 	  </div>
 	  <div class="tab-pane fade" id="rosterList">
-		<div class="table-responsive">
-			<h3 align="center"><?php echo $classroom->getCourseNumber() . " " . $classroom->getCourseName(); ?> - Roster List</h3>
-			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="studentTable">
-				<div class="row">
-					<div class="col-xs-3 col-sm-1">
-						<button class="btn btn-danger btn-sm" onclick="unregister()">Del</button>
-					</div>
-				</div>
-				<thead>
-					<tr>
-						<th class="no-sort" style="text-align: center;">
-							<input type="checkbox" onClick="checkAll(this)" />
-						</th>
-						<th style="text-align: center;">
-							Student ID
-						</th>
-						<th style="text-align: center;">
-							Username
-						</th>
-						<th style="text-align: center;">
-							First Name
-						</th>
-						<th style="text-align: center;">
-							Last Name
-						</th>
-						<th class="no-sort" style="text-align: center;">
-							Grades
-						</th>
-						<th class="no-sort" style="text-align: center;">
-							Grades
-						</th>
-						<th class="no-sort" style="text-align: center;">
-							Grades
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php 
-						$count = 0;
-						foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
-						{
-							//var_dump($row);
-							$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");
-							$grade = $query->fetchAll(PDO::FETCH_ASSOC);
-							echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $grade, $classid, $count);
-							$count++;
-						}
-					?>
-				</tbody>
-			</table>
-		</div>
+		<!-- ajax load content -->
 	  </div>
 	  <div class="tab-pane fade" id="allGrades">
-		
+		<!-- ajax load content -->
 	  </div>
 	</div>
 	</div><!-- /example -->
@@ -157,11 +113,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script type="text/javascript" language="javascript" src="bootstrap/js/loadInPage.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
-	loadForum('classes/forum.php?classid=', <?php echo $classid; ?>); //load forum first when navigating to class page
+	loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>); //load forum first when navigating to class page
 	var role = <?php echo $_SESSION['sess_role']; ?>;
 	if (role != 3)
 	{
-		loadAllGrades('classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
+		loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //load the class roster
+		loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
 	}
 });
 
@@ -300,66 +257,6 @@ function registerStudents()
 		alert('Please correct the errors indicated.');
 		return false;
 	}
-}
-
-$('#studentTable').dataTable(
-{
-	"aaSorting": [[1, 'asc']],
-	"aoColumnDefs" : [ {
-		'bSortable' : false,
-		'aTargets' : [ "no-sort" ]
-	}]
-});
-
-var values = 0; //global array of the id's values
-$('input[id^="delete"]').on('change', function() { //adds the values to the array called values
-    values = $('input:checked').map(function() {
-        return this.value;
-    }).get();
-    
-    //alert(values);
-});
-
-function unregister()
-{
-	if (!values)
-	{
-		alert("No students were selected.");
-	}
-	else
-	{
-		if (window.confirm("Do you want to unregister?"))
-		{
-			//alert(values);
-			//alert($('#box').val());
-			$.post(
-				'classes/unregisterStudents.php',
-				{
-					'checkbox' : values, 
-				},
-				function(data){
-				  //$("#mainDiv").html(data);
-				  location.reload();
-				  //$('#roster').toggleClass("active");
-				}
-			  );
-		  return false;
-		}
-		else
-		{
-			;//do nothing
-		}
-	}
-}
-
-function checkAll(source) {
-  var checkboxes = $('input[id^="delete"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked; //check all of them
-	values = $('input:checked').map(function() {
-        return this.value; //updating the global variable values
-    }).get();
-  }
-}          
+}       
 </script>
 </html>
