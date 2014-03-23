@@ -170,7 +170,7 @@ $(document).ready(function () {
 			});
 			return result; 
 		}, 
-		"The rightmost Student ID does not exist. Please make sure the Student ID is correct and that the student does have an ID number."
+		"The rightmost Student ID does not exist. Please make sure the Student ID is correct, the student does have an ID number and the account is active."
 	);
 	
 	//rule for allowing some symbols in the first and last name field

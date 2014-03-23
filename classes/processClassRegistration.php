@@ -26,7 +26,7 @@ $student_arr = array_unique($student_arr);
 foreach($student_arr as $key => $student)
 {
 	$query = $database->query('(SELECT studentID FROM enrolled WHERE studentID = "' . $student .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1)
-								UNION (SELECT accountID FROM student WHERE studentID = "' . $student .  '" LIMIT 1)
+								UNION (SELECT accountID FROM student WHERE studentID = "' . $student .  '" AND status = 1 LIMIT 1)
 								');
 	if ($query->rowCount() === 1) //if true input does exist and not already registered.
 	{
