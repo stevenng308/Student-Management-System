@@ -841,12 +841,12 @@ class Layout
 			$edit = '<button type="button" class="btn btn-secondary" onclick="location.href=\'editStudent.php?accountid=' . $user->getUserID() . '&role=' . $user->getRole() . '\';">Add Money</button>';
 			$view = '
 					<!-- Button trigger modal -->
-					<button class="btn btn-primary " data-toggle="modal" data-target="#myModal' . $modalNum . '">
+					<button class="btn btn-primary " data-toggle="modal" data-target="#lunchModal' . $modalNum . '">
 					 Add to Balance
 					</button>
 
 					<!-- Modal -->
-					<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal fade" id="lunchModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
 						<div class="modal-content">
 						  <div class="modal-header">
