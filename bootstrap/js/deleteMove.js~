@@ -110,34 +110,6 @@ function moveEmail(page)
 	}
 }
 
-function deleteMessage(id) //deletes when editing the message
-{
-	var tempArray = [id]; //need to store in the array since the php script handling deletion is accepting values only in arrays
-	if (window.confirm("Do you want to delete?"))
-	{
-		//alert(values);
-		$.post(
-			'classes/deleteMessage.php',
-			{
-				'test' : tempArray
-			},
-			function(data){
-			  //$('.modal-backdrop').remove();
-			  //$("#mainDiv").html(data);
-			  //console.log(data);
-			  //alert(data);
-			  $('.modal-backdrop').remove();;
-			  loadIn(page);
-			}
-		  );
-	  return false;
-	}
-	else
-	{
-		;//do nothing
-	}
-}
-
 function checkAll(source) {
   var checkboxes = $('input[id^="delete"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
   for(var i=0, n=checkboxes.length;i<n;i++) {

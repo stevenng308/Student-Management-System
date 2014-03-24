@@ -1190,7 +1190,8 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" style="float:right" class="btn btn-danger" data-toggle="modal" data-target="#myModal' . $modalNum . '" onclick="deleteMssg(' . $mssg->getID() . ')">Delete</button>
+							<button type="button" style="float:right" class="btn btn-primary" data-dismiss="modal">Submit</button>							
+							<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#myModal' . $modalNum . '" onclick="deleteMessage(' . $mssg->getID() . ')">Delete</button>
 						  </div>
 						</div>
 					  </div>
@@ -1209,7 +1210,7 @@ class Layout
 			<tr class="searchable">
 				<td style="text-align: center;">
 					<pre>' . $mssg->getMessage() . '</pre>
-					<p>' . $edt . ' ' . $dlt . ' </p>
+					<p>' . $edt . '</p>
 					
 				</td>
 				<td>
@@ -1225,27 +1226,6 @@ class Layout
 	}
 
 
-	public function editMessage(Message $message, $modalNum)
-	{	
-		$func = '
-			<tr class="searchable">
-				<td style="text-align: center;">
-					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $mail->getID() . '">
-				</td>
-				<td style="text-align: center;">
-					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
-				</td>
-				<td>
-					<button id="loadSavedMail" class="btn btn-link" onclick="loadSavedMail(\'' . $box . '\', ' . $mail->getID() . ')">' . $mail->getSubjectFormatted() . '</button>
-				</td>
-				<td>
-					' . $mail->getDateFormatted() . '
-				</td>
-			</tr>
-		';
-		
-		return $func;
-	}
 
 
 

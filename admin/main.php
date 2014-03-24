@@ -81,7 +81,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	</div>
 </div>
 
-
+<script type="text/javascript" language="javascript" src="bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="bootstrap/js/deleteMove.js"></script>
 
 
 
