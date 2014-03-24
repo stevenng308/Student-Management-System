@@ -1186,7 +1186,7 @@ class Layout
 							<h3 class="modal-title" id="myModalLabel" align="center">Edit Message</h3>
 						  </div>
 						  <div class="modal-body">
-							<pre>' . $mssg->getMessage() . '</pre>
+							<pre><textarea id="message" name="message" class="messageBoard">' . $mssg->getMessage() . '</textarea></pre>
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -1217,6 +1217,29 @@ class Layout
 				</td>
 				<td>
 					' . $mssg->getDateFormatted() . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+
+
+	public function editMessage(Message $message, $modalNum)
+	{	
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $mail->getID() . '">
+				</td>
+				<td style="text-align: center;">
+					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
+				</td>
+				<td>
+					<button id="loadSavedMail" class="btn btn-link" onclick="loadSavedMail(\'' . $box . '\', ' . $mail->getID() . ')">' . $mail->getSubjectFormatted() . '</button>
+				</td>
+				<td>
+					' . $mail->getDateFormatted() . '
 				</td>
 			</tr>
 		';
