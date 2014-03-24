@@ -1131,5 +1131,30 @@ class Layout
 		}
 		return $gradeRow;
 	}
+	
+	public function loadTopicRow($topic, $num)
+	{
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					<input name="delete" id="remove' . $num . '" type="checkbox" value="' . $topic->getTopicID() . '">
+				</td>
+				<td style="text-align: center;">
+					<button class="btn btn-link" onclick="">' . $topic->getTopicSubjectFormatted() . '</button>
+				</td>
+				<td style="text-align: center;">
+					' . $topic->getAuthorUser() . ' &lt;' . $topic->getAuthorFirst() . ' ' . $topic->getAuthorLast() . '&gt;' . '
+				</td>
+				<td style="text-align: center;">
+					' . $topic->getNumMsgs() . '
+				</td>
+				<td style="text-align: center;">
+					' . $topic->getLastPostDate() . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
 }
 ?>

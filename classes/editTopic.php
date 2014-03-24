@@ -1,0 +1,77 @@
+<?php
+/*Student Management System -->
+<!-- Author: Steven Ng -->
+<!-- process deleting topics*/
+require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
+spl_autoload_register(array('AutoLoader', 'autoLoad'));
+if(!isset($_SESSION)){
+	session_start();
+}
+if(!(empty($_SESSION)))
+{
+	if($_SESSION['sess_role'] == 4 || $_SESSION['sess_role'] == 3)
+	{
+		header('Refresh: 1.5; url=index.php');
+		echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
+	}
+}
+else
+{
+	header('Location: ../index.php');
+}
+//$database = new Database();
+$database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
+$session = new Session($_SESSION, $database);
+//var_dump($_POST);
+//var_dump($session);
+$topicid = $_POST['checkbox'][0];
+$classid = $_POST['classID'];
+$query = $database->query("SELECT * FROM forum WHERE topicID = " . $topicid . "");
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
+$num = $database->query("SELECT * FROM response WHERE topicid = " . $topicid . "");
+$topic = new Topic($result[0], $num->rowCount());
+?>
+<div class="container jumbotron">
+	<ol class="breadcrumb">
+	  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>)">Discussion Topics</a></li>
+	  <li class="active">Edit Topic</a></li>
+	</ol>
+	<form name="compose" id="topic-form" action="#" method="post">
+		<div class="input-group">
+		  <span class="input-group-addon">Subject:</span>
+		  <input id="subject" name="subject" type="text" class="form-control" value="<?php echo $topic->getTopicSubject(); ?>"placeholder="Discussion Topic">
+		</div>
+
+		<pre><textarea id="message" name="message" class="emailMessage"><?php echo $topic->getTopicMessage(); ?></textarea></pre>
+		<input name="id" value="<?php echo $topicid; ?>" hidden="hidden"/>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="send">Send</button>
+	</form>
+</div>
+
+<script type="text/javascript" language="javascript" charset="utf-8">
+$(function () {
+	$('#topic-form').submit(function () {
+		if(document.getElementById("message").value && document.getElementById("subject").value) {
+			//alert('Successful Validation');
+			$.post(
+				'classes/processEditTopic.php',
+				$(this).serialize(),
+				function(data){
+				  //$("#forum").html(data);
+				  //console.log(data);
+				  alert("Discussion Topic Edited.");
+				  loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			alert('Please include a subject and message.');
+			return false;
+		}
+	});
+});
+</script>

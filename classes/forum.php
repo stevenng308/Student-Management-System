@@ -18,17 +18,25 @@ if(!(empty($_SESSION)))
 }
 else
 {
-	header('Location: index.php');
+	header('Location: ../index.php');
 }
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-$classid = $_GET['classid'] or die(header('Location: error.php'));
+if ($session->getUserType() == 1)
+{
+	$header = "Location: ../admin/error.php";
+}
+else
+{
+	$header = "Location: error.php";
+}
+$classid = $_GET['classid'] or die(header($header));
 $query = $database->query('SELECT * FROM classroom WHERE classID = "' . $classid . '"');
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 $stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $result[0]['teacherID'] . '"');
 $teach = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$class= new Classroom($result[0], $teach, $database);
+$class = new Classroom($result[0], $teach, $database);
 ?>
 <div class="container">
 	<div class="row">	
@@ -36,15 +44,16 @@ $class= new Classroom($result[0], $teach, $database);
 			<h3 align="center"><?php echo $class->getCourseNumber() . " " . $class->getCourseName(); ?> - Discussion Topics</h3>
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="forumTable">
 				<div class="row">
-					<div class="col-xs-3 col-sm-1">
-						<button class="btn btn-primary btn-sm" onclick="">New Topic</button>
-					</div>
+					<div class="col-xs-3 col-md-6">
+						<button class="btn btn-primary btn-sm" onclick="loadClassPages('#forum' , 'classes/forumForm.php?classid=', <?php echo $classid; ?>)">New Topic</button>
+					
 					<?php
 					if ($_SESSION['sess_role'] != 3)
 					{
 						echo '
-							<div class="col-xs-3 col-sm-1">
-								<button class="btn btn-danger btn-sm" onclick="">Del</button>
+							
+								<button class="btn btn-info btn-sm" onclick="editTopic()">Edit</button>
+								<button class="btn btn-danger btn-sm" onclick="deleteTopic()">Del</button>
 							</div>
 							';
 					}
@@ -53,7 +62,7 @@ $class= new Classroom($result[0], $teach, $database);
 				<thead>
 					<tr>
 						<th class="no-sort" style="text-align: center;">
-							<input type="checkbox" onClick="checkAll(this)" />
+							<input type="checkbox" onClick="checkAllForum(this)" />
 						</th>
 						<th style="text-align: center;">
 							Topic
@@ -70,7 +79,17 @@ $class= new Classroom($result[0], $teach, $database);
 					</tr>
 				</thead>
 				<tbody>
-				
+					<?php
+					$count = 0;
+						foreach ($database->query("SELECT * FROM forum WHERE forumName = '" . $class->getForumName() . "'") as $row)
+						{
+							$num = $database->query("SELECT * FROM response WHERE topicid = " . $row['topicID'] . "");
+							$topic = new Topic($row, $num->rowCount());
+							//var_dump($email);
+							echo $layout->loadTopicRow($topic, $count);
+							$count++;
+						}
+					?>
 				</tbody>
 			</table>
 		</div>
@@ -85,4 +104,90 @@ $('#forumTable').dataTable(
 		'aTargets' : [ "no-sort" ]
 	}]
 });
+
+var vals = 0; //global array of the id's values
+$('input[id^="remove"]').on('change', function() { //adds the values to the array called vals
+    vals = $('input:checked').map(function() {
+        return this.value;
+    }).get();
+    
+    //alert(vals);
+});
+
+function checkAllForum(source) {
+  var checkboxes = $('input[id^="remove"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked; //check all of them
+	vals = $('input:checked').map(function() {
+        return this.value; //updating the global variable values
+    }).get();
+  }
+}
+
+function deleteTopic()
+{
+	if (!vals)
+	{
+		alert("No topics were selected.");
+	}
+	else
+	{
+		if (window.confirm("Do you want to delete?"))
+		{
+			//alert(values);
+			$.post(
+				'classes/deleteTopic.php',
+				{
+					'checkbox' : vals, //sending the values
+				},
+				function(data){
+				  //$("#forum").html(data);
+				  //console.log(data);
+				  loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			;//do nothing
+		}
+	}
+} 
+
+function editTopic()
+{
+	if (!vals)
+	{
+		alert("No topics were selected.");
+	}
+	else if (vals.length > 1) //select only one
+	{
+		alert("Select one discussion topic to edit.");
+	}
+	else
+	{
+		if (window.confirm("Do you want to edit?"))
+		{
+			//alert(values);
+			$.post(
+				'classes/editTopic.php',
+				{
+					'checkbox' : vals, //sending the values
+					'classID' : <?php echo $classid; ?>
+				},
+				function(data){
+				  $("#forum").html(data);
+				  //console.log(data);
+				  //loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+				}
+			  );
+		  return false;
+		}
+		else
+		{
+			;//do nothing
+		}
+	}
+} 
 </script>
