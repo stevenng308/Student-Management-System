@@ -511,7 +511,7 @@ class Layout
 										<tr>
 											<td>Birthdate</td>
 											<td>
-												' . $user->getMonth() . '-' . $user->getDay() . '-' . $user->getYear() . '
+												' . $user->getDOBFormatted() . '
 											</td>
 										</tr>
 										<tr>
@@ -627,7 +627,7 @@ class Layout
 										<tr>
 											<td>Birthdate</td>
 											<td>
-												' . $user->getMonth() . '-' . $user->getDay() . '-' . $user->getYear() . '
+												' . $user->getDOBFormatted() . '
 											</td>
 										</tr>
 										<tr>

@@ -50,6 +50,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 ?>
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/register.css" rel="stylesheet">
+	<link href="../bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	<link href="../bootstrap/css/jquery.ui.timepicker.css" rel="stylesheet">
+	
 	<div class="formDiv" id="result">
 	<form name ="register" id="register-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading">Personal Information</h2>
@@ -59,24 +62,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 		<div class="control-group">
 			<input type="text" class="form-control" name="lastname" id = "lastname" value="<?php echo $user->getLastName(); ?>"/>
 		</div>
-		<br />
-		<label for="birthday">Birthday Information</label>
-		<div class="row">
-			<div class="col-xs-6 col-md-4">
-				<div class="control-group">
-					<input type="text" class="form-control" name="month" id="month" value="<?php echo $user->getMonth(); ?>"/>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-4">
-				<div class="control-group">
-					<input type="text" class="form-control" name="day" id="day" value="<?php echo $user->getDay(); ?>"/>
-				</div>
-			</div>
-			<div class="col-xs-6 col-md-4">
-				<div class="control-group">
-					<input type="text" class="form-control" name="year" id="year" value="<?php echo $user->getYear(); ?>"/>
-				</div>
-			</div>
+		<div class="control-group">
+			<input type="text" class="form-control date" name="birthDate" id="birthDate" value="<?php echo $user->getDOBFormatted(); ?>" placeholder="Birthday"/>
 		</div>
 		<br />
 		<div class="control-group">
@@ -216,5 +203,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Guardi
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<script src="../bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
+<script src="../bootstrap/js/jquery.ui.timepicker.js"></script>
 <script src="../bootstrap/js/validateEditRegister.js"></script>
 </html>

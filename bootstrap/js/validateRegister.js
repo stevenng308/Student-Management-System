@@ -3,6 +3,23 @@
 * Javascript to handle validating registration form
 */
 $(document).ready(function () {
+	$("#birthDate").datepicker({
+		maxDate: 0,
+		changeMonth: true,
+		changeYear: true,
+		yearRange: "1900:2100",
+		onSelect: function() { //after selection focus on that input box so validation can refresh
+			this.focus();
+		},
+		onClose: function() {
+			$('#street').focus();
+		}
+	});
+	
+	$('.date').keydown(function() { //disable keyboard input ont he date fields
+		return false;
+	});
+	
 	//rule for checking password confirmation
 	$.validator.addMethod("valueNotEquals", function(value, element, arg){
 		return arg != value;
@@ -62,7 +79,7 @@ $(document).ready(function () {
         "Email has been registered. Please make sure the User you are trying to register is not already registered."
     );
 	
-	//rule for checking email uniqueness
+	//rule for checking if student ID exist
 	$.validator.addMethod("checkStudentID", 
         function(value, element) {
             var result = false;
@@ -89,67 +106,31 @@ $(document).ready(function () {
         "The rightmost Student ID does not exist. Please make sure the student you are trying to associate with has been created and has a Student ID number."
     );
 	
-	//rule for checking birthdate validity
-	$.validator.addMethod("checkBirth", 
+	//rule for checking if student ID is unique
+	$.validator.addMethod("checkStudentIDUnique", 
         function(value, element) {
             var result = false;
             $.ajax({
                 type:"POST",
                 async: false,
-                url: "../classes/checkBirthdate.php", // script to validate in server side
-                data: {
-					year: value,
-					month: $('#month').val(),
-					day: $('#day').val()
-				},
+                url: "../classes/checkStudentID.php", // script to validate in server side
+                data: {childrenID: value},
                 success: function(data) {
 					//alert(data);
-					if (data.match(/true/) || value === email)
+					if (data.match(/true/))
 					{
-						result = true;
+						result = false;
 					}
 					else
 					{
-						result = false;
+						result = true;
 					}
                     //result = (data) ? true : false;
                 }
             });
             return result; 
         }, 
-        "Birthdate does not exist. This year does not have this date"
-    );
-	
-	//rule for checking date validity
-	$.validator.addMethod("checkDate", 
-        function(value, element) {
-			var result = false;
-			var current = new Date();
-			if (value <= current.getFullYear())
-			{
-				if ($('#month').val() <= current.getMonth() + 1)
-				{
-					if ($('#day').val() <= current.getDate())
-					{
-						result = true;
-					}
-					else
-					{
-						result = false;
-					}
-				}
-				else
-				{
-					result = false;
-				}
-			}
-			else
-			{
-				result = false;
-			}
-			return result;
-		}, 
-        "Birthdate not valid. Is month, date and year correct?"
+        "This Student ID has been taken"
     );
 		
 	//rule for allowing some symbols in the first and last name field
@@ -212,30 +193,7 @@ $(document).ready(function () {
 				noSpecialChars: true,
                 required: true
             },
-			month: {
-				digits: true,
-                minlength: 1,
-				maxlength: 2,
-				range: [1,12],
-				alphanumeric: true,
-                required: true
-            },
-			day: {
-				digits: true,
-                minlength: 1,
-				maxlength: 2,
-				range: [1,31],
-				alphanumeric: true,
-                required: true
-            },
-			year: {
-				digits: true,
-                minlength: 4,
-				maxlength: 4,
-				range: [1900,2100],
-				alphanumeric: true,
-				checkBirth: true,
-				checkDate: true,
+			birthDate: {
                 required: true
             },
 			street: {
@@ -292,6 +250,7 @@ $(document).ready(function () {
 			studentid: {
                 required: true,
 				digits: true,
+				checkStudentIDUnique: true,
 				maxlength: 20
             },
 			childrenID: {
@@ -300,19 +259,6 @@ $(document).ready(function () {
 			}
         },
 		messages: {
-			month: {
-				maxlength: "2 digits max",
-				digits: "Numbers Only"
-			},
-			day: {
-				maxlength: "2 digits max",
-				digits: "Numbers Only"
-			},
-            year: {
-                minlength: "Use 4 digits",
-				maxlength: "Use 4 digits",
-				digits: "Numbers Only"
-			},
 			contact: {
 				digits: "Format contact number as shown (1237774567)"
 			},

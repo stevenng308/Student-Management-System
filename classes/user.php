@@ -141,27 +141,34 @@ class User
 		return $this->DOB;
 	}
 	
+	public function getDOBFormatted()
+	{
+		return date_format($this->DOB, "m/d/Y");
+	}
+	
 	public function setDOB($tempDOB, $DOB2)
 	{
 		$this->DOB = $DOB2;
 		$this->database->exec("UPDATE " . $this->getRoleFormatted() . " SET DOB='" . $tempDOB . "' WHERE accountID='" . $this->userID . "'");
 	}
 	
-	public function getMonth()
+	/*
+	public function getMonth() //legacy DOB stuff
 	{
 		//$newFormat = DateTime::createFromFormat('Y-m-d', $this->DOB);
 		return date_format($this->DOB, "m");
 	}
 	
-	public function getDay()
+	public function getDay() //legacy DOB stuff
 	{
-		return date_format($this->DOB, "d");
+		return date_format($this->DOB, "d"); 
 	}
 	
-	public function getYear()
+	public function getYear() //legacy DOB stuff
 	{
 		return date_format($this->DOB, "Y");
 	}
+	*/
 	
 	public function getContact()
 	{
