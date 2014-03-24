@@ -44,6 +44,50 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 		</form>
 		<button class="btn btn-lg btn-primary btn-block" onclick="postMsg()">Post Message</button>
 	</div>
+
+
+<div class="jumbotron bottomMargin">
+	<div class="table-responsive">
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+			<!---<h3 align="center"><?php echo $session->getUserName() . '\'s Inbox'; ?></h3>--->
+			<thead>
+				<tr>
+					<th>
+						Message
+					</th>
+					<th>
+						Posted By
+					</th>
+					<th>
+						Time Posted
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php
+					$count = 0;
+					foreach ($database->query("SELECT * FROM messageboard ORDER BY messageDate DESC") as $row)
+					{
+						$messge = new Message($row);
+						//var_dump($email);
+						echo $layout->loadMessages($messge, $count);
+						$count++;
+						if ($count > 4)
+							break;
+					}
+				?>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
+
+
+
+
 <!-- Andre Vicente - Loading Each Student Account Lunch Account depending on Student ID 
      We are assuming since this is the ADMIN Main page that their ROLE is automatically set to 1 -->
 	 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">

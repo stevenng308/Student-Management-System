@@ -1163,5 +1163,73 @@ class Layout
 		
 		return $func;
 	}
+
+	public function loadMessages(Message $mssg, $modalNum)
+	{	
+		
+		//function ' . dltMsg . ' ' . $modalNum . ' ' . () . '
+					//{
+					//	$database->exec("DELETE FROM messageboard WHERE messageID = ' . $mssg->getID() . '");
+					//}
+					
+		//$delete = '<button class="btn btn-danger">Delete</button>';
+		$edt =  '
+					<button type="button" style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#myModal' . $modalNum . '">
+						Edit
+					</button>					
+
+					<div class="modal fade" id="myModal2' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					  <div class="modal-dialog">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3 class="modal-title" id="myModalLabel" align="center">Edit Message</h3>
+						  </div>
+						  <div class="modal-body">
+							<pre>' . $mssg->getMessage() . '</pre>
+						  </div>
+						  <div class="modal-footer">
+						  	<button class="btn btn-danger pull-left" onclick="deleteMssg(' . $mssg->getID() . ')">Delete2</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" style="float:right" class="btn btn-danger" data-toggle="modal" data-target="#myModal' . $modalNum . '" onclick="deleteMssg(' . $mssg->getID() . ')">Delete</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
+				';
+				
+		$dlt = '
+					<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#myModal' . $modalNum . '" onclick="deleteMssg(' . $mssg->getID() . ')">
+						Delete
+					</button>					
+			';
+
+		
+			
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					<pre>' . $mssg->getMessage() . '</pre>
+					<p>' . $edt . ' ' . $dlt . ' </p>
+					
+				</td>
+				<td>
+					' . $mssg->getAuthorFirst() . ' ' . $mssg->getAuthorLast() . '
+				</td>
+				<td>
+					' . $mssg->getDateFormatted() . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+
+
+
+
+
+
+
 }
 ?>
