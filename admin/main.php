@@ -46,28 +46,43 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	</div>
 <!-- Andre Vicente - Loading Each Student Account Lunch Account depending on Student ID 
      We are assuming since this is the ADMIN Main page that their ROLE is automatically set to 1 -->
+	 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 <?php
 $role = $session->getUserType();
 $username = $session->getID();
 $query = "SELECT studentID FROM parent_student_assoc WHERE guardianID = '" . $username . "' AND role ='" . $role . "'";
 $count = 0;
-	if (!$database->query($query)==NULL) {
-	 echo "<tr>";
-	 echo "<th><b>Student ID</b></th>";
-	 echo "<th><b>Student Name</b></th>";
-	 echo "<th><b>Current Balance</b></th>";
-	 echo "</tr>";	
-     echo "<br>";
+$stmt = $database->query($query);
+$result = $stmt->fetch();
+	if (!$result==NULL) {
+	 echo "<div class='container bottomMargin'>";
+	 echo "<div class='table-responsive'>";
+     echo "<h3 align='center'>Students linked to Current Account</h3>";
+     echo "<table cellpadding='0' cellspacing='0' border='0' class='table table-hover' id='userTable'>";
+	 echo "		<thead>";
+	 echo "			<tr>";
+	 echo "				<th style='text-align: center;'>Student ID</th>";
+	 echo "				<th style='text-align: center;'>First Name</th>";
+	 echo "				<th style='text-align: center;'>Last Name</th>";
+	 echo "				<th style='text-align: center;'>Account Balance</th>";
+	 echo "			</tr>";
+	 echo "</thead>";	
 	}
+?>
+			<tbody>
+			<?php
 			foreach ($database->query($query) as $row)
 			{
 				$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
 				$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				$user = new User($database, $result[0]['accountID'], "student");
 				echo $layout->loadStundentLunchRow($user, $count);
+				echo "<br>";
 				$count++;
 			} 
-?>
+			?>
+			</tbody>
+			</table>
 </div>
 <?php
 	echo $layout->loadFooter('../');
