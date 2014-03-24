@@ -1174,11 +1174,11 @@ class Layout
 					
 		//$delete = '<button class="btn btn-danger">Delete</button>';
 		$edt =  '
-					<button type="button" style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#myModal' . $modalNum . '">
+					<button type="button" style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#bModal' . $modalNum . '">
 						Edit
 					</button>					
 
-					<div class="modal fade" id="myModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal fade" id="bModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
 						<div class="modal-content">
 						  <div class="modal-header">
@@ -1191,7 +1191,7 @@ class Layout
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							<button type="button" style="float:right" class="btn btn-primary" data-dismiss="modal">Submit</button>							
-							<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#myModal' . $modalNum . '" onclick="deleteMessage(' . $mssg->getID() . ')">Delete</button>
+							<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMessage(' . $mssg->getID() . ')">Delete</button>
 						  </div>
 						</div>
 					  </div>
@@ -1199,7 +1199,7 @@ class Layout
 				';
 				
 		$dlt = '
-					<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#myModal' . $modalNum . '" onclick="deleteMssg(' . $mssg->getID() . ')">
+					<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMssg(' . $mssg->getID() . ')">
 						Delete
 					</button>					
 			';
