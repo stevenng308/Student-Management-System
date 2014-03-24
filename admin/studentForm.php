@@ -47,7 +47,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student For
 			<input type="text" class="form-control" name="lastname" id = "lastname" placeholder="Last Name"/>
 		</div>
 		<br />
-		<!--<label for="birthday">Birthdate: 01-01-1970</label>-->
+		<label for="birthday">Birthday Information</label>
 		<div class="row">
 			<div class="col-xs-6 col-md-4">
 				<div class="control-group">
