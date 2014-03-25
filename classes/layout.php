@@ -1179,13 +1179,14 @@ class Layout
 		}
 		$func = '
 			<tr class="searchable">
-				<td style="text-align: left;">
+				<td style="text-align: left; width: 90%;">
 					<div class="panel ' . $panel . '">
 					  <div class="panel-heading">
 						' . $topic->getAuthorUser() . ' &lt;' . $topic->getAuthorFirst() . ' ' . $topic->getAuthorLast() . '&gt;' . '
 					  </div>
 					  <div class="panel-body">
-						' . $topic->getTopicMessage() . ' <button class="btn btn-primary pull-right" onclick="">Quote</button>
+						<pre>' . $topic->getTopicMessage() . '</pre>
+						<button class="btn btn-primary pull-right" onclick="quoteOP(' . $topic->getTopicID() . ')">Quote</button>
 					  </div>
 					</div>
 				</td>
@@ -1219,7 +1220,8 @@ class Layout
 						' . $reply->getAuthorUser() . ' &lt;' . $reply->getAuthorFirst() . ' ' . $reply->getAuthorLast() . '&gt;' . '
 					  </div>
 					  <div class="panel-body">
-						' . $reply->getResponseMessage() . ' <button class="btn btn-primary pull-right" onclick="">Quote</button>
+						<pre>' . $reply->getResponseMessage() . '</pre>
+						<button class="btn btn-primary pull-right" onclick="quoteResponse(' . $reply->getResponseID() . ')">Quote</button>
 					  </div>
 					</div>
 				</td>

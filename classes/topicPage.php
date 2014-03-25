@@ -34,7 +34,7 @@ $respond = $database->query("SELECT * FROM response WHERE topicid = " . $topicid
 $topic = new Topic($result[0], $respond->rowCount());
 $classid = preg_split("/_+/", $topic->getForumName());
 ?>
-<div class="container">
+<div class="container bottomMargin">
 	<br />
 	<ol class="breadcrumb">
 	  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid[0]; ?>)">Discussion Topics</a></li>
@@ -88,4 +88,40 @@ $('#discussionTable').dataTable(
 		'aTargets' : [ "no-sort" ]
 	}]
 });
+
+function quoteOP(id)
+{
+	$.post(
+			'classes/quote.php',
+			{ 
+				'type' : 0,
+				'classid' : <?php echo $classid[0]; ?>,
+				'topicid' : <?php echo $topicid; ?>,
+				'id' : id
+			},
+			function(data){
+			  $("#forum").html(data);
+			  //loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+			}
+		  );
+	  return false;
+}
+
+function quoteResponse(id)
+{
+	$.post(
+			'classes/quote.php',
+			{ 
+				'type' : 1,
+				'classid' : <?php echo $classid[0]; ?>,
+				'topicid' : <?php echo $topicid; ?>,
+				'id' : id
+			},
+			function(data){
+			  $("#forum").html(data);
+			  //loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+			}
+		  );
+	  return false;
+}
 </script>

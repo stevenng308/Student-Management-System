@@ -40,7 +40,7 @@ $classid = preg_split("/_+/", $topic->getForumName());
 		</ol>
 	<div class="jumbotron">
 		<form name="respond" id="respond" class="" action="#" method="post">
-			<textarea class="form-control childrenID" rows="4" cols="11" name="reply" id="reply" placeholder="Enter your response." autofocus></textarea>
+<pre><textarea class="emailMessage" name="reply" id="reply" placeholder="Enter your response." autofocus></textarea></pre>
 		</form>
 		<button class="btn btn-lg btn-primary btn-block" name="reply" id="reply" onclick="sendReply()">Respond</button>
 	</div>
