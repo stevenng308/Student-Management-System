@@ -1269,7 +1269,7 @@ class Layout
 				';
 				
 		$dlt = '
-					<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMsg(' . $mssg->getID() . ')">
+					<button type="button" style="float:left" class="btn btn-danger" onclick="deleteMsg(' . $mssg->getID() . ')">
 						Delete
 					</button>					
 			';

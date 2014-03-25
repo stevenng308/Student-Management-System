@@ -155,19 +155,26 @@ function postMsg()
 function deleteMsg($id)
 {
 	//alert('hey');
-	$.post(
-		'../classes/deleteMessage.php',
-		{
-			//'message' : $('#edtMessage').val()
-			'id' : $id
-		},
-		function(data){
-			//alert(data);
-		  //$("#mainDiv").html(data);
-		  location.reload();
-		}
-	  );
-  return false;
+	if (window.confirm("Do you want to delete?"))
+	{
+		$.post(
+			'../classes/deleteMessage.php',
+			{
+				//'message' : $('#edtMessage').val()
+				'id' : $id
+			},
+			function(data){
+				//alert(data);
+			  //$("#mainDiv").html(data);
+			  location.reload();
+			}
+		);
+	return false;
+	}
+	else
+	{
+		; //do nothing
+	}
 }
 </script>
 </html>
