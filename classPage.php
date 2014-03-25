@@ -74,20 +74,20 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <div class="container">
 	<div class="bs-example bs-example-tabs">
 		<ul id="myTab" class="nav nav-tabs">
-			  <li class="active"><a href="#home" data-toggle="tab">Home</a></li>
-			  <li><a href="#forum" data-toggle="tab">Forum</a></li>
+			  <li class="active"><a href="#home" data-toggle="tab"><b>Home</b></a></li>
+			  <li><a href="#forum" data-toggle="tab"><b>Forum</b></a></li>
 			  <?php
 				if ($_SESSION['sess_role'] != 3)
 				{
 					echo '
 						 <li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Roster</b> <b class="caret"></b></a>
 							<ul class="dropdown-menu" role="menu" aria-labelledby="roster">
 							  <li><a href="#register" tabindex="-1" data-toggle="tab">Register</a></li>
 							  <li><a href="#rosterList" tabindex="-1" data-toggle="tab">Manage</a></li>
 							</ul>
 						  </li>
-						 <li><a href="#allGrades" data-toggle="tab">All Grades</a></li>
+						 <li><a href="#allGrades" data-toggle="tab"><b>All Grades</b></a></li>
 						 ';
 				}
 				else

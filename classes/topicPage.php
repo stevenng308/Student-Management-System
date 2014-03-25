@@ -160,4 +160,19 @@ function editMessage(id)
 		  );
 	  return false;
 }
+
+function deleteMessage(id)
+{
+		$.post(
+			'classes/processDeleteResponse.php',
+			{ 
+				'id' : id
+			},
+			function(data){
+			  //$("#forum").html(data);
+			  loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+			}
+		  );
+	  return false;
+}
 </script>

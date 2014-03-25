@@ -1214,9 +1214,11 @@ class Layout
 		{
 			case 1: $panel = 'panel-danger';
 					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
+					$delete = '<button class="btn btn-danger" onclick="deleteMessage(' . $reply->getResponseID() . ')">Delete</button>';
 					break;
 			case 2: $panel = 'panel-success';
 					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
+					$delete = '<button class="btn btn-danger" onclick="deleteMessage(' . $reply->getResponseID() . ')">Delete</button>';
 					break;
 			case 3: $panel = 'panel-primary';
 					if ($user == $reply->getAuthorUser())
@@ -1238,6 +1240,7 @@ class Layout
 						<pre>' . $reply->getResponseMessage() . '</pre>
 						<button class="btn btn-primary pull-right" onclick="quoteResponse(' . $reply->getResponseID() . ')">Quote</button>
 						' . $edit. '
+						' . $delete. '
 					  </div>
 					</div>
 				</td>
