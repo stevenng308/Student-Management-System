@@ -23,7 +23,7 @@ function parseEdit($input) //get rid of the last edit timestamp
 	return $input;
 }
 $msg_arr = parseEdit($msg);
-$msg = $msg_arr[0] . " --- Edited on " . $date;
+$msg = $msg_arr[0] . " --- Edited on " . $date . " by " . $session->getUserName();
 $database->exec("UPDATE forum SET topic_subject='" . $subject . "' WHERE topicID='" . $_POST['id']. "';
 							UPDATE forum SET topic_message='" . $msg . "' WHERE topicID='" . $_POST['id']. "';
 							UPDATE forum SET last_post='" . $date . "' WHERE topicID='" . $_POST['id']. "';

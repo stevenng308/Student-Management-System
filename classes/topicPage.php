@@ -61,11 +61,11 @@ $classid = preg_split("/_+/", $topic->getForumName());
 				<tbody>
 					<?php
 						$count = 0;
-						echo $layout->loadDiscussionRow($topic, $session->getUserType());
+						echo $layout->loadDiscussionRow($topic, $session->getUserType(), $session->getUserName());
 						foreach ($database->query("SELECT * FROM response WHERE topicID = '" . $topicid . "'") as $row)
 						{
 							$reply = new Reply($row);
-							echo $layout->loadDiscussionResponseRow($reply, $session->getUserType());
+							echo $layout->loadDiscussionResponseRow($reply, $session->getUserType(), $session->getUserName());
 						}
 					?>
 				</tbody>
@@ -111,6 +111,42 @@ function quoteResponse(id)
 {
 	$.post(
 			'classes/quote.php',
+			{ 
+				'type' : 1,
+				'classid' : <?php echo $classid[0]; ?>,
+				'topicid' : <?php echo $topicid; ?>,
+				'id' : id
+			},
+			function(data){
+			  $("#forum").html(data);
+			  //loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+			}
+		  );
+	  return false;
+}
+
+function editOPMessage(id)
+{
+		$.post(
+			'classes/editResponse.php',
+			{ 
+				'type' : 0,
+				'classid' : <?php echo $classid[0]; ?>,
+				'topicid' : <?php echo $topicid; ?>,
+				'id' : id
+			},
+			function(data){
+			  $("#forum").html(data);
+			  //loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+			}
+		  );
+	  return false;
+}
+
+function editMessage(id)
+{
+		$.post(
+			'classes/editResponse.php',
 			{ 
 				'type' : 1,
 				'classid' : <?php echo $classid[0]; ?>,

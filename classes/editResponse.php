@@ -1,8 +1,7 @@
 <?php
 /*Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- quote form*/
-
+<!-- editing topics*/
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
@@ -22,9 +21,10 @@ else
 {
 	header('Location: index.php');
 }
+//$database = new Database();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-if (!$_POST['type']) //true if quoting the OP message
+if (!$_POST['type']) //true if editing the OP message
 {
 	//var_dump($_POST);
 	$query = $database->query("SELECT * FROM forum WHERE topicID = " . $_POST['id'] . "");
@@ -32,7 +32,7 @@ if (!$_POST['type']) //true if quoting the OP message
 	$respond = $database->query("SELECT * FROM response WHERE topicid = " . $_POST['id'] . "");
 	$orig = new Topic($result[0], $respond->rowCount());
 	$classid = $_POST['classid'];
-	$msg = preg_replace("/\n/", "\n>", $orig->getTopicMessage());
+	$msg = $orig->getTopicMessage();
 	$subject = $orig->getTopicSubject();
 }
 else
@@ -45,7 +45,7 @@ else
 	$result = $query->fetchAll(PDO::FETCH_ASSOC);
 	$orig = new Reply($result[0]);
 	$classid = $_POST['classid'];
-	$msg = preg_replace("/\n/", "\n>", $orig->getResponseMessage());
+	$msg = $orig->getResponseMessage();
 	$subject = $topic->getTopicSubject();
 }
 ?>
@@ -54,34 +54,35 @@ else
 	<ol class="breadcrumb">
 		  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>)">Discussion Topics</a></li>
 		  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $orig->getTopicID() ?>)"><?php echo $subject; ?></a></li>
-		  <li class="active">Reply to: <?php echo $subject; ?></a></li>
+		  <li class="active">Edit Message</a></li>
 		</ol>
 	<div class="jumbotron">
-		<form name="respond" id="respond" class="" action="#" method="post">
-<pre><textarea class="emailMessage" name="reply" id="reply" placeholder="Enter your response." autofocus>
-&gt;Quote From: <?php echo $orig->getAuthorUser() . '&#13;&#10;&gt;' . $msg . '&#13;&#10;&#13;&#10;'; ?></textarea></pre>
+		<form name="edit-message" id="edit-message" class="" action="#" method="post">
+<pre><textarea class="emailMessage" name="reply" id="reply" placeholder="Enter your response." autofocus><?php echo $msg; ?></textarea></pre>
 		</form>
-		<button class="btn btn-lg btn-primary btn-block" name="reply" id="reply" onclick="sendReply()">Respond</button>
+		<button class="btn btn-lg btn-primary btn-block" name="reply" id="reply" onclick="editReply()">Edit</button>
 	</div>
 </div>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
-function sendReply()
+function editReply()
 {
-	if(document.getElementById("reply").value && $.trim($('#reply').val()) != '') {
-		//alert('Successful Validation');
-		$.post(
-				'classes/sendReply.php',
-				{ 
-					'reply' : $('#reply').val(),
-					'id' : <?php echo $_POST['topicid']; ?>
-				},
-				function(data){
-				  //$("#forum").html(data);
-				  loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $orig->getTopicID() ?>);
-				}
-			  );
-		  return false;
+	if(document.getElementById("reply").value) {
+		$.post (
+			'classes/processEditResponse.php',
+			{
+				'type' : <?php echo $_POST['type']; ?>,
+				'message' : $('#reply').val(),
+				'topicid' : <?php echo $_POST['topicid']; ?>,
+				'id' : <?php echo $_POST['id']; ?>
+			},
+			function(data)
+			{
+				//$("#forum").html(data);
+				loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $orig->getTopicID() ?>);
+			}
+		);
+		return false;
 	}
 	else
 	{

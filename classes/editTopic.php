@@ -19,7 +19,7 @@ if(!(empty($_SESSION)))
 }
 else
 {
-	header('Location: ../index.php');
+	header('Location: index.php');
 }
 //$database = new Database();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
@@ -45,7 +45,7 @@ $topic = new Topic($result[0], $num->rowCount());
 
 		<pre><textarea id="message" name="message" class="emailMessage"><?php echo $topic->getTopicMessage(); ?></textarea></pre>
 		<input name="id" value="<?php echo $topicid; ?>" hidden="hidden"/>
-		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="send">Send</button>
+		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="send">Edit</button>
 	</form>
 </div>
 

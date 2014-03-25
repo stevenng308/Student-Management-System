@@ -20,7 +20,7 @@ if(!(empty($_SESSION)))
 }
 else
 {
-	header('Location: ../index.php');
+	header('Location: index.php');
 }
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);

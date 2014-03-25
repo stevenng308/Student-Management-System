@@ -1164,15 +1164,22 @@ class Layout
 		return $func;
 	}
 	
-	public function loadDiscussionRow($topic, $num)
+	public function loadDiscussionRow($topic, $num, $user)
 	{
+		$edit = '';
 		switch ($num)
 		{
 			case 1: $panel = 'panel-danger';
+					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
 					break;
 			case 2: $panel = 'panel-success';
+					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
 					break;
 			case 3: $panel = 'panel-primary';
+					if ($user == $topic->getAuthorUser())
+					{
+						$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
+					}
 					break;
 			default: $panel = 'panel-default';
 					break;
@@ -1187,6 +1194,7 @@ class Layout
 					  <div class="panel-body">
 						<pre>' . $topic->getTopicMessage() . '</pre>
 						<button class="btn btn-primary pull-right" onclick="quoteOP(' . $topic->getTopicID() . ')">Quote</button>
+						' . $edit. '
 					  </div>
 					</div>
 				</td>
@@ -1199,15 +1207,22 @@ class Layout
 		return $func;
 	}
 	
-	public function loadDiscussionResponseRow($reply, $num)
+	public function loadDiscussionResponseRow($reply, $num, $user)
 	{
+		$edit = '';
 		switch ($num)
 		{
 			case 1: $panel = 'panel-danger';
+					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
 					break;
 			case 2: $panel = 'panel-success';
+					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
 					break;
 			case 3: $panel = 'panel-primary';
+					if ($user == $reply->getAuthorUser())
+					{
+						$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getTopicID() . ')">Edit</button>';
+					}
 					break;
 			default: $panel = 'panel-default';
 					break;
@@ -1222,6 +1237,7 @@ class Layout
 					  <div class="panel-body">
 						<pre>' . $reply->getResponseMessage() . '</pre>
 						<button class="btn btn-primary pull-right" onclick="quoteResponse(' . $reply->getResponseID() . ')">Quote</button>
+						' . $edit. '
 					  </div>
 					</div>
 				</td>

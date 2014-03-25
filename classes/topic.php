@@ -17,7 +17,7 @@ class Topic
 		$this->author_last = $topicinfo['author_last'];
 		$this->date_posted = $topicinfo['date_posted'];
 		$this->last_post = $topicinfo['last_post'];
-		$this->numMsgs = $num;
+		$this->numMsgs = $num + 1; //+1 to include the original poster's message
 	}
 	
 	public function getTopicID()

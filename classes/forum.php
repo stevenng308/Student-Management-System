@@ -95,6 +95,7 @@ $class = new Classroom($result[0], $teach, $database);
 		</div>
 	</div>
 </div>
+
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#forumTable').dataTable(
 {
@@ -153,7 +154,7 @@ function deleteTopic()
 			;//do nothing
 		}
 	}
-} 
+}
 
 function editTopic()
 {
