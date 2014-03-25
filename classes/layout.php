@@ -1246,7 +1246,7 @@ class Layout
 		$edt =  '
 					<button type="button" style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#bModal' . $modalNum . '">
 						Edit
-					</button>					
+					</button>			
 
 					<div class="modal fade" id="bModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
@@ -1256,12 +1256,12 @@ class Layout
 							<h3 class="modal-title" id="myModalLabel" align="center">Edit Message</h3>
 						  </div>
 						  <div class="modal-body">
-							<pre><textarea id="message" name="message" class="messageBoard">' . $mssg->getMessage() . '</textarea></pre>
+							<pre><textarea id="edtMessage" name="edtMessage" class="messageBoard">' . $mssg->getMessage() . '</textarea></pre>
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 							<button type="button" style="float:right" class="btn btn-primary" data-dismiss="modal">Submit</button>							
-							<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMessage(' . $mssg->getID() . ')">Delete</button>
+							<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMsg()">Delete</button>
 						  </div>
 						</div>
 					  </div>
@@ -1269,7 +1269,7 @@ class Layout
 				';
 				
 		$dlt = '
-					<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMssg(' . $mssg->getID() . ')">
+					<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMsg(' . $mssg->getID() . ')">
 						Delete
 					</button>					
 			';
@@ -1280,7 +1280,7 @@ class Layout
 			<tr class="searchable">
 				<td style="text-align: center;">
 					<pre>' . $mssg->getMessage() . '</pre>
-					<p>' . $edt . '</p>
+					<p>' . $edt . ' ' . $dlt . ' </p>
 					
 				</td>
 				<td>
