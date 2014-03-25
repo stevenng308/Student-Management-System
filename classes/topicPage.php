@@ -46,6 +46,18 @@ $classid = preg_split("/_+/", $topic->getForumName());
 				<div class="row">
 					<div class="col-xs-3 col-md-6">
 						<button class="btn btn-primary btn-lg" onclick="loadClassPages('#forum', 'classes/respond.php?topicid=', <?php echo $topicid; ?>)">Reply</button>
+						<?php
+							$stmt = $database->query("SELECT id FROM subscribe WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . " AND topicID = " . $topicid . "");
+							if ($stmt->rowCount() == 0)
+							{
+								echo '<button class="btn btn-warning btn-lg" onclick="subscribe(<?php echo $topicid; ?>)">Subscribe</button>';
+							}
+							else
+							{
+								$id = $stmt->fetchAll(PDO::FETCH_ASSOC);
+								echo '<button class="btn btn-warning btn-lg" onclick="unsubscribe(' . $id[0]['id'] . ')">Unsubscribe</button>';
+							}
+						?>
 					</div>
 				</div>
 				<thead>
@@ -171,6 +183,44 @@ function deleteMessage(id)
 			function(data){
 			  //$("#forum").html(data);
 			  loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+			}
+		  );
+	  return false;
+}
+
+function subscribe(id)
+{
+		$.post(
+			'classes/processSubscription.php',
+			{ 
+				'id' : id,
+				'num' : <?php echo $respond->rowCount(); ?>
+			},
+			function(data){
+				if (data.match(/true/))
+				{
+					alert("Subscribed.");
+				}
+				else
+				{
+					alert("You are already subscribed.");
+				}
+			}
+		  );
+	  return false;
+}
+
+function unsubscribe(id)
+{
+		$.post(
+			'classes/processUnsubscribe.php',
+			{ 
+				'id' : id,
+			},
+			function(data){
+				
+				alert("Unsubscribed.");
+				
 			}
 		  );
 	  return false;
