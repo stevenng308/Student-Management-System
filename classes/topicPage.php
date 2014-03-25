@@ -50,7 +50,7 @@ $classid = preg_split("/_+/", $topic->getForumName());
 							$stmt = $database->query("SELECT id FROM subscribe WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . " AND topicID = " . $topicid . "");
 							if ($stmt->rowCount() == 0)
 							{
-								echo '<button class="btn btn-warning btn-lg" onclick="subscribe(<?php echo $topicid; ?>)">Subscribe</button>';
+								echo '<button class="btn btn-warning btn-lg" onclick="subscribe(' . $topicid . ')">Subscribe</button>';
 							}
 							else
 							{
@@ -200,6 +200,7 @@ function subscribe(id)
 				if (data.match(/true/))
 				{
 					alert("Subscribed.");
+					loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
 				}
 				else
 				{
@@ -218,9 +219,8 @@ function unsubscribe(id)
 				'id' : id,
 			},
 			function(data){
-				
 				alert("Unsubscribed.");
-				
+				loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
 			}
 		  );
 	  return false;
