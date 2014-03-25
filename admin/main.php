@@ -81,9 +81,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	</div>
 </div>
 
-<script type="text/javascript" language="javascript" src="bootstrap/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
-<script src="bootstrap/js/deleteMove.js"></script>
+
 
 
 
@@ -141,6 +139,27 @@ function postMsg()
 		'../classes/postMessage.php',
 		{
 			'message' : $('#message').val()
+		},
+		function(data){
+			//alert(data);
+		  //$("#mainDiv").html(data);
+		  location.reload();
+		}
+	  );
+  return false;
+}
+</script>
+
+
+<script>
+function deleteMsg($id)
+{
+	//alert('hey');
+	$.post(
+		'../classes/deleteMessage.php',
+		{
+			//'message' : $('#edtMessage').val()
+			'id' : $id
 		},
 		function(data){
 			//alert(data);
