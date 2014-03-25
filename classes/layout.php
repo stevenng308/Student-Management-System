@@ -1146,8 +1146,8 @@ class Layout
 				<td style="text-align: center;">
 					<input name="delete" id="remove' . $num . '" type="checkbox" value="' . $topic->getTopicID() . '">
 				</td>
-				<td style="text-align: center;">
-					<button class="btn btn-link" onclick="">' . $topic->getTopicSubjectFormatted() . '</button>
+				<td style="text-align: center; width: 60%;">
+					<button class="btn btn-link" onclick="loadClassPages(\'#forum\', \'classes/topicPage.php?topicid=\', ' . $topic->getTopicID() . ')">' . $topic->getTopicSubjectFormatted() . '</button>
 				</td>
 				<td style="text-align: center;">
 					' . $topic->getAuthorUser() . ' &lt;' . $topic->getAuthorFirst() . ' ' . $topic->getAuthorLast() . '&gt;' . '
@@ -1157,6 +1157,74 @@ class Layout
 				</td>
 				<td style="text-align: center;">
 					' . $topic->getLastPostDate() . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+	
+	public function loadDiscussionRow($topic, $num)
+	{
+		switch ($num)
+		{
+			case 1: $panel = 'panel-danger';
+					break;
+			case 2: $panel = 'panel-success';
+					break;
+			case 3: $panel = 'panel-primary';
+					break;
+			default: $panel = 'panel-default';
+					break;
+		}
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: left;">
+					<div class="panel ' . $panel . '">
+					  <div class="panel-heading">
+						' . $topic->getAuthorUser() . ' &lt;' . $topic->getAuthorFirst() . ' ' . $topic->getAuthorLast() . '&gt;' . '
+					  </div>
+					  <div class="panel-body">
+						' . $topic->getTopicMessage() . ' <button class="btn btn-primary pull-right" onclick="">Quote</button>
+					  </div>
+					</div>
+				</td>
+				<td style="text-align: center;">
+					' . $topic->getPostDate() . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
+	
+	public function loadDiscussionResponseRow($reply, $num)
+	{
+		switch ($num)
+		{
+			case 1: $panel = 'panel-danger';
+					break;
+			case 2: $panel = 'panel-success';
+					break;
+			case 3: $panel = 'panel-primary';
+					break;
+			default: $panel = 'panel-default';
+					break;
+		}
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: left; width: 90%;">
+					<div class="panel ' . $panel . '">
+					  <div class="panel-heading">
+						' . $reply->getAuthorUser() . ' &lt;' . $reply->getAuthorFirst() . ' ' . $reply->getAuthorLast() . '&gt;' . '
+					  </div>
+					  <div class="panel-body">
+						' . $reply->getResponseMessage() . ' <button class="btn btn-primary pull-right" onclick="">Quote</button>
+					  </div>
+					</div>
+				</td>
+				<td style="text-align: center;">
+					' . $reply->getPostDate() . '
 				</td>
 			</tr>
 		';

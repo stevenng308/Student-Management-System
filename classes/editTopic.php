@@ -1,7 +1,7 @@
 <?php
 /*Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- process deleting topics*/
+<!-- editing topics*/
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
@@ -36,12 +36,11 @@ $topic = new Topic($result[0], $num->rowCount());
 <div class="container jumbotron">
 	<ol class="breadcrumb">
 	  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>)">Discussion Topics</a></li>
-	  <li class="active">Edit Topic</a></li>
+	  <li class="active">Edit Topic</li>
 	</ol>
 	<form name="compose" id="topic-form" action="#" method="post">
-		<div class="input-group">
-		  <span class="input-group-addon">Subject:</span>
-		  <input id="subject" name="subject" type="text" class="form-control" value="<?php echo $topic->getTopicSubject(); ?>"placeholder="Discussion Topic">
+		<div class="control-group">
+		  <input id="subject" name="subject" type="text" class="form-control" value="<?php echo $topic->getTopicSubject(); ?>" placeholder="Subject">
 		</div>
 
 		<pre><textarea id="message" name="message" class="emailMessage"><?php echo $topic->getTopicMessage(); ?></textarea></pre>
@@ -50,7 +49,24 @@ $topic = new Topic($result[0], $num->rowCount());
 	</form>
 </div>
 
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script type="text/javascript" language="javascript" charset="utf-8">
+$('#topic-form').validate({
+	rules: {
+		subject: {
+			maxlength: 50
+		}
+	},
+	highlight: function (element) {
+		$(element).closest('.control-group').removeClass('has-success').addClass('has-error');
+	},
+	success: function (element) {
+		element.addClass('valid')
+			.closest('.control-group').removeClass('has-error').addClass('has-success');
+	}
+});
+
 $(function () {
 	$('#topic-form').submit(function () {
 		if(document.getElementById("message").value && document.getElementById("subject").value) {

@@ -16,5 +16,6 @@ $session = new Session($_SESSION, $database);
 foreach ($_POST['checkbox'] as $id)
 {
 	$database->exec("DELETE FROM forum WHERE topicID = '" . $id . "'");
+	$database->exec("DELETE FROM response WHERE topicID = '" . $id . "'");
 }
 ?>
