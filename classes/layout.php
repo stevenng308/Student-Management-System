@@ -1263,7 +1263,7 @@ class Layout
 					
 		//$delete = '<button class="btn btn-danger">Delete</button>';
 		$edt =  '
-					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bModal' . $modalNum . '">Edit</button>			
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bModal' . $modalNum . '">Edit</button>		
 
 					<div class="modal fade" id="bModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
@@ -1277,7 +1277,8 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" style="float:right" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>									  </div>
+							<button type="button" style="float:left" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>				
+						  </div>
 						</div>
 					  </div>
 					</div>
@@ -1294,7 +1295,7 @@ class Layout
 		$func = '
 			<tr class="searchable">
 				<td>
-					<p>' . $edt . '' . $dlt . ' </p>
+					<p>' . $edt . ' ' . $dlt . '</p>
 				</td>
 				<td style="text-align: center;">
 					<pre>' . $mssg->getMessage() . '</pre>

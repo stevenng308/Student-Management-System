@@ -38,51 +38,77 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 <!-- Begin page content -->
 <div class="container">
 	<h3>Hello <?php echo $session->getFirstName(); ?>.</h3>
+
+<!-- Begin collapse -->
+<div class="panel-group" id="accordion">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 align="center">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Post Message
+        </a>
+      </h2>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse">
+      <div class="panel-body">
 	<div class="jumbotron">
 		<form name="compose" id="compose-form" action="#" method="post">
 			<pre><textarea id="message" name="message" class="messageBoard"></textarea></pre>			
 		</form>
 		<button class="btn btn-lg btn-primary btn-block" onclick="postMsg()">Post Message</button>
 	</div>
+      </div>
+    </div>
+  </div>
 
 
-<div class="jumbotron bottomMargin">
-	<div class="table-responsive">
-		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
-			<!---<h3 align="center"><?php echo $session->getUserName() . '\'s Inbox'; ?></h3>--->
-			<thead>
-				<tr>
-					<th></th>
-					<th>
-						Message
-					</th>
-					<th>
-						Posted By
-					</th>
-					<th>
-						Time Posted
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-					$count = 0;
-					foreach ($database->query("SELECT * FROM messageboard ORDER BY messageDate DESC") as $row)
-					{
-						$messge = new Message($row);
-						//var_dump($email);
-						echo $layout->loadMessages($messge, $count);
-						$count++;
-						if ($count > 4)
-							break;
-					}
-				?>
-			</tbody>
-		</table>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 align="center">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+	 Message Board
+	</a>
+      </h3>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse in">
+      <div class="panel-body">
+	<div class="jumbotron bottomMargin">
+		<div class="table-responsive">
+			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+				<thead>
+					<tr>
+						<th></th>
+						<th>
+							Message
+						</th>
+						<th>
+							Posted By
+						</th>
+						<th>
+							Time Posted
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						$count = 0;
+						foreach ($database->query("SELECT * FROM messageboard ORDER BY messageDate DESC") as $row)
+						{
+							$messge = new Message($row);
+							echo $layout->loadMessages($messge, $count);
+							$count++;
+							if ($count > 4)
+								break;
+						}
+					?>
+				</tbody>
+			</table>
+		</div>
 	</div>
+      </div>
+    </div>
+  </div>
 </div>
-
-
 
 
 
