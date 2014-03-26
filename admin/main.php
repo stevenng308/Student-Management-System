@@ -126,7 +126,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 						<th style='text-align: center;'>First Name</th>
 						<th style='text-align: center;'>Last Name</th>
 						<th style='text-align: center;'>Account Balance</th>
-						<th class="no-sort" style='text-align: center;'>Recharge</th>
+						<th class="no-sort" style='text-align: center;'></th>
 					</tr>
 				</thead>
 			<tbody>
@@ -139,15 +139,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 			}
 			else
 			{
-				$count = 0;
 				foreach ($database->query($query) as $row)
 				{
 					$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
 					$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 					$user = new User($database, $result[0]['accountID'], "student");
-					echo $layout->loadStudentLunchRow($user, $count);
-					//echo "<br>";
-					$count++;
+					echo $layout->loadStudentLunchRow($user);
 				} 
 			}
 			?>
@@ -163,7 +160,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 <script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
 <script src="../bootstrap/js/handleMessage.js"></script>
-<script src="../bootstrap/js/addMoney.js"></script>
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#lunchTable').dataTable(
 {

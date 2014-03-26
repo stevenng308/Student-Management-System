@@ -836,134 +836,9 @@ class Layout
 		return $func;
 	}
 	
-	public function loadStudentLunchRow(User $user, $modalNum)
+	public function loadStudentLunchRow(User $user)
 	{
-	$view = '
-					<!-- Button trigger modal -->
-					<button class="btn btn-primary " data-toggle="modal" data-target="#lunchModal' . $modalNum . '">
-					 Add to Balance
-					</button>
-
-					<!-- Modal -->
-					<div class="modal fade" id="lunchModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-					  <div class="modal-dialog">
-						<div class="modal-content">
-						  <div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h2 class="modal-title" id="myModalLabel" align="center">' . $user->getFirstName() . ' ' . $user->getLastName() . '\'s Account Balance</h2>
-						  </div>
-						  <div class="modal-body">
-							<div class="table-responsive">
-								<table class="table table-condensed">
-									<thead>
-										<tr>
-											<th style="text-align: center;" colspan="6">
-												<h3>Account Information</h3>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>ID</td>
-											<td>
-												' . $user->getStudentID() . '
-											</td>
-										</tr>
-										<tr>
-											<td>Username</td>
-											<td>
-												' . $user->getUserName() . '
-											</td>
-										</tr>
-										<tr>
-											<td>First Name</td>
-											<td>
-												' . $user->getFirstName() . '
-											</td>
-										</tr>
-										<tr>
-											<td>Last Name</td>
-											<td>
-												' . $user->getLastName() . '
-											</td>
-										</tr>
-									</tbody>
-									<thead>
-										<tr>
-											<th style="text-align: center;" colspan="6">
-												<h3>Add Money to Balance</h3>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>Account Balance</td>
-											<td>
-												' . $user->getBalanceFormatted() . '
-											</td>
-										</tr>
-										<tr>
-											<td>Money to be Added to Balance</td>
-											<td>
-											<div class="control-group">
-											<input type="text" class="form-control" name="addingBalance" id = "addingBalance' . $modalNum . '" value=""/>
-											</div>
-											</td>
-										</tr>
-									</tbody>
-									<thead>
-										<tr>
-											<th style="text-align: center;" colspan="6">
-												<h3>Card Information</h3>
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-									<tr>
-												<td>Cardholder Name</td>
-												<td>
-												<div class="control-group">
-												<input type="text" class="form-control" name="cardholderName" id = "cardholderName" value=""/>
-												</div>
-												</td>
-									</tr>
-									<tr>
-											<td>Credit Card Number</td>
-											<td>
-											<div class="control-group">
-											<input type="text" class="form-control" name="creditCardNumber" id = "creditCardNumber" value=""/>
-											</div>
-											</td>
-									</tr>
-									<tr>
-											<td>Month Expiration Date</td>
-											<td>
-											<div class="control-group">
-											<input type="text" class="form-control" name="monthExpiration" id = "monthExpiration" value=""/>
-											</div>
-											</td>
-									</tr>
-									<tr>
-											<td>Year Expiration Date</td>
-											<td>
-											<div class="control-group">
-											<input type="text" class="form-control" name="yearExpiration" id = "yearExpiration" value=""/>
-											</div>
-											</td>
-									</tr>
-									</tbody>
-								</table>
-							</div>
-						  </div>
-						  <div class="modal-footer">
-							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-secondary" onclick="addMoney(' . $user->getStudentID() . ', ' . $modalNum . ')">Add Money</button>
-						  </div>
-						</div>
-					  </div>
-					</div>	
-					';
-		
+	$add = '<button class="btn btn-primary" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';
 		$func = '
 			<tr class="searchable">
 				<td style="text-align: center;">
@@ -979,7 +854,7 @@ class Layout
 					' . $user->getBalanceFormatted() . '
 				</td>
 				<td style="text-align: center;">
-					' . $view . '
+					' . $add . '
 				</td>
 			</tr>
 		';
@@ -1067,6 +942,8 @@ class Layout
 									</tr> ";
 		}
 		$change = '<button type="button" class="btn btn-danger" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
+		$change2 = '<button type="button" class="btn btn-danger pull-left" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
+		$add = '<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>';
 		$grade =  '
 					<button class="btn btn-info" data-toggle="modal" data-target="#myModal' . $modalNum . '">
 						View
@@ -1090,7 +967,8 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							' . $change . '
+							' . $add . '
+							' . $change2 . '
 						  </div>
 						</div>
 					  </div>
@@ -1115,7 +993,7 @@ class Layout
 					' . $last . '
 				</td>
 				<td style="text-align: center;">
-					<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>
+					' . $add . '
 				</td>
 				<td style="text-align: center;">
 					' .  $change . '
@@ -1284,7 +1162,7 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>				
+							<button type="button" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>				
 						  </div>
 						</div>
 					  </div>
