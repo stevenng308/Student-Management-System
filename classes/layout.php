@@ -1302,8 +1302,13 @@ class Layout
 		{	
 			$func = '
 				<tr class="searchable">
-				
-					<td style="text-align: center; width: 85%;">
+					<td>
+						' . $dlt . '
+					</td>
+					<td>
+						' . $edt . '
+					</td>
+					<td style="width: 85%;">
 						<pre>' . $mssg->getMessage() . '</pre>
 					
 					</td>
@@ -1313,9 +1318,6 @@ class Layout
 					<td>
 						' . $mssg->getDateFormatted() . '
 					</td>
-					<td>
-						<p>' . $edt . ' ' . $dlt . '</p>
-					</td>
 				</tr>
 			';
 		}
@@ -1323,8 +1325,8 @@ class Layout
 		{	
 			$func = '
 				<tr class="searchable">
-				
-					<td style="text-align: center; width: 85%;">
+					<td></td><td></td>
+					<td style="width: 85%;">
 						<pre>' . $mssg->getMessage() . '</pre>
 					
 					</td>

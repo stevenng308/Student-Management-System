@@ -33,8 +33,9 @@ $session = new Session($_SESSION, $database);
 //var_dump($session);
 
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main', '../');
-$role = $session->getUserType();
 ?>
+<!-- Custom CSS for this page -->
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 
 <!-- Begin page content -->
 <div class="container">
@@ -75,19 +76,20 @@ $role = $session->getUserType();
       <div class="panel-body">
 	<div class="jumbotron">
 		<div class="table-responsive">
-			<table class="table table-hover" id="messageTable">
+			<table class="table table-condensed" id="messageTable">
 				<thead>
 					<tr>
+						<th></th>
+						<th></th>
 						<th>
 							Message
 						</th>
-						<th>
+						<th style="text-align: center;">
 							Posted By
 						</th>
-						<th>
+						<th style="text-align: center;">
 							Time Posted
 						</th>
-						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -96,7 +98,7 @@ $role = $session->getUserType();
 						foreach ($database->query("SELECT * FROM messageboard ORDER BY messageDate DESC") as $row)
 						{
 							$messge = new Message($row);
-							echo $layout->loadMessages($messge, $count, $role);
+							echo $layout->loadMessages($messge, $count, $session->getUserType());
 							$count++;
 							if ($count > 4)
 								break;
@@ -111,53 +113,65 @@ $role = $session->getUserType();
   </div>
 </div>
 
-
-
-
-
-
 <!-- Andre Vicente - Loading Each Student Account Lunch Account depending on Student ID 
      We are assuming since this is the ADMIN Main page that their ROLE is automatically set to 1 -->
-	 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
-<?php
-$username = $session->getID();
-$query = "SELECT studentID FROM parent_student_assoc WHERE guardianID = '" . $username . "' AND role ='" . $role . "'";
-$count = 0;
-$stmt = $database->query($query);
-$result = $stmt->fetch();
-	if (!$result==NULL) {
-	 echo "<div class='container bottomMargin' id='lunch'>";
-	 echo "<div class='table-responsive'>";
-     echo "<h3 align='center'>Students linked to Current Account</h3>";
-     echo "<table cellpadding='0' cellspacing='0' border='0' class='table table-hover' id='userTable'>";
-	 echo "		<thead>";
-	 echo "			<tr>";
-	 echo "				<th style='text-align: center;'>Student ID</th>";
-	 echo "				<th style='text-align: center;'>First Name</th>";
-	 echo "				<th style='text-align: center;'>Last Name</th>";
-	 echo "				<th style='text-align: center;'>Account Balance</th>";
-	 echo "			</tr>";
-	 echo "</thead>";	
-	}
-?>
+	 
+<div class='container bottomMargin' id='lunch'>
+	<div class='table-responsive'>
+		<h3 align='center'>Students linked to Current Account</h3>
+			<table cellpadding='0' cellspacing='0' border='0' class='table table-hover' id='lunchTable'>
+				<thead>
+					<tr>
+						<th style='text-align: center;'>Student ID</th>
+						<th style='text-align: center;'>First Name</th>
+						<th style='text-align: center;'>Last Name</th>
+						<th style='text-align: center;'>Account Balance</th>
+						<th class="no-sort" style='text-align: center;'>Recharge</th>
+					</tr>
+				</thead>
 			<tbody>
 			<?php
-			foreach ($database->query($query) as $row)
+			$query = "SELECT studentID FROM parent_student_assoc WHERE guardianID = '" . $session->getID() . "' AND role ='" . $session->getUserType() . "'";
+			$result = $database->query($query);
+			if ($result->rowCount() == 0)
 			{
-				$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
-				$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-				$user = new User($database, $result[0]['accountID'], "student");
-				echo $layout->loadStudentLunchRow($user, $count);
-				echo "<br>";
-				$count++;
-			} 
+				; //do nothing
+			}
+			else
+			{
+				$count = 0;
+				foreach ($database->query($query) as $row)
+				{
+					$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
+					$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+					$user = new User($database, $result[0]['accountID'], "student");
+					echo $layout->loadStudentLunchRow($user, $count);
+					//echo "<br>";
+					$count++;
+				} 
+			}
 			?>
 			</tbody>
-			</table>
+		</table>
+	</div>
 </div>
 <?php
 	echo $layout->loadFooter('../');
 ?>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
 <script src="../bootstrap/js/handleMessage.js"></script>
 <script src="../bootstrap/js/addMoney.js"></script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+$('#lunchTable').dataTable(
+{
+	"aaSorting": [[3, 'asc']],
+	"aoColumnDefs" : [ {
+		'bSortable' : false,
+		'aTargets' : [ "no-sort" ]
+	}]
+});
+</script>
 </html>
