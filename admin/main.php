@@ -159,4 +159,5 @@ $result = $stmt->fetch();
 	echo $layout->loadFooter('../');
 ?>
 <script src="../bootstrap/js/handleMessage.js"></script>
+<script src="../bootstrap/js/addMoney.js"></script>
 </html>

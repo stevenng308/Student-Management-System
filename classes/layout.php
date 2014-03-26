@@ -838,8 +838,7 @@ class Layout
 	
 	public function loadStundentLunchRow(User $user, $modalNum)
 	{
-			$edit = '<button type="button" class="btn btn-secondary" onclick="location.href=\'editStudent.php?accountid=' . $user->getUserID() . '&role=' . $user->getRole() . '\';">Add Money</button>';
-			$view = '
+	$view = '
 					<!-- Button trigger modal -->
 					<button class="btn btn-primary " data-toggle="modal" data-target="#lunchModal' . $modalNum . '">
 					 Add to Balance
@@ -921,6 +920,14 @@ class Layout
 									</thead>
 									<tbody>
 									<tr>
+												<td>Cardholder Name</td>
+												<td>
+												<div class="control-group">
+												<input type="text" class="form-control" name="cardholderName" id = "cardholderName" value=""/>
+												</div>
+												</td>
+									</tr>
+									<tr>
 											<td>Credit Card Number</td>
 											<td>
 											<div class="control-group">
@@ -950,7 +957,7 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							' . $edit . '
+							<button type="button" class="btn btn-secondary" onclick="addMoney(' . $user->getStudentID() . ')">Add Money</button>
 						  </div>
 						</div>
 					  </div>
