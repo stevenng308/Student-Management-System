@@ -52,6 +52,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 			<!---<h3 align="center"><?php echo $session->getUserName() . '\'s Inbox'; ?></h3>--->
 			<thead>
 				<tr>
+					<th></th>
 					<th>
 						Message
 					</th>
