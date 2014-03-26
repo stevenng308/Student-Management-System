@@ -24,5 +24,5 @@ $adding_balance = mysql_real_escape_string($_POST['addingBalance']);
 //$stmt = $database->query($query);
 //$result = $stmt->fetch();
 
-$database->exec("UPDATE student SET balance = '" . $adding_balance . "' WHERE studentID = " . $student_id . "");
+$database->exec("UPDATE student SET balance = balance + '" . $adding_balance . "' WHERE studentID = " . $student_id . "");
 ?>
