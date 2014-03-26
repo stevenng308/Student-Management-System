@@ -33,6 +33,7 @@ $session = new Session($_SESSION, $database);
 //var_dump($session);
 
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main', '../');
+$role = $session->getUserType();
 ?>
 
 <!-- Begin page content -->
@@ -77,8 +78,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
 				<thead>
 					<tr>
-						<th></th>
-						<th>
+						<th style="width: 730px; height: 100px;">
 							Message
 						</th>
 						<th>
@@ -87,6 +87,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 						<th>
 							Time Posted
 						</th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -95,7 +96,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 						foreach ($database->query("SELECT * FROM messageboard ORDER BY messageDate DESC") as $row)
 						{
 							$messge = new Message($row);
-							echo $layout->loadMessages($messge, $count);
+							echo $layout->loadMessages($messge, $count, $role);
 							$count++;
 							if ($count > 4)
 								break;
@@ -119,7 +120,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
      We are assuming since this is the ADMIN Main page that their ROLE is automatically set to 1 -->
 	 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 <?php
-$role = $session->getUserType();
 $username = $session->getID();
 $query = "SELECT studentID FROM parent_student_assoc WHERE guardianID = '" . $username . "' AND role ='" . $role . "'";
 $count = 0;

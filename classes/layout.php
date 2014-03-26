@@ -1253,7 +1253,7 @@ class Layout
 		return $func;
 	}
 
-	public function loadMessages(Message $mssg, $modalNum)
+	public function loadMessages(Message $mssg, $modalNum, $role)
 	{	
 		
 		//function ' . dltMsg . ' ' . $modalNum . ' ' . () . '
@@ -1291,25 +1291,45 @@ class Layout
 			';
 
 		
-			
-		$func = '
-			<tr class="searchable">
-				<td>
-					<p>' . $edt . ' ' . $dlt . '</p>
-				</td>
-				<td style="text-align: center;">
-					<pre>' . $mssg->getMessage() . '</pre>
+		if ($role=='1')
+		{	
+			$func = '
+				<tr class="searchable">
+				
+					<td style="text-align: center;">
+						<pre>' . $mssg->getMessage() . '</pre>
 					
-				</td>
-				<td>
-					' . $mssg->getAuthorFirst() . ' ' . $mssg->getAuthorLast() . '
-				</td>
-				<td>
-					' . $mssg->getDateFormatted() . '
-				</td>
-			</tr>
-		';
-		
+					</td>
+					<td>
+						' . $mssg->getAuthorFirst() . ' ' . $mssg->getAuthorLast() . '
+					</td>
+					<td>
+						' . $mssg->getDateFormatted() . '
+					</td>
+					<td>
+						<p>' . $edt . ' ' . $dlt . '</p>
+					</td>
+				</tr>
+			';
+		}
+		else
+		{	
+			$func = '
+				<tr class="searchable">
+				
+					<td style="text-align: center;">
+						<pre>' . $mssg->getMessage() . '</pre>
+					
+					</td>
+					<td>
+						' . $mssg->getAuthorFirst() . ' ' . $mssg->getAuthorLast() . '
+					</td>
+					<td>
+						' . $mssg->getDateFormatted() . '
+					</td>
+				</tr>
+			';
+		}
 		return $func;
 	}
 
