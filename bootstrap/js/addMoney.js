@@ -1,16 +1,16 @@
-function addMoney($studentID)
+function addMoney($studentID, $num)
 {
 //var tempArray = [studentID];
 	$.post(
 		'../classes/addMoney.php',
 		{
-			'addingBalance' : $('#addingBalance').val(),
+			'addingBalance' : $('#addingBalance'+$num).val(),
 			'studentID' : $studentID
 		},
 		function(data){
-		  //$("#mainDiv").html(data);
+		  //$("#lunch").html(data);
 		  //$('#inboxNum').text(data);
-		location.reload();
+			location.reload();
 		}
 	  );
 return false;

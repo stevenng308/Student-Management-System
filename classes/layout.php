@@ -836,7 +836,7 @@ class Layout
 		return $func;
 	}
 	
-	public function loadStundentLunchRow(User $user, $modalNum)
+	public function loadStudentLunchRow(User $user, $modalNum)
 	{
 	$view = '
 					<!-- Button trigger modal -->
@@ -906,7 +906,7 @@ class Layout
 											<td>Money to be Added to Balance</td>
 											<td>
 											<div class="control-group">
-											<input type="text" class="form-control" name="addingBalance" id = "addingBalance" value=""/>
+											<input type="text" class="form-control" name="addingBalance" id = "addingBalance' . $modalNum . '" value=""/>
 											</div>
 											</td>
 										</tr>
@@ -957,7 +957,7 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" class="btn btn-secondary" onclick="addMoney(' . $user->getStudentID() . ')">Add Money</button>
+							<button type="button" class="btn btn-secondary" onclick="addMoney(' . $user->getStudentID() . ', ' . $modalNum . ')">Add Money</button>
 						  </div>
 						</div>
 					  </div>

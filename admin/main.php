@@ -126,7 +126,7 @@ $count = 0;
 $stmt = $database->query($query);
 $result = $stmt->fetch();
 	if (!$result==NULL) {
-	 echo "<div class='container bottomMargin'>";
+	 echo "<div class='container bottomMargin' id='lunch'>";
 	 echo "<div class='table-responsive'>";
      echo "<h3 align='center'>Students linked to Current Account</h3>";
      echo "<table cellpadding='0' cellspacing='0' border='0' class='table table-hover' id='userTable'>";
@@ -147,7 +147,7 @@ $result = $stmt->fetch();
 				$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
 				$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 				$user = new User($database, $result[0]['accountID'], "student");
-				echo $layout->loadStundentLunchRow($user, $count);
+				echo $layout->loadStudentLunchRow($user, $count);
 				echo "<br>";
 				$count++;
 			} 
