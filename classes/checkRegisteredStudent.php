@@ -30,7 +30,7 @@ else
 	$index = count($child_arr) - 1; //get the index of the last element because the preceding elements have ids that are completed and don't need to be looked up
 	$child = mysql_real_escape_string($child_arr[$index]); //search using the ID in the last element
 }
-$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = "' . $child .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1');
+/*$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = "' . $child .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1');
 if ($query->rowCount() == 0) //if true input does not exist.
 {
 	echo "true";
@@ -38,7 +38,17 @@ if ($query->rowCount() == 0) //if true input does not exist.
 else
 {
 	echo "false";
-}					
+}*/
+foreach ($child_arr as $child)
+{
+	$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = "' . $child .  '" AND classID = "' . $_POST['classID'] .  '" LIMIT 1');
+	if ($query->rowCount() != 0) //if true input does exist and is already registered.
+	{
+		echo "false";
+		return;
+	}
+}		
+echo "true";					
 
 
 //var_dump($_POST);

@@ -105,7 +105,7 @@ $(document).ready(function () {
             });
             return result; 
         }, 
-        "The rightmost Student ID does not exist. Please make sure the student you are trying to associate with has been created and has a Student ID number."
+        "One or more Student IDs do not exist. Please make sure the student you are trying to associate with has been created and has a Student ID number."
     );
 	
 	//rule for checking if student ID is unique

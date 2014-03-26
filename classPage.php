@@ -170,7 +170,7 @@ $(document).ready(function () {
 			});
 			return result; 
 		}, 
-		"The rightmost Student ID does not exist. Please make sure the Student ID is correct, the student does have an ID number and the account is active."
+		"One or more Student IDs do not exist. Please make sure the Student ID is correct, the student does have an ID number and the account is active."
 	);
 	
 	//rule for allowing some symbols in the first and last name field
@@ -218,7 +218,7 @@ $(document).ready(function () {
 			});
 			return result; 
 		}, 
-		"The rightmost Student ID has already been registered."
+		"One or more Student IDs have already been registered."
 	);
 	
 	$('#register-student').validate({
