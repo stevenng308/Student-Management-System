@@ -1284,7 +1284,7 @@ class Layout
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" style="float:left" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>				
+							<button type="button" class="btn btn-primary pull-right" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>				
 						  </div>
 						</div>
 					  </div>

@@ -42,7 +42,7 @@ $role = $session->getUserType();
 
 <!-- Begin collapse -->
 <div class="panel-group" id="accordion">
-  <div class="panel panel-primary">
+  <div class="panel panel-fb">
     <div class="panel-heading">
       <h2 class="panel-title" align="center">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
@@ -50,7 +50,7 @@ $role = $session->getUserType();
         </a>
       </h2>
     </div>
-    <div id="collapseOne" class="panel-collapse collapse">
+    <div id="collapseOne" class="panel-collapse collapse in">
       <div class="panel-body">
 	<div class="jumbotron">
 		<form name="compose" id="compose-form" action="#" method="post">
@@ -71,7 +71,7 @@ $role = $session->getUserType();
 	</a>
       </h3>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse in">
+    <div id="collapseTwo" class="panel-collapse collapse">
       <div class="panel-body">
 	<div class="jumbotron">
 		<div class="table-responsive">

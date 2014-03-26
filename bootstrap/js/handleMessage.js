@@ -12,6 +12,7 @@ function deleteMsg($id)
 			function(data){
 				//alert(data);
 			  //$("#mainDiv").html(data);
+			  alert("Message has been deleted.");
 			  location.reload();
 			}
 		);
@@ -28,7 +29,7 @@ function editMsg($id, $mn)
 	$msg = "#edtMessage";
 	$msg = $msg + $mn;
 	//alert($msg);
-	if (window.confirm("Edits submitted."))
+	if (window.confirm("Do you want to edit?"))
 	{
 		$.post(
 			'../classes/editMessage.php',
@@ -39,6 +40,7 @@ function editMsg($id, $mn)
 			function(data){
 				//alert(data);
 			  //$("#mainDiv").html(data);
+			  alert("Message has been edited.");
 			  location.reload();
 			}
 		);
@@ -61,6 +63,7 @@ function postMsg()
 		function(data){
 			//alert(data);
 		  //$("#mainDiv").html(data);
+		  alert("Message has been posted.");
 		  location.reload();
 		}
 	  );
