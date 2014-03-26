@@ -42,9 +42,9 @@ $role = $session->getUserType();
 
 <!-- Begin collapse -->
 <div class="panel-group" id="accordion">
-  <div class="panel panel-default">
+  <div class="panel panel-primary">
     <div class="panel-heading">
-      <h2 align="center">
+      <h2 class="panel-title" align="center">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
           Post Message
         </a>
@@ -63,9 +63,9 @@ $role = $session->getUserType();
   </div>
 
 
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel-heading">
-      <h3 align="center">
+      <h3 class="panel-title" align="center">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
 	 Message Board
 	</a>
@@ -73,12 +73,12 @@ $role = $session->getUserType();
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in">
       <div class="panel-body">
-	<div class="jumbotron bottomMargin">
+	<div class="jumbotron">
 		<div class="table-responsive">
-			<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+			<table class="table table-hover" id="messageTable">
 				<thead>
 					<tr>
-						<th style="width: 730px; height: 100px;">
+						<th>
 							Message
 						</th>
 						<th>

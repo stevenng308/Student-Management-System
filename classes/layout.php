@@ -1303,7 +1303,7 @@ class Layout
 			$func = '
 				<tr class="searchable">
 				
-					<td style="text-align: center;">
+					<td style="text-align: center; width: 85%;">
 						<pre>' . $mssg->getMessage() . '</pre>
 					
 					</td>
@@ -1324,7 +1324,7 @@ class Layout
 			$func = '
 				<tr class="searchable">
 				
-					<td style="text-align: center;">
+					<td style="text-align: center; width: 85%;">
 						<pre>' . $mssg->getMessage() . '</pre>
 					
 					</td>
