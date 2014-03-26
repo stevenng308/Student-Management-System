@@ -1263,9 +1263,7 @@ class Layout
 					
 		//$delete = '<button class="btn btn-danger">Delete</button>';
 		$edt =  '
-					<button type="button" style="float:left" class="btn btn-primary" data-toggle="modal" data-target="#bModal' . $modalNum . '">
-						Edit
-					</button>			
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bModal' . $modalNum . '">Edit</button>			
 
 					<div class="modal fade" id="bModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 					  <div class="modal-dialog">
@@ -1275,20 +1273,18 @@ class Layout
 							<h3 class="modal-title" id="myModalLabel" align="center">Edit Message</h3>
 						  </div>
 						  <div class="modal-body">
-							<pre><textarea id="edtMessage" name="edtMessage" class="messageBoard">' . $mssg->getMessage() . '</textarea></pre>
+							<pre><textarea id="edtMessage' . $modalNum . '" name="edtMessage' . $modalNum . '" class="messageBoard">' . $mssg->getMessage() . '</textarea></pre>
 						  </div>
 						  <div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-							<button type="button" style="float:right" class="btn btn-primary" data-dismiss="modal">Submit</button>							
-							<button type="button" style="float:left" class="btn btn-danger" data-toggle="modal" data-target="#bModal' . $modalNum . '" onclick="deleteMsg()">Delete</button>
-						  </div>
+							<button type="button" style="float:right" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')" >Submit</button>									  </div>
 						</div>
 					  </div>
 					</div>
 				';
 				
 		$dlt = '
-					<button type="button" style="float:left" class="btn btn-danger" onclick="deleteMsg(' . $mssg->getID() . ')">
+					<button type="button" class="btn btn-danger" onclick="deleteMsg(' . $mssg->getID() . ')">
 						Delete
 					</button>					
 			';
@@ -1297,9 +1293,11 @@ class Layout
 			
 		$func = '
 			<tr class="searchable">
+				<td>
+					<p>' . $edt . '' . $dlt . ' </p>
+				</td>
 				<td style="text-align: center;">
 					<pre>' . $mssg->getMessage() . '</pre>
-					<p>' . $edt . ' ' . $dlt . ' </p>
 					
 				</td>
 				<td>

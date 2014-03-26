@@ -131,50 +131,5 @@ $result = $stmt->fetch();
 <?php
 	echo $layout->loadFooter('../');
 ?>
-<script>
-function postMsg()
-{
-	//alert("hi");
-	$.post(
-		'../classes/postMessage.php',
-		{
-			'message' : $('#message').val()
-		},
-		function(data){
-			//alert(data);
-		  //$("#mainDiv").html(data);
-		  location.reload();
-		}
-	  );
-  return false;
-}
-</script>
-
-
-<script>
-function deleteMsg($id)
-{
-	//alert('hey');
-	if (window.confirm("Do you want to delete?"))
-	{
-		$.post(
-			'../classes/deleteMessage.php',
-			{
-				//'message' : $('#edtMessage').val()
-				'id' : $id
-			},
-			function(data){
-				//alert(data);
-			  //$("#mainDiv").html(data);
-			  location.reload();
-			}
-		);
-	return false;
-	}
-	else
-	{
-		; //do nothing
-	}
-}
-</script>
+<script src="../bootstrap/js/handleMessage.js"></script>
 </html>
