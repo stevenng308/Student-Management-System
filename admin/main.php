@@ -32,6 +32,15 @@ $session = new Session($_SESSION, $database);
 //var_dump($_SESSION);
 //var_dump($session);
 
+$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . "");
+if ($query->rowCount() == 1)
+{
+	$new = $session->getID();
+}
+else
+{
+	$new = 0;
+}
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main', '../');
 ?>
 <!-- Custom CSS for this page -->
@@ -118,7 +127,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	 
 <div class='container bottomMargin' id='lunch'>
 	<div class='table-responsive'>
-		<h3 align='center'>Students linked to Current Account</h3>
+		<h3 align='center'>Students Associated To Current Account</h3>
 			<table cellpadding='0' cellspacing='0' border='0' class='table table-hover' id='lunchTable'>
 				<thead>
 					<tr>
@@ -169,5 +178,13 @@ $('#lunchTable').dataTable(
 		'aTargets' : [ "no-sort" ]
 	}]
 });
+
+if (<?php echo $new ?>)
+{
+	if (window.confirm('Please consider changing your password for account integrity.'))
+	{
+		window.location.replace('../changePassword.php?id=' + <?php echo $new ?>);
+	}
+}
 </script>
 </html>

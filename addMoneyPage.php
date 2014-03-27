@@ -34,7 +34,7 @@ if ($session->getUserType() == 1)
 {
 	$header = "Location: admin/error.php";
 }
-if ($session->getUserType() == 2)
+else if ($session->getUserType() == 2)
 {
 	$header = "Location: teacher/error.php";
 }
