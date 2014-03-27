@@ -4919,6 +4919,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
   border-radius: 10px;
 }
 
+.badge-danger{
+	background-color:#b94a48;
+}
+
 .badge:empty {
   display: none;
 }

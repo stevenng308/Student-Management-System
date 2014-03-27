@@ -26,4 +26,5 @@ $date = date('Y-m-d H:i:s');
 $database->exec("INSERT INTO response(topicID, response_message, author_user, author_first, author_last, date_posted)
 				VALUES('" . $_POST['id'] . "', '" . $msg . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "')");
 $database->exec("UPDATE forum SET last_post='" . $date . "' WHERE topicID='" . $_POST['id']. "'");
+$database->exec("UPDATE subscribe SET lastNum = lastNum + 1 WHERE topicID='" . $_POST['id']. "' AND accountID = '" . $session->getID(). "' AND role= '" . $session->getUserType(). "'");
 ?>

@@ -124,7 +124,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 		<!-- ajax load content -->
 	  </div>
 	</div>
-	</div><!-- /example -->
+	</div>
 </div>
 <?php
 	echo $layout->loadFooter('');

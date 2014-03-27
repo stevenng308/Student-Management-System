@@ -25,6 +25,12 @@ class Topic
 		return $this->topicID;
 	}
 	
+	public function getClassID()
+	{
+		$classid = preg_split("/_+/", $this->forumName);
+		return $classid[0];
+	}
+	
 	public function getForumName()
 	{
 		return $this->forumName;

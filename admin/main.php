@@ -41,6 +41,27 @@ else
 {
 	$new = 0;
 }
+
+$query = $database->query("SELECT * FROM subscribe WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . "");
+$subscription = $query->fetchAll(PDO::FETCH_ASSOC);
+$class_arr = [];
+$posts = 0;
+for ($i = 0; $i < count($subscription); $i++)
+{
+	$respond = $database->query("SELECT * FROM response WHERE topicid = " . $subscription[$i]['topicID'] . "");
+	if ($respond->rowCount()+1 > $subscription[$i]['lastNum']) // if true new posts were made
+	{
+		$num = $respond->rowCount() + 1;
+		$posts = $posts + ($num - $subscription[$i]['lastNum']);
+		$database->exec("UPDATE subscribe SET lastNum = " . $num . " WHERE id = " . $subscription[$i]['id'] . ""); //update the number of posts in the subscription row
+		$query = $database->query("SELECT * FROM forum WHERE topicID = " . $subscription[$i]['topicID'] . "");
+		$result = $query->fetchAll(PDO::FETCH_ASSOC);
+		$topic = new Topic($result[0], $respond->rowCount());
+		$class_arr[$i] = $topic->getClassID();
+		//var_dump($class_arr);
+	}
+}
+$class_arr = array_unique($class_arr);
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main', '../');
 ?>
 <!-- Custom CSS for this page -->
@@ -48,8 +69,43 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 
 <!-- Begin page content -->
 <div class="container">
-	<h3>Hello <?php echo $session->getFirstName(); ?>.</h3>
+ <nav class="navbar navbar-default" role="navigation">
+  <div class="container-fluid">
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
+		<span class="sr-only">Toggle navigation</span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+		<span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand">Hello <?php echo $session->getFirstName(); ?>.</a>
+	</div>
+	<ul class="nav navbar-nav navbar-right">
+	<li class="dropdown">
+	  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge badge-danger"><?php echo $posts . ' '; ?></span> New Forum Msgs <b class="caret"></b></a>
+	  <ul class="dropdown-menu">
+		<?php
+			if (!empty($class_arr))
+			{
+				foreach ($class_arr as $class)
+				{
+					$query = $database->query("SELECT course_name FROM classroom WHERE classID = " . $class . "");
+					$classroom = $query->fetchAll(PDO::FETCH_ASSOC);
+					echo '<li><a href="../classPage.php?classid=' . $class . '">' . $classroom[0]['course_name'] . ' ' . ' - Class Page </a></li>';
+				}
+			}
+			else
+			{
+				echo '<li class="disabled"><a>No New Forum Msgs</a></li>';
+			}
+		?>
+	  </ul>
+	</li>
+  </ul>
+  </div>
+</nav>
 
+ 
 <!-- Begin collapse -->
 <div class="panel-group" id="accordion">
   <div class="panel panel-fb">

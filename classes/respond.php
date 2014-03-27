@@ -29,7 +29,8 @@ $query = $database->query("SELECT * FROM forum WHERE topicID = " . $topicid . ""
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 $respond = $database->query("SELECT * FROM response WHERE topicid = " . $topicid . "");
 $topic = new Topic($result[0], $respond->rowCount());
-$classid = preg_split("/_+/", $topic->getForumName());
+//$classid = preg_split("/_+/", $topic->getForumName());
+$classid = $topic->getClassID();
 ?>
 <div class="container">
 	<br />
