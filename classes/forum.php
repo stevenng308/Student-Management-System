@@ -10,22 +10,22 @@ if(!(empty($_SESSION)))
 {
 	if($_SESSION['sess_role'] == 4)
 	{
-		header('Refresh: 1.5; url=../index.php');
-		echo '<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+		header('Refresh: 1.5; url=index.php');
+		echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
 		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
 		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
 	}
 }
 else
 {
-	header('Location: ../index.php');
+	header('Location: index.php');
 }
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 if ($session->getUserType() == 1)
 {
-	$header = "Location: ../admin/error.php";
+	$header = "Location: admin/error.php";
 }
 else
 {

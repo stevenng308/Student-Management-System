@@ -836,32 +836,6 @@ class Layout
 		return $func;
 	}
 	
-	public function loadStudentLunchRow(User $user)
-	{
-	$add = '<button class="btn btn-primary" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';
-		$func = '
-			<tr class="searchable">
-				<td style="text-align: center;">
-					' . $user->getStudentID() . '
-				</td>
-				<td style="text-align: center;">
-					' . $user->getFirstName() . '
-				</td>
-				<td style="text-align: center;">
-					' . $user->getLastName() . '
-				</td>
-				<td style="text-align: center;">
-					' . $user->getBalanceFormatted() . '
-				</td>
-				<td style="text-align: center;">
-					' . $add . '
-				</td>
-			</tr>
-		';
-		
-		return $func;
-	}
-	
 	public function loadInbox(Email $mail, $modalNum, $box)
 	{	
 		//$delete = '<button class="btn btn-danger">Delete</button>';
@@ -1220,7 +1194,35 @@ class Layout
 		return $func;
 	}
 
-
+	public function loadStudentLunchRow(User $user)
+	{
+	$add = '<button class="btn btn-primary" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';
+	$grade = '<button class="btn btn-info" onclick="location.href=\'../student/studentAllGrades.php?id=' . $user->getStudentID() . '\';">View Grades</button>';
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					' . $user->getStudentID() . '
+				</td>
+				<td style="text-align: center;">
+					' . $user->getFirstName() . '
+				</td>
+				<td style="text-align: center;">
+					' . $user->getLastName() . '
+				</td>
+				<td style="text-align: center;">
+					' . $user->getBalanceFormatted() . '
+				</td>
+				<td style="text-align: center;">
+					' . $add . '
+				</td>
+				<td style="text-align: center;">
+					' . $grade . '
+				</td>
+			</tr>
+		';
+		
+		return $func;
+	}
 
 
 

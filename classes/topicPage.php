@@ -1,7 +1,7 @@
 <?php
 /*Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- process deleting topics*/
+<!-- all topics*/
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
@@ -19,7 +19,7 @@ if(!(empty($_SESSION)))
 }
 else
 {
-	header('Location: ../index.php');
+	header('Location: index.php');
 }
 //$database = new Database();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');

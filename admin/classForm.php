@@ -35,7 +35,7 @@ $session = new Session($_SESSION, $database);
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Add Class Form', '../');
 ?>
 	<!-- Custom styles for this template -->
-	<link href="../bootstrap/css/classroomForm.css" rel="stylesheet">
+	<link href="../bootstrap/css/register.css" rel="stylesheet">
 	<link href="../bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 	<link href="../bootstrap/css/jquery.ui.timepicker.css" rel="stylesheet">
 	

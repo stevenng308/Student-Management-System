@@ -71,28 +71,24 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/dataTables.bootstrap.css">
 
 <!-- Begin page content -->
-<div class="container">
+<div class="container bottomMargin">
 	<div class="bs-example bs-example-tabs">
-		<ul id="myTab" class="nav nav-tabs">
+		<ul id="myTab" class="nav nav-tabs nav-justified">
 			  <li class="active"><a href="#home" data-toggle="tab"><b>Home</b></a></li>
 			  <li><a href="#forum" data-toggle="tab"><b>Forum</b></a></li>
 			  <?php
 				if ($_SESSION['sess_role'] != 3)
 				{
 					echo '
-						 <li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>Roster</b> <b class="caret"></b></a>
-							<ul class="dropdown-menu" role="menu" aria-labelledby="roster">
-							  <li><a href="#register" tabindex="-1" data-toggle="tab">Register</a></li>
-							  <li><a href="#rosterList" tabindex="-1" data-toggle="tab">Manage</a></li>
-							</ul>
-						  </li>
+						 <li><a href="#register" tabindex="-1" data-toggle="tab"><b>Register</b></a></li>
+						 <li><a href="#rosterList" tabindex="-1" data-toggle="tab"><b>Roster</b></a></li>
 						 <li><a href="#allGrades" data-toggle="tab"><b>All Grades</b></a></li>
 						 ';
+					//echo '<li><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>';
 				}
 				else
 				{
-					echo '<li><a href="#grades" data-toggle="tab">Grades</a></li>';
+					echo '<li><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>';
 				}
 			  ?>
 		</ul>
@@ -142,6 +138,11 @@ $(window).load(function(){
 	{
 		loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //load the class roster
 		loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
+		//loadClassPages('#grades', 'classes/studentClassGrades.php?classid=', <?php echo $classid; ?>);
+	}
+	else if (role == 3)
+	{
+		loadClassPages('#grades', 'classes/studentClassGrades.php?classid=', <?php echo $classid; ?>); //load students grade in grade div
 	}
 });
 

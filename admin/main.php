@@ -192,6 +192,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 						<th style='text-align: center;'>Last Name</th>
 						<th style='text-align: center;'>Account Balance</th>
 						<th class="no-sort" style='text-align: center;'></th>
+						<th class="no-sort" style='text-align: center;'></th>
 					</tr>
 				</thead>
 			<tbody>
