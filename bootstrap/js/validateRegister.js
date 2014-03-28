@@ -273,7 +273,7 @@ $(document).ready(function () {
             $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
         },
         success: function (element) {
-            $(element).text('OK!').addClass('valid')
+            $(element).addClass('valid')
                 .closest('.control-group').removeClass('has-error').addClass('has-success');
         }
     });

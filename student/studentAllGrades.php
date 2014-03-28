@@ -78,21 +78,22 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 						echo '<option value="' . $i . '">' . $i . '</option>';
 					}
 				}*/
+				//begin getting array of years for the grades the student has
 				$year_arr = [];
 				$count = 0;//using for array index values
-				foreach ($database->query("SELECT classID FROM grade WHERE studentID = " . $id . "") as $class)
+				foreach ($database->query("SELECT classID FROM grade WHERE studentID = " . $id . "") as $class) //get the class id of the grade
 				{
-					$query = $database->query("SELECT year FROM classroom WHERE classID = " . $class[0] . "");
+					$query = $database->query("SELECT year FROM classroom WHERE classID = " . $class[0] . ""); //get the year of the class
 					$year = $query->fetchAll(PDO::FETCH_ASSOC);
 					$year_arr[$count] = $year[0]['year'];
 					$count++;
 				}
-				$year_arr = array_values(array_unique($year_arr)); //remove dupes and then normalize the indexes
+				$year_arr = array_values(array_unique($year_arr)); //remove dupes and then normalize the indexes. dupes will cause the index value to not be 0 and 1 and so on (0 and 7)
 				for ($i = 0; $i < count($year_arr); $i++)
 				{
-					if ($field != $year_arr[$i])
+					if ($field != $year_arr[$i]) //remove dupe select option
 					{
-						echo '<option value="' . $year_arr[$i] . '">' . $year_arr[$i] . '</option>';
+						echo '<option value="' . $year_arr[$i] . '">' . $year_arr[$i] . '</option>'; //select option for displaying grades based on school years
 					}
 				}
 				echo '</select></div>
@@ -115,13 +116,14 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 				<?php 
 				if (isset($_GET['field']))
 				{
+					//begin getting grades for the school year selected
 					$class_arr = [];
 					$name_arr = [];
 					$count = 0; //using for array index values
-					foreach ($database->query('SELECT classid FROM grade WHERE studentID = ' . $id . '') as $class)
+					foreach ($database->query('SELECT classid FROM grade WHERE studentID = ' . $id . '') as $class) //get the class id belonging to the grade
 					{
-						$query = $database->query('SELECT classid, course_name FROM classroom WHERE classID = ' . $class[0] . ' AND year = "' . $_GET['field'] . '"');
-						if ($query->rowCount() != 0)
+						$query = $database->query('SELECT classid, course_name FROM classroom WHERE classID = ' . $class[0] . ' AND year = "' . $_GET['field'] . '"'); //get the class id and name if it matches the year selected
+						if ($query->rowCount() != 0) //true if there was a result because we're selecting all the grades belonging to the student in the foreach and might not be in the right school year
 						{
 							$class = $query->fetchAll(PDO::FETCH_ASSOC);
 							//var_dump($class);
@@ -131,15 +133,17 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 							$count++;
 						}
 					}
-					$class_arr = array_values(array_unique($class_arr)); //remove dupes and then normalize the indexes
+					$class_arr = array_values(array_unique($class_arr)); //remove dupes and then normalize the indexes. dupes will cause the index value to not be 0 and 1 and so on (0 and 7)
 					$name_arr = array_values(array_unique($name_arr));
 					//var_dump($class_arr);
 					//var_dump($name_arr);
-					for ($i = 0; $i < count($class_arr); $i++)
+					for ($i = 0; $i < count($class_arr); $i++) //class_arr and name_arr should be equal in size since we only want 1 entry per class
 					{
+						//display class name
 						echo '<th style="text-align: center;" colspan="6">
-								<h4>' . $name_arr[$i] . '</h4>
+								<h4>' . $name_arr[$i] . '</h4> 
 							</th>';
+						//start displaying the grades for the class based on the selected year
 						foreach ($database->query('SELECT * FROM grade WHERE studentID = ' . $id . ' AND classID = ' . $class_arr[$i] . '') as $row) //change 12 later
 						{
 							echo '<tr>

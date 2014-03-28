@@ -86,23 +86,24 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Class 
 		<div class="row">
 			<div class="col-xs-6 col-md-6">
 				<div class="control-group">
-					<select id="semester" name="semester" class="form-control">
-						<option selected="selected" value="<?php echo $classroom->getSemester(); ?>" ><?php echo $classroom->getSemester(); ?></option>
+					<!--select id="semester" name="semester" class="form-control" disabled="disabled">
+						<option selected="selected" value="<?php echo $classroom->getSemester(); ?>" disabled="disabled"><?php echo $classroom->getSemester(); ?></option>
 						<?php
-							if ($classroom->getSemester() == "Spring")
+							/*if ($classroom->getSemester() == "Spring")
 								echo '<option value="Fall">Fall</option>';
 							else
-								echo '<option value="Spring">Spring</option>';
+								echo '<option value="Spring">Spring</option>';*/
 						?>
-					</select>
+					</select>-->
+					<input id="semester" name="semester" class="form-control" value="<?php echo $classroom->getSemester(); ?>" placeholder="Semester" readonly></input>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-6">
 				<div class="control-group">
-					<select id="schoolYear" name="schoolYear" class="form-control">
-						<option selected="selected" value="<?php echo $classroom->getSchoolYear(); ?>"><?php echo $classroom->getSchoolYear(); ?></option>
+					<!--<select id="schoolYear" name="schoolYear" class="form-control" disabled="disabled">
+						<option selected="selected" value="<?php echo $classroom->getSchoolYear(); ?>" disabled="disabled"><?php echo $classroom->getSchoolYear(); ?></option>
 						<?php
-							$currentYear = date('Y');
+							/*$currentYear = date('Y');
 							$nextYear = $currentYear + 1;
 							$schoolYear = $currentYear . "-" . $nextYear;
 							for ($i = 0; $i < 15; $i++)
@@ -120,20 +121,23 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Class 
 									$nextYear++;
 									$schoolYear = $currentYear . "-" . $nextYear;
 								}
-							}
+							}*/
 						?>
-					</select>
+					</select>-->
+					<input id="schoolYear" name="schoolYear" class="form-control" value="<?php echo $classroom->getSchoolYear(); ?>" placeholder="School Year" readonly></input>
 				</div>
 			</div>
 		</div>
 		<input id="username" name="username" type="text" class="form-control" value="<?php echo $classroom->getTeacherID(); ?>" placeholder="Assigned Teacher's Username">
-		<div class="checkbox"">
+		<div class="checkbox">
 			<label>
 				<?php ($classroom->getStatus() ? $check = '<input name="status" id="status" type="checkbox" checked> Active Class' : $check = '<input name="status" id="status" type="checkbox"> Active Class');
 				echo $check;?>
 			</label>
 		</div>
-		<input type="hidden" value="<?php echo $classroom->getClassID(); ?>" name="classid" id="classid"> 
+		<div class="control-group">
+			<input type="hidden" value="<?php echo $classroom->getClassID(); ?>" name="classid" id="classid"> 
+		</div>
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>
 	</form>

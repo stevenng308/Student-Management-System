@@ -81,19 +81,20 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Add Class F
 		<div class="row">
 			<div class="col-xs-6 col-md-6">
 				<div class="control-group">
-					<select id="semester" name="semester" class="form-control">
+					<!--<select id="semester" name="semester" class="form-control" disabled="disabled">
 						<option selected="selected" value="semester">Semester</option>
 						<option value="Spring">Spring</option>
 						<option value="Fall">Fall</option>
-					</select>
+					</select>-->
+					<input id="semester" name="semester" class="form-control" placeholder="Semester" readonly></input>
 				</div>
 			</div>
 			<div class="col-xs-6 col-md-6">
 				<div class="control-group">
-					<select id="schoolYear" name="schoolYear" class="form-control">
+					<!--<select id="schoolYear" name="schoolYear" class="form-control" disabled="disabled">
 						<option selected="selected" value="0">Year</option>
 						<?php
-							$currentYear = date('Y');
+							/*$currentYear = date('Y');
 							$nextYear = $currentYear + 1;
 							$schoolYear = $currentYear . "-" . $nextYear;
 							for ($i = 0; $i < 15; $i++)
@@ -102,13 +103,16 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Add Class F
 								$currentYear++;
 								$nextYear++;
 								$schoolYear = $currentYear . "-" . $nextYear;
-							}
+							}*/
 						?>
-					</select>
+					</select>-->
+					<input id="schoolYear" name="schoolYear" class="form-control" placeholder="School Year" readonly></input>
 				</div>
 			</div>
 		</div>
-		<input id="username" name="username" type="text" class="form-control" placeholder="Assigned Teacher's Username">
+		<div class="control-group">
+			<input id="username" name="username" type="text" class="form-control" placeholder="Assigned Teacher's Username">
+		</div>
 		<br />
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>
 	</form>
