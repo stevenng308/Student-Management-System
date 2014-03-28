@@ -120,8 +120,8 @@ function unregister()
 				},
 				function(data){
 				  //$("#mainDiv").html(data);
-				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>);
-				  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
+				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //refresh the roster
+				  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load/unload all grades of the new students if they had existing grades
 				}
 			  );
 		  return false;

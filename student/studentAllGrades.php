@@ -107,7 +107,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 			<table class="table table-condensed">
 				<thead>
 					<tr>
-						<th style="text-align: center;" colspan="6">
+						<th style="text-align: center;" colspan="2">
 							<h3><?php echo $result[0]['firstName'] . '  ' . $result[0]['lastName'] . '\'s Grades'; ?></h3>
 						</th>
 					</tr>
@@ -118,30 +118,35 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 				{
 					//begin getting grades for the school year selected
 					$class_arr = [];
-					$name_arr = [];
+					//$name_arr = [];
 					$count = 0; //using for array index values
 					foreach ($database->query('SELECT classid FROM grade WHERE studentID = ' . $id . '') as $class) //get the class id belonging to the grade
 					{
-						$query = $database->query('SELECT classid, course_name FROM classroom WHERE classID = ' . $class[0] . ' AND year = "' . $_GET['field'] . '"'); //get the class id and name if it matches the year selected
+						$query = $database->query('SELECT classid FROM classroom WHERE classID = ' . $class[0] . ' AND year = "' . $_GET['field'] . '"'); //get the class id and name if it matches the year selected
 						if ($query->rowCount() != 0) //true if there was a result because we're selecting all the grades belonging to the student in the foreach and might not be in the right school year
 						{
 							$class = $query->fetchAll(PDO::FETCH_ASSOC);
 							//var_dump($class);
 							$class_arr[$count] = $class[0]['classid'];
-							$name_arr[$count] = $class[0]['course_name'];
+							//$name_arr[$count] = $class[0]['course_name'];
 							//echo $count . ' ';
 							$count++;
 						}
 					}
 					$class_arr = array_values(array_unique($class_arr)); //remove dupes and then normalize the indexes. dupes will cause the index value to not be 0 and 1 and so on (0 and 7)
-					$name_arr = array_values(array_unique($name_arr));
+					//$name_arr = array_values(array_unique($name_arr));
 					//var_dump($class_arr);
 					//var_dump($name_arr);
 					for ($i = 0; $i < count($class_arr); $i++) //class_arr and name_arr should be equal in size since we only want 1 entry per class
 					{
+						$query =  $database->query('SELECT * FROM classroom WHERE classID=' . $class_arr[$i] . '');
+						$class = $query->fetchAll(PDO::FETCH_ASSOC);
+						$query =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $class[0]['teacherID'] . '"');
+						$teacher = $query->fetchAll(PDO::FETCH_ASSOC);
+						$classroom = new Classroom($class[0], $teacher, $database);
 						//display class name
-						echo '<th style="text-align: center;" colspan="6">
-								<h4>' . $name_arr[$i] . '</h4> 
+						echo '<th style="text-align: center;" colspan="2">
+								<h4>' . $classroom->getCourseNumber() . ' ' . $classroom->getCourseName() . '</h4> 
 							</th>';
 						//start displaying the grades for the class based on the selected year
 						foreach ($database->query('SELECT * FROM grade WHERE studentID = ' . $id . ' AND classID = ' . $class_arr[$i] . '') as $row) //change 12 later

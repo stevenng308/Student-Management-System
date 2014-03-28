@@ -40,6 +40,10 @@ http://www.datatables.net/forums/discussion/788/sorting-enabled-when-it-should-n
 https://stackoverflow.com/questions/3932587/disable-a-column-sorting-using-datatables-of-jquery
 https://stackoverflow.com/questions/1172206/how-to-check-if-a-text-is-all-white-space-characters-in-client-side
 https://stackoverflow.com/questions/7683604/prefix-a-in-front-of-each-line-in-a-text-ie-create-quote-blocks
+https://stackoverflow.com/questions/10304245/cant-set-default-in-twitter-bootstrap-toggleable-tab
+https://stackoverflow.com/questions/1209903/how-to-remove-a-specific-get-variable-from-a-url
+https://stackoverflow.com/questions/20561712/jquery-validate-plugin-on-dynamic-form-inputs-not-working
+http://www.paulund.co.uk/smooth-scroll-to-internal-links-with-jquery (Paul UnderWood)
 
 
 .Heelo; 'Test', "W%or!d"

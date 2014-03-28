@@ -48,9 +48,10 @@ foreach ($_POST as $key => $element)
 <div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
 	<div class="jumbotron">
 	<h2>Grade changed for <?php echo $result[0]['username'] . ' &lt' . $result[0]['firstname'] . ' ' . $result[0]['lastname'] . '&gt';?></h2>
-		<form class="form-signin" style="text-valign:center">
+		<div class="container" style="text-align: center;">
 			<a class="btn btn-primary" href="../classPage.php?classid=<?php echo $class; ?>" role="button">Return To Class Page</a>
-			<a class="btn btn-default" href="../index.php" role="button">Return Home</a>
-		</form>
+			<a class="btn btn-info" href="../classPage.php?classid=<?php echo $class; ?>&roster=1" role="button">Return To Class Roster</a>
+			<a class="btn btn-success" href="../index.php" role="button">Return Home</a>
+		</div>
 	</div>
 </div>

@@ -44,7 +44,8 @@ else
 
 $query = $database->query("SELECT * FROM subscribe WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . "");
 $subscription = $query->fetchAll(PDO::FETCH_ASSOC);
-$class_arr = [];
+//$class_arr = [];
+$topic_arr = [];
 $posts = 0;
 for ($i = 0; $i < count($subscription); $i++)
 {
@@ -53,15 +54,19 @@ for ($i = 0; $i < count($subscription); $i++)
 	{
 		$num = $respond->rowCount() + 1;
 		$posts = $posts + ($num - $subscription[$i]['lastNum']);
-		$database->exec("UPDATE subscribe SET lastNum = " . $num . " WHERE id = " . $subscription[$i]['id'] . ""); //update the number of posts in the subscription row
+		//$database->exec("UPDATE subscribe SET lastNum = " . $num . " WHERE id = " . $subscription[$i]['id'] . ""); //update the number of posts in the subscription row
 		$query = $database->query("SELECT * FROM forum WHERE topicID = " . $subscription[$i]['topicID'] . "");
 		$result = $query->fetchAll(PDO::FETCH_ASSOC);
 		$topic = new Topic($result[0], $respond->rowCount());
-		$class_arr[$i] = $topic->getClassID();
+		//$class_arr[$i] = $topic->getClassID();
+		$topic_arr[$i] = $topic; //store the topic object for further use
 		//var_dump($class_arr);
 	}
 }
-$class_arr = array_unique($class_arr);
+//$class_arr = array_values(array_unique($class_arr)); //remove dupes and normalize the index values because of removal
+//$topic_arr = array_values(array_unique($topic_arr)); //remove dupes and normalize the index values because of removal
+//var_dump($class_arr);
+//var_dump($topic_arr);
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main', '../');
 ?>
 <!-- Custom CSS for this page -->
@@ -85,13 +90,20 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 	  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge badge-danger"><?php echo $posts . ' '; ?></span> New Forum Msgs <b class="caret"></b></a>
 	  <ul class="dropdown-menu">
 		<?php
-			if (!empty($class_arr))
+			/*if (!empty($class_arr))
 			{
 				foreach ($class_arr as $class)
 				{
 					$query = $database->query("SELECT course_name FROM classroom WHERE classID = " . $class . "");
 					$classroom = $query->fetchAll(PDO::FETCH_ASSOC);
 					echo '<li><a href="../classPage.php?classid=' . $class . '">' . $classroom[0]['course_name'] . ' ' . ' - Class Page </a></li>';
+				}
+			}*/
+			if (!empty($topic_arr)) //topic array and class array should be same size
+			{
+				foreach ($topic_arr as $newTopic)
+				{
+					echo '<li><a href="../classPage.php?classid=' . $newTopic->getClassID() . '&topicid=' . $newTopic->getTopicID() . '">' . $newTopic->getTopicSubjectFormatted() . '</a></li>';
 				}
 			}
 			else
@@ -112,7 +124,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
     <div class="panel-heading">
       <h2 class="panel-title" align="center">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Post Message
+          Create New Message
         </a>
       </h2>
     </div>

@@ -92,7 +92,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Grade Form'
 									</div>
 									<div class="col-xs-6 col-md-6">
 										<div class="control-group">
-											<input type="text" class="form-control" name="grade' . $j . '" id="grade' . $j . '" placeholder="Grade"/>
+											<input type="text" class="form-control grade" name="grade' . $j . '" id="grade' . $j . '" placeholder="Grade"/>
 										</div>
 									</div>
 								</div>
@@ -155,142 +155,46 @@ $(document).ready(function () {
 	);
 	
 	$('#grade-form').validate({
-        rules: {
-			label0: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade0: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-
-			label1: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade1: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label2: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade2: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label3: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade3: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label4: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade4: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label5: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade5: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label6: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade6: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label7: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade7: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label8: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade8: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label9: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade9: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			},
-			
-			label10: {
-				required: true,
-				maxlength: 50,
-				allowSpaces: true
-			},
-			grade10: {
-				required: true,
-				maxlength: 6,
-				noSpecial: true
-			}
-		},
         highlight: function (element) {
             $(element).closest('.control-group').removeClass('has-success').addClass('has-error');
         },
         success: function (element) {
-            $(element).text('OK!').addClass('valid')
+            $(element).addClass('valid')
                 .closest('.control-group').removeClass('has-error').addClass('has-success');
         }
     });
 	
-	$('[id^="label"]').keydown(function() {
+	$('input[name^="label"]').each(function () { //use .each on every input with name beginning label to add the rules to each of them
+		$(this).rules("add", {
+			required: true,
+			maxlength: 50,
+			allowSpaces: true
+		});
+	});
+	
+	$('input[name^="grade"]').each(function () { //use .each on every input with name beginning grade to add the rules to each of them
+		$(this).rules("add", {
+			required: true,
+			maxlength: 6,
+			noSpecial: true
+		});
+	});
+	
+	/*$('[name^="label"]').keyup(function() { //validate on key downs since no longer in the init of the validator above
 		$(this).valid();
 	});
-	$('[id^="grade"]').keydown(function() {
+	$('[name^="grade"]').keydown(function() { //validate on key downs since no longer in the init of the validator above
 		$(this).valid();
+	});*/
+	
+	$('[id^="label"]').change().keyup(function() { //validate when there is a change and a key is released on a input with label in its name
+		$(this).valid();
+		//$("#grade0").valid();
+	});
+	
+	$('.grade').change().keyup(function() { //validate when there is a change and a key is released on a input with grade in its name
+		$(this).valid();
+		//$("#grade0").valid();
 	});
 	
 	//handles the submit button onclick action. POSTs the form for processing and 

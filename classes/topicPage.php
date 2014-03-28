@@ -45,7 +45,7 @@ $classid = $topic->getClassID();
 		<div>
 			<table cellpadding="0" cellspacing="0" border="0" class="table table-bordered" id="discussionTable">
 				<div class="row">
-					<div class="col-xs-3 col-md-6">
+					<div class="col-xs-3 col-md-12">
 						<button class="btn btn-primary btn-lg" onclick="loadClassPages('#forum', 'classes/respond.php?topicid=', <?php echo $topicid; ?>)">Reply</button>
 						<?php
 							$stmt = $database->query("SELECT id FROM subscribe WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . " AND topicID = " . $topicid . "");
@@ -59,6 +59,7 @@ $classid = $topic->getClassID();
 								echo '<button class="btn btn-warning btn-lg" onclick="unsubscribe(' . $id[0]['id'] . ')">Unsubscribe</button>';
 							}
 						?>
+						<a type="button" class="btn btn-primary btn-sm pull-right" href="#bottom">Scroll To Bottom</a>
 					</div>
 				</div>
 				<thead>
@@ -83,11 +84,11 @@ $classid = $topic->getClassID();
 					?>
 				</tbody>
 			</table>
-			<div class="row">
+			<div class="row" id="bottom">
 					<div class="col-xs-3 col-md-6">
 						<button class="btn btn-primary btn-lg" onclick="loadClassPages('#forum', 'classes/respond.php?topicid=', <?php echo $topicid; ?>)">Reply</button>
 					</div>
-				</div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -100,6 +101,21 @@ $('#discussionTable').dataTable(
 		'bSortable' : false,
 		'aTargets' : [ "no-sort" ]
 	}]
+});
+
+$(document).ready(function(){
+	$('a[href^="#"]').on('click',function (e) {
+	    e.preventDefault();
+
+	    var target = this.hash,
+	    $target = $(target);
+
+	    $('html, body').stop().animate({
+	        'scrollTop': $target.offset().top
+	    }, 900, 'swing', function () {
+	        window.location.hash = target;
+	    });
+	});
 });
 
 function quoteOP(id)

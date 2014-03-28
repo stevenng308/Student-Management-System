@@ -25,10 +25,30 @@ else
 {
 	header('Location: index.php');
 }
-$classid = $_GET['classid'] or die(header('Location: error.php'));
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
+$classid = $_GET['classid'] or die(header('Location: error.php'));
+if (isset($_GET['topicid']))
+{
+	session_regenerate_id();
+	$_SESSION['topic'] = $_GET['topicid']; //set a session variable for use after refresh to get rid of the get variable topicid in url
+	session_write_close();
+	$respond = $database->query("SELECT * FROM response WHERE topicid = " . $_GET['topicid'] . "");
+	$num = $respond->rowCount() + 1;
+	$posts = $posts + ($num - $subscription[$i]['lastNum']);
+	$database->exec("UPDATE subscribe SET lastNum = " . $num . " WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . " AND topicID = " . $_GET['topicid'] . ""); //update the number of posts in the subscription row
+	//var_dump($_SESSION['topic']);
+	header('Location: classPage.php?classid=' . $classid . '');
+}
+if (isset($_GET['roster']))
+{
+	session_regenerate_id();
+	$_SESSION['roster'] = $_GET['roster']; //set a session variable for use after refresh to get rid of the get variable roster in url
+	session_write_close();
+	//var_dump($_SESSION['roster']);
+	header('Location: classPage.php?classid=' . $classid . '');
+}
 $query = $database->query('SELECT * FROM classroom WHERE classID = "' . $classid . '"');
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 //var_dump($result);
@@ -42,7 +62,7 @@ if (!$classroom->getStatus() && $_SESSION['sess_role'] == 3)
 		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
 		style="text-align: center; vertical-align: middle"><p>Classroom is inactive. You cannot view the classroom\'s page.</p></div></body></html>');
 }
-if($_SESSION['sess_role'] == 3)
+if($_SESSION['sess_role'] == 3) //check if the student is registered in this class
 {
 	$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = ' . $session->getID() . ' AND classID = ' . $classid . ' LIMIT 1');
 	if ($query->rowCount() == 0)
@@ -53,7 +73,7 @@ if($_SESSION['sess_role'] == 3)
 		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
 	}
 }	
-if($_SESSION['sess_role'] == 2)
+if($_SESSION['sess_role'] == 2) //check if the teacher is assigned to this class
 {
 	$query = $database->query('SELECT teacherID FROM classroom WHERE teacherID = ' . $session->getID() . ' AND classID = ' .  $classid . ' LIMIT 1');
 	if ($query->rowCount() == 0)
@@ -74,21 +94,21 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <div class="container bottomMargin">
 	<div class="bs-example bs-example-tabs">
 		<ul id="myTab" class="nav nav-tabs nav-justified">
-			  <li class="active"><a href="#home" data-toggle="tab"><b>Home</b></a></li>
-			  <li><a href="#forum" data-toggle="tab"><b>Forum</b></a></li>
+			  <li id="homeTab" class="active"><a href="#home" data-toggle="tab"><b>Home</b></a></li>
+			  <li id="forumTab"><a href="#forum" data-toggle="tab"><b>Forum</b></a></li>
 			  <?php
 				if ($_SESSION['sess_role'] != 3)
 				{
 					echo '
-						 <li><a href="#register" tabindex="-1" data-toggle="tab"><b>Register</b></a></li>
-						 <li><a href="#rosterList" tabindex="-1" data-toggle="tab"><b>Roster</b></a></li>
-						 <li><a href="#allGrades" data-toggle="tab"><b>All Grades</b></a></li>
+						 <li id="registerTab"><a href="#register" tabindex="-1" data-toggle="tab"><b>Register</b></a></li>
+						 <li id="rosterTab"><a href="#rosterList" tabindex="-1" data-toggle="tab"><b>Roster</b></a></li>
+						 <li id="allGradesTab"><a href="#allGrades" data-toggle="tab"><b>All Grades</b></a></li>
 						 ';
 					//echo '<li><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>';
 				}
 				else
 				{
-					echo '<li><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>';
+					echo '<li id="gradesTab"><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>';
 				}
 			  ?>
 		</ul>
@@ -132,9 +152,37 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script type="text/javascript" language="javascript" src="bootstrap/js/loadInPage.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
-	loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>); //load forum first when navigating to class page
+	if (<?php echo $_SESSION['topic']; ?>) //true if topic id has been set. show the topic page.
+	{
+		loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $_SESSION['topic']; ?>);
+		$('#forumTab a[href="#forum"]').tab('show');
+		<?php 
+			session_regenerate_id(); //session write open here
+			$_SESSION['topic'] = 0; //set the session[topic] variable to zero so it won't load the topic page on refresh
+			//session_write_close(); //no close or else $_SESSION['roster'] variable below will never be set to 0 even if topic id is not set
+		?>;
+	}
+	else
+	{
+		loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>); //load forum otherwise when navigating to class page
+	}
+	
+	//alert(<?php echo $_SESSION['roster']; ?>);
+	if (<?php echo $_SESSION['roster']; ?> != 0) //true if roster has been set. show the roster page.
+	{
+		//alert(<?php echo $_SESSION['roster']; ?>);
+		loadClassPages('#rosterList', 'classes/roster.php?classid=', <?php echo $classid; ?>);
+		$('#rosterTab a[href="#rosterList"]').tab('show');
+		<?php 
+			//session_regenerate_id();
+			$_SESSION['roster'] = 0; //set the session[roster] variable to zero so it won't load the topic page on refresh
+			session_write_close();
+		?>;
+		//alert(<?php echo $_SESSION['roster']; ?>);
+	}
+	
 	var role = <?php echo $_SESSION['sess_role']; ?>;
-	if (role != 3)
+	if (role != 3) //true if user is an admin load these pages in the proper divs
 	{
 		loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //load the class roster
 		loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
@@ -266,7 +314,9 @@ function registerStudents()
 				  alert("Registered.");
 				  //alert(data);
 				  $('#studentID').val("");
-				  location.reload();
+				  //location.reload();
+				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //load the class roster
+				  $('#rosterTab a[href="#rosterList"]').tab('show');
 				}
 			  );
 		  return false;

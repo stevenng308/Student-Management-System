@@ -96,8 +96,8 @@ function deleteAllGrades(id)
 			function(data){
 			  //$("#result").html(data);
 			  //console.log(data);
-			  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load all grades first when navigating to class page
-			  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>);
+			  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //reload the grades div so that the grades don't show for the unregistered student
+			  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //refresh old content on the roster div
 			}
 		  );
 		return false;
