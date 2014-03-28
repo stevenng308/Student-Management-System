@@ -41,6 +41,12 @@ if (isset($_GET['topicid']))
 	//var_dump($_SESSION['topic']);
 	header('Location: classPage.php?classid=' . $classid . '');
 }
+else
+{
+	session_regenerate_id();
+	$_SESSION['topic'] = 0;
+	session_write_close();
+}
 if (isset($_GET['roster']))
 {
 	session_regenerate_id();
@@ -48,6 +54,12 @@ if (isset($_GET['roster']))
 	session_write_close();
 	//var_dump($_SESSION['roster']);
 	header('Location: classPage.php?classid=' . $classid . '');
+}
+else
+{
+	session_regenerate_id();
+	$_SESSION['roster'] = 0;
+	session_write_close();
 }
 $query = $database->query('SELECT * FROM classroom WHERE classID = "' . $classid . '"');
 $result = $query->fetchAll(PDO::FETCH_ASSOC);

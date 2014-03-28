@@ -126,7 +126,54 @@ $(function(){
 });
 
 $(document).ready(function () {
-	//rule for allowing spaces but no symbols
+
+	//rule for checking unique labels within the form
+	$.validator.addMethod("valueNotEquals", function(value, element){
+			var labels = $('input[name^="label"]');
+			for (i = 0; i < labels.length; i++)
+			{
+				//alert(element == $(labels[i]));
+				if (element !== labels[i])
+				{
+					if (value === $(labels[i]).val())
+						return false;
+				}
+			}
+			return true;
+		}, 
+		"Grade label is being used in this form"
+	 );
+	 
+	 //rule for checking if grade has been set
+	$.validator.addMethod("checkStudentGrade", 
+        function(value, element) {
+            var result = false;
+            $.ajax({
+                type:"POST",
+                async: false,
+                url: "../classes/checkStudentGrade.php", // script to validate in server side
+                data: { label: value,
+						id: <?php echo $id; ?>
+						},
+                success: function(data) {
+					//alert(data);
+					if (data.match(/true/))
+					{
+						result = true;
+					}
+					else
+					{
+						result = false;
+					}
+                    //result = (data) ? true : false;
+                }
+            });
+            return result; 
+        }, 
+        "This Student has a grade with this label already"
+    );
+	 
+	//rule for allowing certain characters for grades
 	$.validator.addMethod("noSpecial", 
         function(value, element, regexp) {
 			var regex = new RegExp("^[A-Z0-9.]+$");
@@ -168,7 +215,9 @@ $(document).ready(function () {
 		$(this).rules("add", {
 			required: true,
 			maxlength: 50,
-			allowSpaces: true
+			allowSpaces: true,
+			valueNotEquals: true,
+			checkStudentGrade: true
 		});
 	});
 	

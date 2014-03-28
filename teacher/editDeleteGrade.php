@@ -107,6 +107,23 @@ $(function(){
 
 $(document).ready(function () {
 
+	//rule for checking unique labels within the form
+	$.validator.addMethod("valueNotEquals", function(value, element){
+			var labels = $('input[name^="label"]');
+			for (i = 0; i < labels.length; i++)
+			{
+				//alert(element == $(labels[i]));
+				if (element !== labels[i])
+				{
+					if (value === $(labels[i]).val())
+						return false;
+				}
+			}
+			return true;
+		}, 
+		"Grade label is being used in this form"
+	 );
+	 
 	//rule for allowing spaces but no symbols
 	$.validator.addMethod("noSpecial", 
         function(value, element, regexp) {
@@ -152,7 +169,8 @@ $(document).ready(function () {
 		$(this).rules("add", {
 			required: true,
 			maxlength: 50,
-			allowSpaces: true
+			allowSpaces: true,
+			valueNotEquals: true
 		});
 	});
 	
