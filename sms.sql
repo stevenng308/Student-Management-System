@@ -58,10 +58,6 @@ CREATE TABLE IF NOT EXISTS `admin` (
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `accountID` (`accountID`),
   UNIQUE KEY `username` (`username`),
-  KEY `role` (`role`),
-  KEY `role_2` (`role`),
-  KEY `accountID_2` (`accountID`),
-  KEY `accountID_3` (`accountID`)
 )
 
 -- --------------------------------------------------------
@@ -74,27 +70,86 @@ INSERT INTO `admin` (`accountID`, `username`, `password`, `role`, `firstName`, `
 --
 
 CREATE TABLE IF NOT EXISTS `classroom` (
-  `classID` int(8) NOT NULL,
-  `courseNO` int(8) NOT NULL,
-  `courseDescript` varchar(50) NOT NULL,
-  `classTime` time NOT NULL,
+  `classID` int(10) NOT NULL AUTO_INCREMENT,
+  `course_number` varchar(9) NOT NULL,
+  `course_name` varchar(25) NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `start_time` time NOT NULL,
+  `end_time` time NOT NULL,
+  `semester` varchar(6) NOT NULL,
+  `year` varchar(9) NOT NULL,
   `teacherID` int(10) NOT NULL,
+  `forumName` varchar(16) NOT NULL,
+  `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`classID`)
 )
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `email`
+--
+
+CREATE TABLE IF NOT EXISTS `email` (
+  `emailID` int(11) NOT NULL AUTO_INCREMENT,
+  `owner` varchar(25) NOT NULL,
+  `dest_username` varchar(25) NOT NULL,
+  `dest_first` varchar(20) NOT NULL,
+  `dest_last` varchar(25) NOT NULL,
+  `from_username` varchar(25) NOT NULL,
+  `from_first` varchar(20) NOT NULL,
+  `from_last` varchar(25) NOT NULL,
+  `date_sent` datetime NOT NULL,
+  `subject` text NOT NULL,
+  `msg_content` longtext NOT NULL,
+  `box` int(1) NOT NULL,
+  PRIMARY KEY (`emailID`)
+)
 
 --
 -- Table structure for table `enrolled`
 --
 
 CREATE TABLE IF NOT EXISTS `enrolled` (
+  `registerNum` int(10) NOT NULL AUTO_INCREMENT,
   `classID` int(8) NOT NULL,
   `studentID` int(20) NOT NULL,
-  PRIMARY KEY (`classID`)
+  PRIMARY KEY (`registerNum`)
 )
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `forum`
+--
+
+CREATE TABLE IF NOT EXISTS `forum` (
+  `topicID` int(10) NOT NULL AUTO_INCREMENT,
+  `forumName` varchar(16) NOT NULL,
+  `topic_subject` text NOT NULL,
+  `topic_message` mediumtext NOT NULL,
+  `author_user` varchar(25) NOT NULL,
+  `author_first` varchar(20) NOT NULL,
+  `author_last` varchar(25) NOT NULL,
+  `date_posted` datetime NOT NULL,
+  `last_post` datetime NOT NULL,
+  PRIMARY KEY (`topicID`)
+)
+
+--
+-- Table structure for table `forum`
+--
+
+CREATE TABLE IF NOT EXISTS `grade` (
+  `gradeID` int(11) NOT NULL AUTO_INCREMENT,
+  `studentID` int(20) NOT NULL,
+  `classID` int(10) NOT NULL,
+  `label` varchar(50) NOT NULL,
+  `grade` varchar(6) NOT NULL,
+  PRIMARY KEY (`gradeID`)
+)
+
 
 --
 -- Table structure for table `messageboard`
@@ -144,8 +199,6 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `salt` char(128) NOT NULL,
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `accountID` (`accountID`),
-  KEY `role` (`role`),
-  KEY `role_2` (`role`)
 )
 
 -- --------------------------------------------------------
@@ -163,6 +216,21 @@ CREATE TABLE IF NOT EXISTS `parent_student_assoc` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `response
+--
+
+CREATE TABLE IF NOT EXISTS `response` (
+  `responseID` int(10) NOT NULL AUTO_INCREMENT,
+  `topicID` int(10) NOT NULL,
+  `response_message` mediumtext NOT NULL,
+  `author_user` varchar(25) NOT NULL,
+  `author_first` varchar(20) NOT NULL,
+  `author_last` varchar(25) NOT NULL,
+  `date_posted` datetime NOT NULL,
+  PRIMARY KEY (`responseID`)
+)  
+  
+--
 -- Table structure for table `role`
 --
 
@@ -170,8 +238,6 @@ CREATE TABLE IF NOT EXISTS `role` (
   `role` int(1) NOT NULL,
   `description` varchar(10) NOT NULL,
   PRIMARY KEY (`role`),
-  UNIQUE KEY `role_2` (`role`),
-  KEY `role` (`role`)
 )
 
 --
@@ -212,6 +278,19 @@ ALTER TABLE `student` ADD `balance` INT( 6 ) NOT NULL DEFAULT '0' AFTER `passwor
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `subscribe`
+--
+
+CREATE TABLE IF NOT EXISTS `subscribe` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `accountID` int(10) NOT NULL,
+  `role` int(1) NOT NULL,
+  `topicID` int(10) NOT NULL,
+  `lastNum` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+)  
+  
+--
 -- Table structure for table `teacher`
 --
 
@@ -232,25 +311,12 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 )
 -- --------------------------------------------------------
 
---
--- Table structure for table `email`
---
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` EVENT `empty` ON SCHEDULE EVERY 3 HOUR STARTS '2014-03-13 21:06:11' ON COMPLETION PRESERVE ENABLE DO begin
+delete from email where box = 3;
+end$$
 
-CREATE TABLE IF NOT EXISTS `email` (
-  `emailID` int(11) NOT NULL AUTO_INCREMENT,
-  `owner` varchar(25) NOT NULL,
-  `dest_username` varchar(25) NOT NULL,
-  `dest_first` varchar(20) NOT NULL,
-  `dest_last` varchar(25) NOT NULL,
-  `from_username` varchar(25) NOT NULL,
-  `from_first` varchar(20) NOT NULL,
-  `from_last` varchar(25) NOT NULL,
-  `date_sent` datetime NOT NULL,
-  `subject` text NOT NULL,
-  `msg_content` longtext NOT NULL,
-  `box` int(1) NOT NULL,
-  PRIMARY KEY (`emailID`)
-);
+DELIMITER ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
