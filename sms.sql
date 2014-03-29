@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `address` (
   `city` varchar(20) NOT NULL,
   `state` varchar(2) NOT NULL,
   `zip` int(5) NOT NULL
-)
+);
 
 -- --------------------------------------------------------
 
@@ -57,13 +57,13 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `salt` char(128) NOT NULL,
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `accountID` (`accountID`),
-  UNIQUE KEY `username` (`username`),
-)
+  UNIQUE KEY `username` (`username`)
+);
 
 -- --------------------------------------------------------
 
 INSERT INTO `admin` (`accountID`, `username`, `password`, `role`, `firstName`, `lastName`, `email`, `DOB`, `contactNum`, `status`, `salt`) VALUES
-(1, 'admin', 'dce15624c79336c6d6bca9e892b9285ccae6934b82dc27939d1c7b8eebb28a09', 1, 'Admin', 'Ruler', 'admin@mail.com', '1970-01-01', 7777777777, 1, 'db0')
+(1, 'admin', 'dce15624c79336c6d6bca9e892b9285ccae6934b82dc27939d1c7b8eebb28a09', 1, 'Admin', 'Ruler', 'admin@mail.com', '1970-01-01', 7777777777, 1, 'db0');
 
 --
 -- Table structure for table `classroom`
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS `classroom` (
   `forumName` varchar(16) NOT NULL,
   `status` tinyint(1) NOT NULL,
   PRIMARY KEY (`classID`)
-)
+);
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `email` (
   `msg_content` longtext NOT NULL,
   `box` int(1) NOT NULL,
   PRIMARY KEY (`emailID`)
-)
+);
 
 --
 -- Table structure for table `enrolled`
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS `enrolled` (
   `classID` int(8) NOT NULL,
   `studentID` int(20) NOT NULL,
   PRIMARY KEY (`registerNum`)
-)
+);
 
 -- --------------------------------------------------------
 
@@ -135,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `forum` (
   `date_posted` datetime NOT NULL,
   `last_post` datetime NOT NULL,
   PRIMARY KEY (`topicID`)
-)
+);
 
 --
 -- Table structure for table `forum`
@@ -148,7 +148,7 @@ CREATE TABLE IF NOT EXISTS `grade` (
   `label` varchar(50) NOT NULL,
   `grade` varchar(6) NOT NULL,
   PRIMARY KEY (`gradeID`)
-)
+);
 
 
 --
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `messageboard` (
   `authorLastName` varchar(30) NOT NULL DEFAULT 'Admin',
   `messageDate` datetime DEFAULT NULL,
   PRIMARY KEY (`messageID`)
-)
+);
 
 -- --------------------------------------------------------
 
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `newuser` (
   `role` int(1) NOT NULL,
   PRIMARY KEY (`username`),
   UNIQUE KEY `username` (`username`)
-)
+);
 
 -- --------------------------------------------------------
 
@@ -198,8 +198,8 @@ CREATE TABLE IF NOT EXISTS `parent` (
   `status` tinyint(1) NOT NULL,
   `salt` char(128) NOT NULL,
   PRIMARY KEY (`accountID`),
-  UNIQUE KEY `accountID` (`accountID`),
-)
+  UNIQUE KEY `accountID` (`accountID`)
+);
 
 -- --------------------------------------------------------
 
@@ -211,7 +211,7 @@ CREATE TABLE IF NOT EXISTS `parent_student_assoc` (
   `studentID` int(20) NOT NULL,
   `guardianID` int(10) NOT NULL,
   `role` int(1) NOT NULL
-)
+);
 
 -- --------------------------------------------------------
 
@@ -228,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `response` (
   `author_last` varchar(25) NOT NULL,
   `date_posted` datetime NOT NULL,
   PRIMARY KEY (`responseID`)
-)  
+);
   
 --
 -- Table structure for table `role`
@@ -237,8 +237,8 @@ CREATE TABLE IF NOT EXISTS `response` (
 CREATE TABLE IF NOT EXISTS `role` (
   `role` int(1) NOT NULL,
   `description` varchar(10) NOT NULL,
-  PRIMARY KEY (`role`),
-)
+  PRIMARY KEY (`role`)
+);
 
 --
 -- Dumping data for table `role`
@@ -272,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `student` (
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `studentID` (`studentID`),
   KEY `studentID_2` (`studentID`)
-)
+);
 
 ALTER TABLE `student` ADD `balance` INT( 6 ) NOT NULL DEFAULT '0' AFTER `password` ;
 -- --------------------------------------------------------
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `subscribe` (
   `topicID` int(10) NOT NULL,
   `lastNum` int(10) NOT NULL,
   PRIMARY KEY (`id`)
-)  
+);  
   
 --
 -- Table structure for table `teacher`
@@ -308,7 +308,7 @@ CREATE TABLE IF NOT EXISTS `teacher` (
   `salt` char(128) NOT NULL,
   PRIMARY KEY (`accountID`),
   UNIQUE KEY `accountID` (`accountID`)
-)
+);
 -- --------------------------------------------------------
 
 DELIMITER $$
