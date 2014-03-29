@@ -35,7 +35,7 @@ echo $layout->loadFixedNavBar('Home', '');
 <link href="bootstrap/css/signin.css" rel="stylesheet">
 
 <!-- Begin page content -->
-<div class="container">
+<div class="container bottomMargin">
   <form name="signin" class="form-signin" action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="post">
 		<h2 class="form-signin-heading">SMS Portal Login</h2>
 			<input type="text" class="form-control" name="user" id = "user" placeholder="Username" autofocus>
@@ -57,6 +57,14 @@ echo $layout->loadFixedNavBar('Home', '');
 			</div>
 			<br/>
 			<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button> 
+	<div class="row">
+		<div class="col-xs-6 col-sm-6" style="text-align: right;">
+			<a href="forgot.php?type=1">Forgot Username</a>
+		</div>
+		<div class="col-xs-6 col-sm-6">
+			<a href="forgot.php?type=2">Forgot Password</a>
+		</div>
+	</div>
 	<div class="container" align="center">
 		<p>Admin login: User - admin; Pass - admin</p>
 	</div>

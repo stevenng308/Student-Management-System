@@ -54,10 +54,10 @@ $classroom->setStatus($status);
 
 <div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
 	<div class="jumbotron">
-		<form class="form-signin" style="text-valign:center">
+		<div class="container" style="text-valign:center">
 			<h2><?php echo $course_num . ' ' . $course_name . ' '?> edited.</h2>
 			<a class="btn btn-primary" href="../admin/viewClasses.php" role="button">Edit More Classes</a>
 			<a class="btn btn-default" href="../admin/main.php" role="button">Return Home</a>
-		</form>
+		</div>
 	</div>
 </div>

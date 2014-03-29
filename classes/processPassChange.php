@@ -55,9 +55,9 @@ $database->exec("DELETE FROM newuser WHERE accountID = " . $session->getID() . "
 
 <div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
 	<div class="jumbotron">
-		<form class="form-signin" style="text-valign:center">
+		<div class="container" style="text-valign:center">
 			<h3>Password has been changed. Thank You.</h3>
 			<a class="btn btn-primary" href="<?php echo $session->getUserTypeFormatted(); ?>/main.php" role="button">Return Home</a>
-		</form>
+		</div>
 	</div>
 </div>

@@ -149,10 +149,10 @@ if ($status != $user->getStatus())
 
 <div class="container form-wrapper" style="text-align:center; vertical-align:middle">
 	<div class="jumbotron">
-		<form class="form-signin" style="text-valign:center">
+		<div class="container" style="text-valign:center">
 			<h2><?php echo $username ?> Edited.</h2>
 			<a class="btn btn-primary" href="../admin/viewUser.php" role="button">Edit More Users</a>
 			<a class="btn btn-success" href="../admin/main.php" role="button">Return Home</a>
-		</form>
+		</div>
 	</div>
 </div>

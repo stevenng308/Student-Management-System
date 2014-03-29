@@ -1,6 +1,6 @@
 <!-- Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- add grades form -->
+<!-- change password form -->
 
 <html>
 <?php
@@ -91,6 +91,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Change Pass
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<script src="../bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
+<script src="../bootstrap/js/jquery.ui.timepicker.js"></script>
 <script>
 $(document).ready(function () {
 	//rule for checking password confirmation

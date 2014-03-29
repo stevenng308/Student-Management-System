@@ -123,10 +123,10 @@ if (!empty($_POST['childrenID']))//if true begin inserting into parent student a
 
 <div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
 	<div class="jumbotron">
-		<form class="form-signin" style="text-valign:center">
+		<div class="container" style="text-valign:center">
 			<h2><?php echo $username ?> registered.</h2>
 			<a class="btn btn-primary" href="../admin/register.php" role="button">Register More Users</a>
 			<a class="btn btn-default" href="../admin/main.php" role="button">Return Home</a>
-		</form>
+		</div>
 	</div>
 </div>
