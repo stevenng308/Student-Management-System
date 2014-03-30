@@ -1194,6 +1194,91 @@ class Layout
 		return $func;
 	}
 
+
+
+
+	public function loadClassMessages(Message $mssg, $clssID, $modalNum, $role)
+	{	
+		
+
+		$edt =  '
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#cModal' . $modalNum . '">Edit</button>		
+
+				<div class="modal fade" id="cModal' . $modalNum . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h3 class="modal-title" id="myModalLabel" align="center">Edit Message</h3>
+					  </div>
+					  <div class="modal-body">
+						<pre><textarea id="edtMessage' . $modalNum . '" name="edtMessage' . $modalNum . '" class="messageBoard">' . $mssg->getMessage() . '</textarea></pre>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')">Submit</button>	
+					  </div>
+					</div>
+				  </div>
+				</div>
+			';
+				
+		$dlt = '
+					<button type="button" class="btn btn-danger" onclick="deleteMsg(' . $mssg->getID() . ')">
+						Delete
+					</button>					
+			';
+
+		
+		if ($role=='1')
+		{	
+			$func = '
+				<tr class="searchable">
+					<td>
+						' . $dlt . '
+					</td>
+					<td>
+						' . $edt . '
+					</td>
+					<td style="width: 85%;">
+						<pre>' . $mssg->getMessage() . '</pre>
+					
+					</td>
+					<td>
+						' . $mssg->getAuthorFirst() . ' ' . $mssg->getAuthorLast() . '
+					</td>
+					<td>
+						' . $mssg->getDateFormatted() . '
+					</td>
+				</tr>
+			';
+		}
+		else
+		{	
+			$func = '
+				<tr class="searchable">
+					<td></td><td></td>
+					<td style="width: 85%;">
+						<pre>' . $mssg->getMessage() . '</pre>
+					
+					</td>
+					<td>
+						' . $mssg->getAuthorFirst() . ' ' . $mssg->getAuthorLast() . '
+					</td>
+					<td>
+						' . $mssg->getDateFormatted() . '
+					</td>
+				</tr>
+			';
+		}
+		return $func;
+	}
+
+
+
+
+	
+
 	public function loadStudentLunchRow(User $user)
 	{
 	$add = '<button class="btn btn-primary" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';

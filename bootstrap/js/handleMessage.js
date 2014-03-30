@@ -69,3 +69,22 @@ function postMsg()
 	  );
   return false;
 }
+
+function postClassMsg($classID)
+{
+	//alert("hi");
+	$.post(
+		'classes/postClassMessage.php',
+		{
+			'message' : $('#message').val(),
+			'clssID' : $classID
+		},
+		function(data){
+			//alert(data);
+		  //$("#mainDiv").html(data);
+		  alert("Message has been posted.");
+		  location.reload();
+		}
+	  );
+  return false;
+}

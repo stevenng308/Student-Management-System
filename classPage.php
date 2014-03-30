@@ -126,7 +126,130 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 		</ul>
 	<div id="myTabContent" class="tab-content">
 	  <div class="tab-pane fade in active" id="home">
-		<p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+		
+
+
+
+<div class="panel-group" id="accordion">
+  <div class="panel panel-fb">
+    <div class="panel-heading">
+      <h2 class="panel-title" align="center">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+          Create New Class Message
+        </a>
+      </h2>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in">
+      <div class="panel-body">
+	<div class="jumbotron">
+		<form name="compose" id="compose-form" action="#" method="post">
+			<pre><textarea id="message" name="message" class="messageBoard"></textarea></pre>			
+		</form>
+		<button class="btn btn-lg btn-primary btn-block" onclick="postClassMsg(<?php echo $_GET['classid']; ?>)">Post Message</button> <!---Will have to do postClassMsg($classID)--->
+	</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="panel panel-success">
+    <div class="panel-heading">
+      <h3 class="panel-title" align="center">
+        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+	 Message Board
+	</a>
+      </h3>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse">
+      <div class="panel-body">
+	<div class="jumbotron">
+		<div class="table-responsive">
+			<table class="table table-condensed" id="messageTable">
+				<thead>
+					<tr>
+						<th></th>
+						<th></th>
+						<th>
+							Message
+						</th>
+						<th style="text-align: center;">
+							Posted By
+						</th>
+						<th style="text-align: center;">
+							Time Posted
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+						$count = 0;
+						foreach ($database->query("SELECT * FROM class_messageboard WHERE classID = ' . $classid . ' ORDER BY messageDate DESC") as $row)
+						{
+							$messge = new Message($row);
+							echo $layout->loadClassMessages($messge, $classID, $count, $session->getUserType());
+							
+							$count++;
+							if ($count > 4)
+								break;
+						}
+					?>
+				</tbody>
+			</table>
+		</div>
+	</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	  </div>
 	  <div class="tab-pane fade" id="forum">
 		<!-- ajax load content -->
@@ -162,6 +285,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script type="text/javascript" language="javascript" src="bootstrap/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
 <script type="text/javascript" language="javascript" src="bootstrap/js/loadInPage.js"></script>
+<script type="text/javascript" language="javascript" src="bootstrap/js/handleMessage.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
 	if (<?php echo $_SESSION['topic']; ?>) //true if topic id has been set. show the topic page.
