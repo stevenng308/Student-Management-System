@@ -216,6 +216,20 @@ CREATE TABLE IF NOT EXISTS `parent_student_assoc` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `reset`
+--
+
+CREATE TABLE IF NOT EXISTS `reset` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `accountID` int(10) NOT NULL,
+  `role` int(1) NOT NULL,
+  `myKey` char(128) NOT NULL,
+  PRIMARY KEY (`id`)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `response
 --
 

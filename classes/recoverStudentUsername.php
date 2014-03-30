@@ -18,7 +18,7 @@ $email = mysql_real_escape_string($_POST['email']);
 $birth = mysql_real_escape_string($_POST['birthDate']);
 $birth = date('Y-m-d', strtotime(mysql_real_escape_string($_POST['birthDate'])));
 $id = mysql_real_escape_string($_POST['studentid']);
-$query = $database->query("SELECT username FROM " . $_POST['role'] . " WHERE firstname = '" . $first . "' AND lastname = '" . $last . "' AND email = '" . $email . "' AND DOB = '" . $birth . "' AND studentID = '" . $id . "' LIMIT 1");
+$query = $database->query("SELECT username FROM " . $_POST['role'] . " WHERE BINARY firstname = '" . $first . "' AND lastname = '" . $last . "' AND email = '" . $email . "' AND DOB = '" . $birth . "' AND studentID = '" . $id . "' LIMIT 1");
 if ($query->rowCount() == 0)
 {
 	//echo $birth . ' ' . $query->rowCount();

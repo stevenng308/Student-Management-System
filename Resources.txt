@@ -44,7 +44,9 @@ https://stackoverflow.com/questions/10304245/cant-set-default-in-twitter-bootstr
 https://stackoverflow.com/questions/1209903/how-to-remove-a-specific-get-variable-from-a-url
 https://stackoverflow.com/questions/20561712/jquery-validate-plugin-on-dynamic-form-inputs-not-working
 http://www.paulund.co.uk/smooth-scroll-to-internal-links-with-jquery (Paul UnderWood)
-
+http://css-tricks.com/sending-nice-html-email-with-php/
+https://stackoverflow.com/questions/16830673/wamp-send-mail-using-smtp-localhost
+http://www.hmailserver.com/
 
 .Heelo; 'Test', "W%or!d"
 

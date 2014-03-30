@@ -64,7 +64,7 @@ $(function(){
 			}
 			else
 			{
-				window.location.href = "forgotPasswordStudent.php";
+				window.location.href = "forgotPassword.php?role=" + role;
 			}
 		}
 		return false;

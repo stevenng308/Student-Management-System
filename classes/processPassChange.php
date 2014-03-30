@@ -1,7 +1,7 @@
 <?php
 /*Student Management System -->
-<!-- Author: Andre Vicente -->
-<!-- process updating lunch allowance*/
+<!-- Author: Steven Ng -->
+<!-- process updating new user passwords*/
 
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';
 spl_autoload_register(array('AutoLoader', 'autoLoad'));
@@ -41,7 +41,7 @@ function createSalt()
 	$text = md5(uniqid(rand(), true));
 	return substr($text, 0, 3);
 }
-$hash = hash('sha256', $pass);		
+$hash = hash('whirlpool', $pass);		
 $salt = createSalt();
 //while (true)
 //echo $salt;

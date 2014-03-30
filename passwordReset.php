@@ -11,64 +11,39 @@ spl_autoload_register(array('AutoLoader', 'autoLoad'));
 if(!isset($_SESSION)){
 	session_start();
 }
-if(!(empty($_SESSION)))
-{
-	/*if($_SESSION['sess_role'] == 3)
-	{
-		header('Refresh: 1.5; url=index.php');
-		echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
-		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
-		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
-	}*/
-}
-else
-{
-	header('Location: index.php');
-}
+$id = $_GET['id'] or die(header("Location: error.php"));
+$myKey = $_GET['myKey'] or die(header("Location: error.php"));
 $layout = new Layout();
-//$database = new Database();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
-$session = new Session($_SESSION, $database);
-
-if ($session->getUserType() == 1)
+$query = $database->query("SELECT accountID, role FROM reset WHERE id = " . $id . " AND myKey = '" . $myKey . "'");
+if ($query->rowCount() == 0)
 {
-	$header = "Location: admin/error.php";
-}
-else if ($session->getUserType() == 2)
-{
-	$header = "Location: teacher/error.php";
-}
-else if ($session->getUserType() == 3)
-{
-	$header = "Location: student/error.php";
+	header('Refresh: 8; url=index.php');
+	echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+	exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+	style="text-align: center; vertical-align: middle"><p>The reset link is incorrect or the link has expired. Please request another password reset. This page will redirect you to the SMS homepage.</p></div></body></html>');
 }
 else
 {
-	$header = "Location: parent/error.php";
+	$result = $query->fetchAll(PDO::FETCH_ASSOC);
+	$id = $result[0]['accountID'];
+	$role = $result[0]['role'];
+	$database->exec("DELETE FROM reset WHERE myKey = '" . $myKey . "'");
+	switch ($role)
+	{
+		case 1: $table = "Admin";
+				break;
+		case 2: $table = "Teacher";
+				break;
+		case 3: $table = "Student";
+				break;
+		case 4: $table = "Parent";
+				break;
+		default: header('Location: error.php');
+				break;
+	}
 }
-$id = $_GET['id'] or die(header($header));
-if ($session->getUserType() == 1)
-{
-	$stmt = "SELECT * FROM admin WHERE accountID = " . $id . "";
-}
-else if ($session->getUserType() == 2)
-{
-	$stmt = "SELECT * FROM teacher WHERE accountID = " . $id . "";
-}
-else if ($session->getUserType() == 3)
-{
-	$stmt = "SELECT * FROM student WHERE studentID = " . $id . "";
-}
-else
-{
-	$stmt = "SELECT * FROM parent WHERE accountID = " . $id . "";
-}
-//var_dump($_SESSION);
-//var_dump($session);
-$query = $database->query($stmt);
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
-$user = new User($database, $result[0]['accountID'], $session->getUserTypeFormatted());
-echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Change Password Form', '');
+echo $layout->loadFixedNavBar('Reset Password Form', '');
 ?>
 	<!-- Custom styles for this template -->
 	<link href="bootstrap/css/grade.css" rel="stylesheet">
@@ -76,6 +51,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Change Pass
 <div class="formDiv" id="result">
 	<form name="changePassword" id="changePassword-form" class="form-signin" action="#" method="post">
 		<h3>New Password</h3>
+		<input name="id" id="id" hidden="hidden" value="<?php echo $id; ?>"></input>
+		<input type="text" class="form-control" name="role" id = "role" value="<?php echo $table; ?>" readonly></input>
 		<div class="control-group">
 			<input type="password" class="form-control" name="password" id = "password" value="" placeholder="New Password"/>
 		</div>
@@ -134,7 +111,7 @@ $(document).ready(function () {
 			if($(this).valid()) {
 				//alert('Successful Validation');
 				$.post(
-					'classes/processPassChange.php',
+					'classes/processPassReset.php',
 					$(this).serialize(),
 					function(data){
 					  $("#result").html(data);
