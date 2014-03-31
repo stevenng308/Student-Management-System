@@ -128,14 +128,14 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 	  <div class="tab-pane fade in active" id="home">
 		
 
-
+<!----Begin Class Messageboard ---->
 
 <div class="panel-group" id="accordion">
   <div class="panel panel-fb">
     <div class="panel-heading">
       <h2 class="panel-title" align="center">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Create New Class Message
+          Create New <?php echo $classroom->getCourseNumber() . " " . $classroom->getCourseName(); ?> Message
         </a>
       </h2>
     </div>
@@ -156,7 +156,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
     <div class="panel-heading">
       <h3 class="panel-title" align="center">
         <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-	 Message Board
+	 <?php echo $classroom->getCourseNumber() . " " . $classroom->getCourseName(); ?> Message Board
 	</a>
       </h3>
     </div>
@@ -183,11 +183,11 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 				<tbody>
 					<?php
 						$count = 0;
-						foreach ($database->query("SELECT * FROM class_messageboard WHERE classID = ' . $classid . ' ORDER BY messageDate DESC") as $row)
+						$classid = $_GET['classid'];
+						foreach ($database->query("SELECT * FROM class_messageboard  WHERE classID = " . $classid . " ORDER BY messageDate DESC") as $row)
 						{
-							$messge = new Message($row);
-							echo $layout->loadClassMessages($messge, $classID, $count, $session->getUserType());
-							
+							$message = new ClassMessage($row);
+							echo $layout->loadClassMessages($message, $classid, $count, $session->getUserType());
 							$count++;
 							if ($count > 4)
 								break;
@@ -202,53 +202,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<!----End Class Messageboard ---->
 
 	  </div>
 	  <div class="tab-pane fade" id="forum">

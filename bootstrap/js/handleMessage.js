@@ -6,7 +6,6 @@ function deleteMsg($id)
 		$.post(
 			'../classes/deleteMessage.php',
 			{
-				//'message' : $('#edtMessage').val()
 				'id' : $id
 			},
 			function(data){
@@ -87,4 +86,57 @@ function postClassMsg($classID)
 		}
 	  );
   return false;
+}
+
+function editClassMsg($id, $mn)
+{
+	$msg = "#edtMessage";
+	$msg = $msg + $mn;
+	//alert($msg);
+	if (window.confirm("Do you want to edit?"))
+	{
+		$.post(
+			'classes/editClassMessage.php',
+			{
+				'msg' : $($msg).val(),
+				'id' : $id,
+			},
+			function(data){
+				//alert(data);
+			  //$("#mainDiv").html(data);
+			  alert("Message has been edited.");
+			  location.reload();
+			}
+		);
+	return false;
+	}
+	else
+	{
+		; //do nothing
+	}
+}
+
+function deleteClassMsg($id)
+{
+	//alert('hey');
+	if (window.confirm("Do you want to delete?"))
+	{
+		$.post(
+			'classes/deleteClassMessage.php',
+			{
+				'id' : $id
+			},
+			function(data){
+				//alert(data);
+			  //$("#mainDiv").html(data);
+			  alert("Message has been deleted.");
+			  location.reload();
+			}
+		);
+	return false;
+	}
+	else
+	{
+		; //do nothing
+	}
 }

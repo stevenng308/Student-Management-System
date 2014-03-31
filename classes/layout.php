@@ -1197,7 +1197,7 @@ class Layout
 
 
 
-	public function loadClassMessages(Message $mssg, $clssID, $modalNum, $role)
+	public function loadClassMessages(ClassMessage $mssg, $clssID, $modalNum, $role)
 	{	
 		
 
@@ -1216,7 +1216,7 @@ class Layout
 					  </div>
 					  <div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editMsg(' . $mssg->getID() . ', ' . $modalNum . ')">Submit</button>	
+						<button type="button" class="btn btn-primary" data-dismiss="modal" data-target="edtMessage' . $modalNum . '" onclick="editClassMsg(' . $mssg->getID() . ', ' . $modalNum . ')">Submit</button>	
 					  </div>
 					</div>
 				  </div>
@@ -1224,13 +1224,13 @@ class Layout
 			';
 				
 		$dlt = '
-					<button type="button" class="btn btn-danger" onclick="deleteMsg(' . $mssg->getID() . ')">
+					<button type="button" class="btn btn-danger" onclick="deleteClassMsg(' . $mssg->getID() . ')">
 						Delete
 					</button>					
 			';
 
 		
-		if ($role=='1')
+		if ($role=='1' || $role=='2')
 		{	
 			$func = '
 				<tr class="searchable">
