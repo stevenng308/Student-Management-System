@@ -50,6 +50,8 @@ else
 				break;
 	}
 	$date = Date('F j, Y, H:i:s a');
+	$expire = new DateTime();
+	$expire->modify('+1 day');
 	function createSalt()
 	{
 		$text = md5(uniqid(rand(), true));
@@ -59,7 +61,7 @@ else
 	$salt = createSalt();
 	$key = hash('sha256', $salt . $hash); //key for authentication
 	//var_dump($key);
-	$database->exec("INSERT INTO reset(accountID, role, myKey) VALUES('" . $id . "', '" . $table . "', '" . $key . "')");
+	$database->exec("INSERT INTO reset(accountID, role, myKey, expire) VALUES('" . $id . "', '" . $table . "', '" . $key . "', '" . $expire->format('Y-m-d H:i:s') . "')");
 	
 	//being creating email
 	$subject = 'SMS - Password Reset Request (24HR Response Window)';
