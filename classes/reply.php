@@ -5,7 +5,7 @@
 <?php
 class Reply
 {
-	private $responseID, $topicID, $response_message, $author_user, $author_first, $suthor_last, $date_posted;
+	private $responseID, $topicID, $response_message, $author_user, $author_first, $suthor_last, $suthor_role, $date_posted;
 	public function __construct($replyinfo)
 	{
 		$this->responseID = $replyinfo['responseID'];
@@ -14,6 +14,7 @@ class Reply
 		$this->author_user = $replyinfo['author_user'];
 		$this->author_first = $replyinfo['author_first'];
 		$this->author_last = $replyinfo['author_last'];
+		$this->author_role = $replyinfo['role'];
 		$this->date_posted = $replyinfo['date_posted'];
 	}
 	
@@ -40,6 +41,11 @@ class Reply
 	public function getAuthorLast()
 	{
 		return $this->author_last;
+	}
+	
+	public function getAuthorRole()
+	{
+		return $this->author_role;
 	}
 	
 	public function getAuthorUser()

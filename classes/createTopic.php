@@ -23,5 +23,5 @@ $frm_first = $result[0]['firstname'];
 $frm_last = $result[0]['lastname'];
 $date = date('Y-m-d H:i:s');
 
-$database->exec("INSERT INTO forum(forumName, topic_subject, topic_message, author_user, author_first, author_last, date_posted, last_post) VALUES('" . $_POST['forum'] . "', '" . $subject . "', '" . $msg . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $date . "', '" . $date . "')");
+$database->exec("INSERT INTO forum(forumName, topic_subject, topic_message, author_user, author_first, author_last, role, date_posted, last_post) VALUES('" . $_POST['forum'] . "', '" . $subject . "', '" . $msg . "', '" . $session->getUserName() . "', '" . $frm_first . "', '" . $frm_last . "', '" . $session->getUserType() . "', '" . $date . "', '" . $date . "')");
 ?>

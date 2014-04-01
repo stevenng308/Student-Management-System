@@ -5,7 +5,7 @@
 <?php
 class Topic
 {
-	private $topicID, $forumName, $topic_subject, $topic_message, $author_user, $author_first, $suthor_last, $date_posted, $last_post, $numMsgs;
+	private $topicID, $forumName, $topic_subject, $topic_message, $author_user, $author_first, $suthor_last, $suthor_role, $date_posted, $last_post, $numMsgs;
 	public function __construct($topicinfo, $num)
 	{
 		$this->topicID = $topicinfo['topicID'];
@@ -15,6 +15,7 @@ class Topic
 		$this->author_user = $topicinfo['author_user'];
 		$this->author_first = $topicinfo['author_first'];
 		$this->author_last = $topicinfo['author_last'];
+		$this->author_role = $topicinfo['role'];
 		$this->date_posted = $topicinfo['date_posted'];
 		$this->last_post = $topicinfo['last_post'];
 		$this->numMsgs = $num + 1; //+1 to include the original poster's message
@@ -59,6 +60,11 @@ class Topic
 	public function getAuthorLast()
 	{
 		return $this->author_last;
+	}
+	
+	public function getAuthorRole()
+	{
+		return $this->author_role;
 	}
 	
 	public function getAuthorUser()

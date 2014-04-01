@@ -129,21 +129,21 @@ class Layout
 				$links = '
 						<li class="active"><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li><a href="#">Manage Classes</a></li>';
+						<li><a href="'. $dir .'teacher/viewClasses.php">Manage Classes</a></li>';
 			}
 			else if ($title == "Email")
 			{
 				$links = '
 						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li><a href="#">Manage Classes</a></li>';
+						<li><a href="'. $dir .'teacher/viewClasses.php">Manage Classes</a></li>';
 			}
 			else
 			{
 				$links = '
 						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li class="active"><a href="#">Manage Classes</a></li>
+						<li class="active"><a href="'. $dir .'teacher/viewClasses.php">Manage Classes</a></li>
 						';
 			}
 		}
@@ -690,10 +690,14 @@ class Layout
 		if ($role == 1)
 		{
 			$edit = '<button type="button" class="btn btn-info" onclick="location.href=\'../admin/editClass.php?classid=' . $class->getClassID() . '\';">Edit</button>';
+			$checkbox = '<td style="text-align: center;">
+						<input name="status" id="status' . $modalNum . '" type="checkbox" value="' . $class->getClassID() . '">
+						</td>';
 		}
 		else
 		{
 			$edit = '<button type="button" class="btn btn-info" disabled="disabled">Edit</button>';
+			$checkbox = '';
 		}
 		$view = '
 				<!-- Button trigger modal -->
@@ -803,9 +807,7 @@ class Layout
 		
 		$func = '
 			<tr class="searchable">
-				<td style="text-align: center;">
-					<input name="status" id="status' . $modalNum . '" type="checkbox" value="' . $class->getClassID() . '">
-				</td>
+				' . $checkbox . '
 				<td style="text-align: center;">
 					' . $class->getCourseNumber() . '
 				</td>
@@ -1039,10 +1041,10 @@ class Layout
 		return $func;
 	}
 	
-	public function loadDiscussionRow($topic, $num, $user)
+	public function loadDiscussionRow($topic, $user)
 	{
 		$edit = '';
-		switch ($num)
+		switch ($topic->getAuthorRole())
 		{
 			case 1: $panel = 'panel-danger';
 					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
@@ -1082,10 +1084,10 @@ class Layout
 		return $func;
 	}
 	
-	public function loadDiscussionResponseRow($reply, $num, $user)
+	public function loadDiscussionResponseRow($reply, $user)
 	{
 		$edit = '';
-		switch ($num)
+		switch ($reply->getAuthorRole())
 		{
 			case 1: $panel = 'panel-danger';
 					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';

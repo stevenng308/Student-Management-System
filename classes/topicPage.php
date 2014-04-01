@@ -37,7 +37,7 @@ $classid = $topic->getClassID();
 ?>
 <div class="container bottomMargin">
 	<br />
-	<ol class="breadcrumb">
+	<ol class="breadcrumb" id="top">
 	  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid[0]; ?>)">Discussion Topics</a></li>
 	  <li class="active"><?php echo $topic->getTopicSubject(); ?></li>
 	</ol>
@@ -79,14 +79,16 @@ $classid = $topic->getClassID();
 						foreach ($database->query("SELECT * FROM response WHERE topicID = '" . $topicid . "'") as $row)
 						{
 							$reply = new Reply($row);
-							echo $layout->loadDiscussionResponseRow($reply, $session->getUserType(), $session->getUserName());
+							echo $layout->loadDiscussionResponseRow($reply, $session->getUserName());
 						}
 					?>
 				</tbody>
 			</table>
+			<br />
 			<div class="row" id="bottom">
-					<div class="col-xs-3 col-md-6">
+					<div class="col-xs-3 col-md-12">
 						<button class="btn btn-primary btn-lg" onclick="loadClassPages('#forum', 'classes/respond.php?topicid=', <?php echo $topicid; ?>)">Reply</button>
+						<a type="button" class="btn btn-primary btn-sm pull-right" href="#top">Scroll To Top</a>
 					</div>
 			</div>
 		</div>

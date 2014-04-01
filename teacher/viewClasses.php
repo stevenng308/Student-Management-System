@@ -1,6 +1,6 @@
-﻿<!-- Student Management System -->
+<!-- Student Management System -->
 <!-- Author: Steven Ng -->
-<!-- view all classes in the system -->
+<!-- view teacher's classes in the system -->
 
 <html>
 <?php
@@ -13,7 +13,7 @@ if(!isset($_SESSION)){
 }
 if(!(empty($_SESSION)))
 {
-	if($_SESSION['sess_role'] != 1)
+	if($_SESSION['sess_role'] == 3 || $_SESSION['sess_role'] == 4)
 	{
 		header('Refresh: 1.5; url=../index.php');
 		echo '<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">';
@@ -39,22 +39,19 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 
 <div class="container bottomMargin">
 	<div class="table-responsive">
-		<h3 align="center">All Classes in the Student Management System</h3>
+		<h3 align="center">Assigned Classes</h3>
 		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
 			<div class="row">
 				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-danger btn-sm" onclick="deactivate()">Deactive</button>
+					<!--<button class="btn btn-danger btn-sm" onclick="deactivate()">Deactive</button>-->
 				</div>
 				<div class="col-xs-3 col-sm-1">
-					<button class="btn btn-info btn-sm" onclick="activate()">Active</button>
+					<!--<button class="btn btn-info btn-sm" onclick="activate()">Active</button>-->
 				</div>
 			</div>
 			<br/>
 			<thead>
 				<tr>
-					<th class="no-sort" style="text-align: center;">
-						<input type="checkbox" onClick="checkAll(this)" />
-					</th>
 					<th style="text-align: center;">
 						Course Number
 					</th>
@@ -84,7 +81,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 			<tbody>
 					<?php 
 						$count = 0;
-						foreach ($database->query('SELECT * FROM classroom') as $row)
+						foreach ($database->query('SELECT * FROM classroom WHERE teacherID = ' . $session->getID() . '') as $row)
 						{
 							$stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $row['teacherID'] . '"');
 							$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -108,7 +105,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 	$(document).ready(function() {
 		$('#userTable').dataTable(
 		{
-			"aaSorting": [[1, 'asc']],
+			"aaSorting": [[0, 'asc']],
 			"aoColumnDefs" : [ {
 				'bSortable' : false,
 				'aTargets' : [ "no-sort" ]
