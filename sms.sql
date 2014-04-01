@@ -241,8 +241,9 @@ CREATE TABLE IF NOT EXISTS `reset` (
   `accountID` int(10) NOT NULL,
   `role` int(1) NOT NULL,
   `myKey` char(128) NOT NULL,
+  `expire` datetime NOT NULL,
   PRIMARY KEY (`id`)
-);
+) ;
 
 -- --------------------------------------------------------
 
@@ -342,7 +343,15 @@ CREATE TABLE IF NOT EXISTS `teacher` (
 );
 -- --------------------------------------------------------
 
+
 DELIMITER $$
+--
+-- Events
+--
+CREATE DEFINER=`root`@`localhost` EVENT `clearReset` ON SCHEDULE EVERY 3 HOUR STARTS '2014-03-30 00:53:02' ON COMPLETION NOT PRESERVE ENABLE DO begin
+DELETE FROM reset WHERE expire < current_timestamp;
+end$$
+
 CREATE DEFINER=`root`@`localhost` EVENT `empty` ON SCHEDULE EVERY 3 HOUR STARTS '2014-03-13 21:06:11' ON COMPLETION PRESERVE ENABLE DO begin
 delete from email where box = 3;
 end$$
