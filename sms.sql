@@ -168,6 +168,23 @@ CREATE TABLE IF NOT EXISTS `messageboard` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `class_messageboard`
+--
+
+CREATE TABLE IF NOT EXISTS `class_messageboard` (
+  `class_messageID` int(4) unsigned NOT NULL AUTO_INCREMENT,
+  `messageContent` text,
+  `accountID` int(10) NOT NULL,
+  `authorFirstName` varchar(25) NOT NULL DEFAULT 'Test',
+  `authorLastName` varchar(30) NOT NULL DEFAULT 'Admin',
+  `messageDate` datetime DEFAULT NULL,
+  `classID` int(10) NOT NULL,
+  PRIMARY KEY (`messageID`)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newuser`
 --
 
