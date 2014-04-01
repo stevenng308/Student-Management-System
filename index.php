@@ -56,7 +56,7 @@ echo $layout->loadFixedNavBar('Home', '');
 				</div>
 			</div>
 			<br/>
-			<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit">Sign in</button> 
+			<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" id="submit">Sign in</button> 
 	<div class="row">
 		<div class="col-xs-6 col-sm-6" style="text-align: right;">
 			<a href="forgot.php?type=1">Forgot Username</a>
@@ -172,4 +172,12 @@ echo $layout->loadFixedNavBar('Home', '');
 <?php
 	echo $layout->loadFooter('');
 ?>
+<script type="text/javascript" charset="utf-8">
+$(function(){
+	// bind change event to select
+	$('#role').bind('change', function () {	
+		$('#submit').focus();
+	});
+});
+</script>
 </html>

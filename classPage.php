@@ -43,9 +43,9 @@ if (isset($_GET['topicid']))
 }
 else
 {
-	session_regenerate_id();
+	/*session_regenerate_id();
 	$_SESSION['topic'] = 0;
-	session_write_close();
+	session_write_close();*/ //do nothing. debugging because class sometimes load slowly
 }
 if (isset($_GET['roster']))
 {
@@ -57,9 +57,9 @@ if (isset($_GET['roster']))
 }
 else
 {
-	session_regenerate_id();
+	/*session_regenerate_id();
 	$_SESSION['roster'] = 0;
-	session_write_close();
+	session_write_close();*/ //do nothing. debugging because class sometimes load slowly
 }
 $query = $database->query('SELECT * FROM classroom WHERE classID = "' . $classid . '"');
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -242,6 +242,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script type="text/javascript" language="javascript" src="bootstrap/js/handleMessage.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
+	//alert(<?php echo $_SESSION['topic']; ?>);
 	if (<?php echo $_SESSION['topic']; ?>) //true if topic id has been set. show the topic page.
 	{
 		loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $_SESSION['topic']; ?>);
