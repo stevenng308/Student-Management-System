@@ -14,7 +14,7 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 //var_dump($_POST);
 $user = mysql_real_escape_string($_POST['username']);
 $email = mysql_real_escape_string($_POST['email']);
-$query = $database->query("SELECT accountID FROM " . $_POST['role'] . " WHERE BINARY username = '" . $user. "' AND email = '" . $email . "' LIMIT 1");
+$query = $database->query("SELECT accountID FROM " . $_POST['role'] . " WHERE BINARY username = '" . $user. "' AND email = '" . $email . "' AND status = '1' LIMIT 1");
 if ($query->rowCount() == 0)
 {
 	//echo $birth . ' ' . $query->rowCount();
@@ -24,7 +24,7 @@ if ($query->rowCount() == 0)
 
 			<div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
 				<div class="jumbotron">
-				<h2>Account could not be found.</h2>
+				<h2>Account could not be found or is deactivated.</h2>
 					<div class="container" style="text-align: center;">
 						<a class="btn btn-primary" href="index.php" role="button">Return Home</a>
 					</div>

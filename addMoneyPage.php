@@ -51,7 +51,7 @@ $user = new User($database, $result[0]['accountID'], 'student');
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Add Money Form', '');
 ?>
 	<!-- Custom styles for this template -->
-	<link href="bootstrap/css/signin.css" rel="stylesheet">
+	<link href="bootstrap/css/register.css" rel="stylesheet">
 	<div class=" container formDiv" id="result">
 	<form name="addBalance" id="addBalance-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading" style="text-align: center;"><?php echo $user->getFirstName() . ' ' . $user->getLastName() . ' ';?></h2>

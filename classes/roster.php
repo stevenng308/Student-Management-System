@@ -56,6 +56,9 @@ $classroom = new Classroom($result[0], $teacher, $database);
 				<th style="text-align: center;">
 					Last Name
 				</th>
+				<th style="text-align: center;">
+					Active
+				</th>
 				<th class="no-sort" style="text-align: center;">
 					Grades
 				</th>
@@ -75,7 +78,7 @@ $classroom = new Classroom($result[0], $teacher, $database);
 					//var_dump($row);
 					$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");
 					$grade = $query->fetchAll(PDO::FETCH_ASSOC);
-					echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $grade, $classid, $count);
+					echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $row['status'], $grade, $classid, $count);
 					$count++;
 				}
 			?>

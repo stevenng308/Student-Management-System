@@ -202,6 +202,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 						<th style='text-align: center;'>Student ID</th>
 						<th style='text-align: center;'>First Name</th>
 						<th style='text-align: center;'>Last Name</th>
+						<th style='text-align: center;'>Active</th>
 						<th style='text-align: center;'>Account Balance</th>
 						<th class="no-sort" style='text-align: center;'></th>
 						<th class="no-sort" style='text-align: center;'></th>
@@ -241,7 +242,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#lunchTable').dataTable(
 {
-	"aaSorting": [[3, 'asc']],
+	"aaSorting": [[4, 'asc']],
 	"aoColumnDefs" : [ {
 		'bSortable' : false,
 		'aTargets' : [ "no-sort" ]

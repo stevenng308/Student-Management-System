@@ -249,7 +249,6 @@ $(document).ready(function () {
 			studentid: {
                 required: true,
 				digits: true,
-				checkStudentIDUnique: true,
 				maxlength: 20
             },
 			childrenID: {

@@ -906,8 +906,23 @@ class Layout
 		return $func;
 	}
 	
-	public function loadRosterRow($id, $user, $first, $last, $grade, $class, $modalNum)
-	{	$gradeRow = '';
+	public function loadRosterRow($id, $user, $first, $last, $status, $grade, $class, $modalNum)
+	{	
+		if ($status)
+		{
+			$status = "True";
+			$change = '<button type="button" class="btn btn-danger" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
+			$change2 = '<button type="button" class="btn btn-danger pull-left" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
+			$add = '<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>';
+		}
+		else
+		{
+			$status = "False";
+			$change = '<button type="button" class="btn btn-danger" disabled="disabled" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
+			$change2 = '<button type="button" class="btn btn-danger pull-left" disabled="disabled" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
+			$add = '<button type="button" class="btn btn-primary" disabled="disabled" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>';
+		}
+		$gradeRow = '';
 		for ($j = 0; $j < count($grade); $j++)
 		{
 			$gradeRow = $gradeRow . "<tr>
@@ -915,9 +930,6 @@ class Layout
 										<td>" . $grade[$j]['grade'] . "</td>
 									</tr> ";
 		}
-		$change = '<button type="button" class="btn btn-danger" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
-		$change2 = '<button type="button" class="btn btn-danger pull-left" onclick="location.href=\'teacher/editDeleteGrade.php?id=' . $id . '&class=' . $class . '\';">Edit/Delete</button>';
-		$add = '<button type="button" class="btn btn-primary" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>';
 		$grade =  '
 					<button class="btn btn-info" data-toggle="modal" data-target="#myModal' . $modalNum . '">
 						View
@@ -965,6 +977,9 @@ class Layout
 				</td>
 				<td style="text-align: center;">
 					' . $last . '
+				</td>
+				<td style="text-align: center;">
+					' . $status . '
 				</td>
 				<td style="text-align: center;">
 					' . $add . '
@@ -1281,8 +1296,15 @@ class Layout
 
 	public function loadStudentLunchRow(User $user)
 	{
-	$add = '<button class="btn btn-primary" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';
-	$grade = '<button class="btn btn-info" onclick="location.href=\'../student/studentAllGrades.php?id=' . $user->getStudentID() . '\';">View Grades</button>';
+		if ($user->getStatus())
+		{
+			$add = '<button class="btn btn-primary" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';
+		}
+		else
+		{
+			$add = '<button class="btn btn-primary" disabled="disabled" onclick="location.href=\'../addMoneyPage.php?id=' . $user->getStudentID() . '\';">Add to Balance</button>';
+		}
+		$grade = '<button class="btn btn-info" onclick="location.href=\'../student/studentAllGrades.php?id=' . $user->getStudentID() . '\';">View Grades</button>';
 		$func = '
 			<tr class="searchable">
 				<td style="text-align: center;">
@@ -1293,6 +1315,9 @@ class Layout
 				</td>
 				<td style="text-align: center;">
 					' . $user->getLastName() . '
+				</td>
+				<td style="text-align: center;">
+					' . $user->getStatusFormatted() . '
 				</td>
 				<td style="text-align: center;">
 					' . $user->getBalanceFormatted() . '

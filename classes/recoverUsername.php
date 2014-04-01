@@ -17,7 +17,7 @@ $last = mysql_real_escape_string($_POST['lastname']);
 $email = mysql_real_escape_string($_POST['email']);
 $birth = mysql_real_escape_string($_POST['birthDate']);
 $birth = date('Y-m-d', strtotime(mysql_real_escape_string($_POST['birthDate'])));
-$query = $database->query("SELECT username FROM " . $_POST['role'] . " WHERE BINARY firstname = '" . $first . "' AND lastname = '" . $last . "' AND email = '" . $email . "' AND DOB = '" . $birth . "' LIMIT 1");
+$query = $database->query("SELECT username FROM " . $_POST['role'] . " WHERE BINARY firstname = '" . $first . "' AND lastname = '" . $last . "' AND email = '" . $email . "' AND DOB = '" . $birth . "' AND status = '1' LIMIT 1");
 if ($query->rowCount() == 0)
 {
 	//echo $birth . ' ' . $query->rowCount();
@@ -27,7 +27,7 @@ if ($query->rowCount() == 0)
 
 			<div class="container jumbo-tron form-wrapper" style="text-align:center; vertical-align:middle">
 				<div class="jumbotron">
-				<h2>Username could not be found.</h2>
+				<h2>Username could not be found or is deactivated.</h2>
 					<div class="container" style="text-align: center;">
 						<a class="btn btn-primary" href="index.php" role="button">Return Home</a>
 					</div>

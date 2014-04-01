@@ -15,7 +15,9 @@ $id = $_GET['id'] or die(header("Location: error.php"));
 $myKey = $_GET['myKey'] or die(header("Location: error.php"));
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
-$query = $database->query("SELECT accountID, role FROM reset WHERE id = " . $id . " AND myKey = '" . $myKey . "'");
+$query = $database->query("SELECT accountID, role, expire FROM reset WHERE id = " . $id . " AND myKey = '" . $myKey . "'");
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
+$current = new DateTime();
 if ($query->rowCount() == 0)
 {
 	header('Refresh: 8; url=index.php');
@@ -23,12 +25,18 @@ if ($query->rowCount() == 0)
 	exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
 	style="text-align: center; vertical-align: middle"><p>The reset link is incorrect or the link has expired. Please request another password reset. This page will redirect you to the SMS homepage.</p></div></body></html>');
 }
+else if ($result[0]['expire'] < $current->format('Y-m-d H:i:s'))
+{
+	header('Refresh: 8; url=index.php');
+	echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+	exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+	style="text-align: center; vertical-align: middle"><p>The reset link has expired. Please request another password reset. This page will redirect you to the SMS homepage.</p></div></body></html>');
+}
 else
 {
-	$result = $query->fetchAll(PDO::FETCH_ASSOC);
 	$id = $result[0]['accountID'];
 	$role = $result[0]['role'];
-	$database->exec("DELETE FROM reset WHERE myKey = '" . $myKey . "'");
+	//$database->exec("DELETE FROM reset WHERE myKey = '" . $myKey . "'");
 	switch ($role)
 	{
 		case 1: $table = "Admin";
