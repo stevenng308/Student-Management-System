@@ -858,6 +858,7 @@ class Layout
 						  <div class="modal-footer">
 							<button class="btn btn-danger pull-left" onclick="deleteReadEmail(\'' . $box . '\', ' . $mail->getID() . ')">Delete</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<button type="button" id="reply" class="btn btn-success" data-dismiss="modal" onclick="forward(\'' . $box . '\', ' . $mail->getID() . ')">Forward</button>
 							<button type="button" id="reply" class="btn btn-primary" data-dismiss="modal" onclick="reply(\'' . $box . '\', ' . $mail->getID() . ')">Reply</button>
 						  </div>
 						</div>

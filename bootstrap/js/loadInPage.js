@@ -40,6 +40,15 @@ function reply(box, email)
 	$('#mainDiv').load('classes/replyMail.php?id=' + email);
 }
 
+function forward(box, email)
+{
+	$('.modal-backdrop').remove();
+	$('#compose').toggleClass("active")
+	$('#' + box).toggleClass("active");
+	lastBtn = 'compose';
+	$('#mainDiv').load('classes/forwardMail.php?id=' + email);
+}
+
 function loadSavedMail(box, email)
 {
 	$('#compose').toggleClass("active")
