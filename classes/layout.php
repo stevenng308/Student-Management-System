@@ -143,7 +143,7 @@ class Layout
 				$links = '
 						<li><a href="'. $dir .'teacher/main.php">Home</a></li>
 						<li><a href="'. $dir .'emailPage.php">Email</a></li>
-						<li class="active"><a href="'. $dir .'teacher/viewClasses.php">Manage Classes</a></li>
+						<li><a href="'. $dir .'teacher/viewClasses.php">Manage Classes</a></li>
 						';
 			}
 		}

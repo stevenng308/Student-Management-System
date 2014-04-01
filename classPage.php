@@ -41,12 +41,6 @@ if (isset($_GET['topicid']))
 	//var_dump($_SESSION['topic']);
 	header('Location: classPage.php?classid=' . $classid . '');
 }
-else
-{
-	/*session_regenerate_id();
-	$_SESSION['topic'] = 0;
-	session_write_close();*/ //do nothing. debugging because class sometimes load slowly
-}
 if (isset($_GET['roster']))
 {
 	session_regenerate_id();
@@ -54,12 +48,6 @@ if (isset($_GET['roster']))
 	session_write_close();
 	//var_dump($_SESSION['roster']);
 	header('Location: classPage.php?classid=' . $classid . '');
-}
-else
-{
-	/*session_regenerate_id();
-	$_SESSION['roster'] = 0;
-	session_write_close();*/ //do nothing. debugging because class sometimes load slowly
 }
 $query = $database->query('SELECT * FROM classroom WHERE classID = "' . $classid . '"');
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -242,10 +230,12 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script type="text/javascript" language="javascript" src="bootstrap/js/handleMessage.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
+	var topic = <?php echo (isset($_SESSION['topic'])) ? $_SESSION['topic'] : 0; ?>; //help fix the undefined index that happens when coming from main page to forum
+	var roster = <?php echo (isset($_SESSION['roster'])) ? $_SESSION['roster'] : 0; ?>; //help fix the undefined index that happens when coming from register tab to roster
 	//alert(<?php echo $_SESSION['topic']; ?>);
-	if (<?php echo $_SESSION['topic']; ?>) //true if topic id has been set. show the topic page.
+	if (topic) //true if topic id has been set. show the topic page.
 	{
-		loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $_SESSION['topic']; ?>);
+		loadClassPages('#forum', 'classes/topicPage.php?topicid=', topic);
 		$('#forumTab a[href="#forum"]').tab('show');
 		<?php 
 			session_regenerate_id(); //session write open here
@@ -259,7 +249,7 @@ $(window).load(function(){
 	}
 	
 	//alert(<?php echo $_SESSION['roster']; ?>);
-	if (<?php echo $_SESSION['roster']; ?> != 0) //true if roster has been set. show the roster page.
+	if (roster) //true if roster has been set. show the roster page.
 	{
 		//alert(<?php echo $_SESSION['roster']; ?>);
 		loadClassPages('#rosterList', 'classes/roster.php?classid=', <?php echo $classid; ?>);
@@ -406,8 +396,8 @@ function registerStudents()
 				  //alert(data);
 				  $('#studentID').val("");
 				  //location.reload();
-				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //load the class roster
-				  $('#rosterTab a[href="#rosterList"]').tab('show');
+				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //reload the class roster
+				  $('#rosterTab a[href="#rosterList"]').tab('show'); //display the roster tab
 				}
 			  );
 		  return false;
