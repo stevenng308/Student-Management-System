@@ -47,6 +47,8 @@ http://www.paulund.co.uk/smooth-scroll-to-internal-links-with-jquery (Paul Under
 http://css-tricks.com/sending-nice-html-email-with-php/
 https://stackoverflow.com/questions/16830673/wamp-send-mail-using-smtp-localhost
 http://www.hmailserver.com/
+https://stackoverflow.com/questions/17205377/javascript-regular-expression-for-currency-format
+https://stackoverflow.com/questions/11945412/regex-currency-format-javascript
 
 .Heelo; 'Test', "W%or!d"
 
