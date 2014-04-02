@@ -1,5 +1,5 @@
 <!-- Student Management System -->
-<!-- Author: Steven Ng -->
+<!-- Author: Andre Vicente Integration/Validation: Steven Ng -->
 <!-- add grades form -->
 
 <html>

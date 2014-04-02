@@ -29,11 +29,22 @@ $session = new Session($_SESSION, $database);
 //var_dump($session);
 $topicid = $_GET['topicid'] or die(header('Location: error.php'));
 $query = $database->query("SELECT * FROM forum WHERE topicID = " . $topicid . "");
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
-$respond = $database->query("SELECT * FROM response WHERE topicid = " . $topicid . "");
-$topic = new Topic($result[0], $respond->rowCount());
-//$classid = preg_split("/_+/", $topic->getForumName());
-$classid = $topic->getClassID();
+if ($query->rowCount() == 0)
+{
+	//header('Refresh: 1.5; url=index.php');
+	echo '<link href="bootstrap/css/confirmationAccount.css" rel="stylesheet">';
+	exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
+	style="text-align: center; vertical-align: middle"><p>The discussion topic does not exist. <a href="javascript:void(0)" onclick="loadClassPages(\'#forum\', \'classes/forum.php?classid=\', ' . $_GET['classid'] . ')" >Refresh index.</a></p><br /></div></body>
+	</html>');
+}
+else
+{
+	$result = $query->fetchAll(PDO::FETCH_ASSOC);
+	$respond = $database->query("SELECT * FROM response WHERE topicid = " . $topicid . "");
+	$topic = new Topic($result[0], $respond->rowCount());
+	//$classid = preg_split("/_+/", $topic->getForumName());
+	$classid = $topic->getClassID();
+}
 ?>
 <div class="container bottomMargin">
 	<br />

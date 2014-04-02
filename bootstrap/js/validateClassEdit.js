@@ -65,7 +65,7 @@ $(document).ready(function () {
             });
             return result; 
         }, 
-        "Teacher ID does not exist."
+        "Teacher ID does not exist or the account has been deactivated."
     );
 	
 	//rule for allowing numbers and dash

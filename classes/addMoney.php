@@ -1,6 +1,6 @@
 <?php
 /*Student Management System -->
-<!-- Author: Andre Vicente -->
+<!-- Author: Andre Vicente Integration/Validation: Steven Ng -->
 <!-- process updating lunch allowance*/
 
 require_once dirname(dirname(__FILE__)) . '\AutoLoader.php';

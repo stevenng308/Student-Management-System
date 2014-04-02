@@ -163,6 +163,8 @@ echo $layout->loadFixedNavBar('Home', '');
 				$_SESSION['sess_role'] = $userData['role'];
 				$_SESSION['sess_firstName'] = $userData['firstName'];
 				$_SESSION['sess_lastName'] = $userData['lastName'];
+				$_SESSION['roster'] = 0;
+				$_SESSION['topic'] = 0;
 				session_write_close();
 				header('Location: ' . $table . '/main.php');
 			}

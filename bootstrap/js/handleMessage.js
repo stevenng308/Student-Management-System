@@ -54,38 +54,54 @@ function editMsg($id, $mn)
 function postMsg()
 {
 	//alert("hi");
-	$.post(
-		'../classes/postMessage.php',
-		{
-			'message' : $('#message').val()
-		},
-		function(data){
-			//alert(data);
-		  //$("#mainDiv").html(data);
-		  alert("Message has been posted.");
-		  location.reload();
-		}
-	  );
-  return false;
+	if ($('#message').val())
+	{
+		$.post(
+			'../classes/postMessage.php',
+			{
+				'message' : $('#message').val()
+			},
+			function(data){
+				//alert(data);
+			  //$("#mainDiv").html(data);
+			  alert("Message has been posted.");
+			  location.reload();
+			}
+		  );
+	  return false;
+	}
+	else
+	{
+		alert('Please include a message.');
+		return false;
+	}
 }
 
 function postClassMsg($classID)
 {
 	//alert("hi");
-	$.post(
-		'classes/postClassMessage.php',
-		{
-			'message' : $('#message').val(),
-			'clssID' : $classID
-		},
-		function(data){
-			//alert(data);
-		  //$("#mainDiv").html(data);
-		  alert("Message has been posted.");
-		  location.reload();
-		}
-	  );
-  return false;
+	if ($('#classMessage').val())
+	{
+		$.post(
+			'classes/postClassMessage.php',
+			{
+				'message' : $('#classMessage').val(),
+				'clssID' : $classID
+			},
+			function(data){
+				//alert(data);
+			  //$("#mainDiv").html(data);
+			  alert("Message has been posted.");
+			  location.reload();
+			}
+		  );
+	  return false;
+	}
+	else
+	{
+		alert('Please include a message.');
+		return false;
+	}
 }
 
 function editClassMsg($id, $mn)

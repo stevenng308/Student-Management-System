@@ -2569,8 +2569,9 @@
 		var previousSearch = settings.oPreviousSearch;
 		var features = settings.aanFeatures;
 		//var input = '<input type="search" class="'+classes.sFilterInput+'"/>'; //removes the default search input. sSearch is the label in front of it.
-		var input = '<div class="input-group"><span class="input-group-addon">Filter</span><input id="filter" class="form-control '+classes.sFilterInput+'" type="search" placeholder="Search Term"></input></div>';
-	
+		//var input = '<div class="input-group"><span class="input-group-addon">Filter</span><input id="filter" class="form-control '+classes.sFilterInput+'" type="search" placeholder="Search Term"></input></div>';
+		var input = '<input id="filter" class="form-control '+classes.sFilterInput+'" type="search" placeholder="Search Term"></input>';
+		
 		var str = settings.oLanguage.sSearch;
 		str = str.match(/_INPUT_/) ?
 			str.replace('_INPUT_', input) :

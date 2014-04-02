@@ -131,7 +131,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
       <div class="panel-body">
 	<div class="jumbotron">
 		<form name="compose" id="compose-form" action="#" method="post">
-			<pre><textarea id="message" name="message" class="messageBoard"></textarea></pre>			
+			<pre><textarea id="classMessage" name="message" class="messageBoard"></textarea></pre>			
 		</form>
 		<button class="btn btn-lg btn-primary btn-block" onclick="postClassMsg(<?php echo $_GET['classid']; ?>)">Post Message</button> <!---Will have to do postClassMsg($classID)--->
 	</div>
@@ -230,17 +230,17 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script type="text/javascript" language="javascript" src="bootstrap/js/handleMessage.js"></script>
 <script type="text/javascript" charset="utf-8">
 $(window).load(function(){
-	var topic = <?php echo (isset($_SESSION['topic'])) ? $_SESSION['topic'] : 0; ?>; //help fix the undefined index that happens when coming from main page to forum
-	var roster = <?php echo (isset($_SESSION['roster'])) ? $_SESSION['roster'] : 0; ?>; //help fix the undefined index that happens when coming from register tab to roster
+	//var topic = <?php echo (isset($_SESSION['topic'])) ? $_SESSION['topic'] : 0; ?>; //help fix the undefined index that happens when coming from main page to forum
+	//var roster = <?php echo (isset($_SESSION['roster'])) ? $_SESSION['roster'] : 0; ?>; //help fix the undefined index that happens when coming from register tab to roster
 	//alert(<?php echo $_SESSION['topic']; ?>);
-	if (topic) //true if topic id has been set. show the topic page.
+	if (<?php echo $_SESSION['topic']; ?>) //true if topic id has been set. show the topic page.
 	{
-		loadClassPages('#forum', 'classes/topicPage.php?topicid=', topic);
+		loadClassPages('#forum', 'classes/topicPage.php?classid=<?php echo $classid; ?>&topicid=', <?php echo $_SESSION['topic']; ?>);
 		$('#forumTab a[href="#forum"]').tab('show');
 		<?php 
 			session_regenerate_id(); //session write open here
 			$_SESSION['topic'] = 0; //set the session[topic] variable to zero so it won't load the topic page on refresh
-			//session_write_close(); //no close or else $_SESSION['roster'] variable below will never be set to 0 even if topic id is not set
+			session_write_close(); //no close or else $_SESSION['roster'] variable below will never be set to 0 even if topic id is not set
 		?>;
 	}
 	else
@@ -249,19 +249,19 @@ $(window).load(function(){
 	}
 	
 	//alert(<?php echo $_SESSION['roster']; ?>);
-	if (roster) //true if roster has been set. show the roster page.
+	if (<?php echo $_SESSION['roster']; ?>) //true if roster has been set. show the roster page.
 	{
 		//alert(<?php echo $_SESSION['roster']; ?>);
 		loadClassPages('#rosterList', 'classes/roster.php?classid=', <?php echo $classid; ?>);
 		$('#rosterTab a[href="#rosterList"]').tab('show');
 		<?php 
-			//session_regenerate_id();
+			session_regenerate_id();
 			$_SESSION['roster'] = 0; //set the session[roster] variable to zero so it won't load the topic page on refresh
 			session_write_close();
 		?>;
 		//alert(<?php echo $_SESSION['roster']; ?>);
 	}
-	
+	//loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
 	var role = <?php echo $_SESSION['sess_role']; ?>;
 	if (role != 3) //true if user is an admin load these pages in the proper divs
 	{
