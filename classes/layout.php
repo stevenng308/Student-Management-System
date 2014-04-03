@@ -719,7 +719,7 @@ class Layout
 								<thead>
 									<tr>
 										<th style="text-align: center;" colspan="6">
-											<h3>Class Info.</h3>
+											<h3>Class Info</h3>
 										</th>
 									</tr>
 								</thead>

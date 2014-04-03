@@ -27,6 +27,7 @@ function deactivate()
 				function(data){
 				  //$("#mainDiv").html(data);
 				  //loadIn(page);
+				  alert("Class deactivated.");
 				  location.reload();
 				}
 			  );
@@ -59,6 +60,7 @@ function activate()
 				function(data){
 				  //$("#mainDiv").html(data);
 				  //loadIn(page);
+				  alert("Class activated.");
 				  location.reload();
 				}
 			  );

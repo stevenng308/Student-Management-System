@@ -118,18 +118,21 @@ $(document).ready(function () {
 	$(function () {
 		$('#addBalance-form').submit(function () {
 			if($(this).valid()) {
-				//alert('Successful Validation');
-				  $.post(
-						'classes/addMoney.php',
-						$(this).serialize(),
-						function(data){
-							//alert("Amount has been added.");
-							$("#result").html(data);
-							//$('#inboxNum').text(data);
-							//location.window();
-						}
-					);
-					return false;
+				if (window.confirm('Do you wish to process this transaction?'))
+				{
+					//alert('Successful Validation');
+					  $.post(
+							'classes/addMoney.php',
+							$(this).serialize(),
+							function(data){
+								//alert("Amount has been added.");
+								$("#result").html(data);
+								//$('#inboxNum').text(data);
+								//location.window();
+							}
+						);
+						return false;
+				}
 			}
 			else
 			{
