@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `class_messageboard` (
   `authorLastName` varchar(30) NOT NULL DEFAULT 'Admin',
   `messageDate` datetime DEFAULT NULL,
   `classID` int(10) NOT NULL,
-  PRIMARY KEY (`messageID`)
+  PRIMARY KEY (`class_messageID`)
 );
 
 -- --------------------------------------------------------
