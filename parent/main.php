@@ -31,14 +31,36 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 //var_dump($_SESSION);
 //var_dump($session);
+$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . "");
+if ($query->rowCount() == 1)
+{
+	$new = $session->getID();
+}
+else
+{
+	$new = 0;
+}
 
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Parent Main', '../');
 ?>
+<!-- Custom CSS for this page -->
+<link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 
 <!-- Begin page content -->
 <div class="container">
-	 <a class="navbar-brand">Hello <?php echo $session->getFirstName(); ?>.</a>
-	</div>
+	 <nav class="navbar navbar-default" role="navigation">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-4">
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+		  </button>
+		  <a class="navbar-brand">Hello <?php echo $session->getFirstName(); ?>.</a>
+		</div>
+	 </div>
+	</nav>
 	
 	<!-- Begin collapse -->
 	<!-- Message Board for Parent -->
@@ -90,7 +112,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Parent Main
     </div>
   </div>
 </div>
-
 <!-- Student Association for Parent -->
 <div class='container bottomMargin' id='lunch'>
 	<div class='table-responsive'>
@@ -117,12 +138,15 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Parent Main
 			}
 			else
 			{
+				$count = 0;
 				foreach ($database->query($query) as $row)
 				{
 					$stmt = $database->query('SELECT * FROM student WHERE studentID = "' . $row['studentID'] . '"');
 					$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+					//var_dump($result);
 					$user = new User($database, $result[0]['accountID'], "student");
 					echo $layout->loadStudentLunchRow($user);
+					$count++;
 				} 
 			}
 			?>

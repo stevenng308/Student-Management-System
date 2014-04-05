@@ -112,7 +112,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 	<div class="row">
 		<div class="col-xs-6 col-sm-4"></div>
 		<div class="table-responsive col-xs-6 col-sm-4">
-			<table class="table table-condensed">
+			<table class="table table-condensed table-bordered table-hover">
 				<thead>
 					<tr>
 						<th style="text-align: center;" colspan="2">
@@ -155,13 +155,21 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 						//display class name
 						echo '<th style="text-align: center;" colspan="2">
 								<h4>' . $classroom->getCourseNumber() . ' ' . $classroom->getCourseName() . '</h4> 
-							</th>';
+							</th>
+							<tr>
+								<th style="text-align: center;">
+									<h4>Label</h4>
+								</th>
+								<th style="text-align: center;">
+									<h4>Grade</h4>
+								</th>
+							</tr>';
 						//start displaying the grades for the class based on the selected year
 						foreach ($database->query('SELECT * FROM grade WHERE studentID = ' . $id . ' AND classID = ' . $class_arr[$i] . '') as $row) //change 12 later
 						{
 							echo '<tr>
-									<td style="text-align: right; width: 25%;">' . $row['label'] . '</td>
-									<td style="width: 25%;">' . $row['grade'] . '</td>
+									<td style="text-align: center; width: 25%;">' . $row['label'] . '</td>
+									<td style="text-align: center; width: 25%;">' . $row['grade'] . '</td>
 								  </tr>';
 						}
 					}
