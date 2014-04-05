@@ -32,7 +32,8 @@ $(document).ready(function () {
 	//rule for allowing up to 2 decimal places
 	$.validator.addMethod("twoDecimals", 
         function(value, element, regexp) {
-			var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp(/^[1-9]\d*(\.\d{1,2})?$/);
 			var key = value;
 			
 			if (!regex.test(key)) {

@@ -948,6 +948,8 @@ class Layout
 						  <div class="modal-body">
 							<div class="table-responsive">
 								<table class="table table-condensed">
+									<th>Grade Label</th>
+									<th>Grade</th>
 									<tbody> 
 										' . $gradeRow . '
 									</tbody>

@@ -240,7 +240,7 @@ $(window).load(function(){
 		<?php 
 			session_regenerate_id(); //session write open here
 			$_SESSION['topic'] = 0; //set the session[topic] variable to zero so it won't load the topic page on refresh
-			session_write_close(); //no close or else $_SESSION['roster'] variable below will never be set to 0 even if topic id is not set
+			//session_write_close(); //no close or else $_SESSION['roster'] variable below will never be set to 0 even if topic id is not set
 		?>;
 	}
 	else
@@ -255,7 +255,7 @@ $(window).load(function(){
 		loadClassPages('#rosterList', 'classes/roster.php?classid=', <?php echo $classid; ?>);
 		$('#rosterTab a[href="#rosterList"]').tab('show');
 		<?php 
-			session_regenerate_id();
+			//session_regenerate_id();
 			$_SESSION['roster'] = 0; //set the session[roster] variable to zero so it won't load the topic page on refresh
 			session_write_close();
 		?>;

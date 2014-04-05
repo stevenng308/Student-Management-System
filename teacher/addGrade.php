@@ -172,11 +172,63 @@ $(document).ready(function () {
         }, 
         "This Student has a grade with this label already"
     );
+	
+	//rule for allowing up to 2 decimal places
+	$.validator.addMethod("twoDecimals", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp(/^[1-9]\d*(\.\d{1,2})?$/);
+			var regexText = new RegExp("^[A-DF]+$");
+			var key = value;
+			
+			/*if (!regex.test(key)) {
+			   return false;
+			}
+			return true;*/
+			if (regexText.test(key))
+			{
+				return true;
+			}
+			else
+			{
+				if (!regex.test(key)) {
+				   return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		},
+		"Invalid format. Only two decimal places (99.99) and letters A-D and F allowed"
+	);
+	
+	//overloading range rule
+	$.validator.addMethod("range", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp("^[A-DF]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   if (key < 0 || key > 100)
+			   {
+					return false;
+			   }
+			   else
+			   {
+					return true
+			   }
+			}
+			return true;
+		},
+		"Please enter a value between 0-100"
+	);
 	 
 	//rule for allowing certain characters for grades
 	$.validator.addMethod("noSpecial", 
         function(value, element, regexp) {
-			var regex = new RegExp("^[A-Z0-9.]+$");
+			var regex = new RegExp("^[A-DF0-9.]+$");
 			var key = value;
 			
 			if (!regex.test(key)) {
@@ -184,7 +236,7 @@ $(document).ready(function () {
 			}
 			return true;
 		},
-		"Capital letters and Numbers Only"
+		"Letters A-D and F allowed"
 	);
 	
 	//rule for allowing spaces
@@ -225,6 +277,8 @@ $(document).ready(function () {
 		$(this).rules("add", {
 			required: true,
 			maxlength: 6,
+			range: true,
+			twoDecimals: true,
 			noSpecial: true
 		});
 	});

@@ -22,7 +22,7 @@ class Classroom
 		$this->teacherID = $classInfo['teacherID'];
 		$this->teacherUser = $teacherInfo[0]['username'];
 		$this->teacherFirst = $teacherInfo[0]['firstname'];
-		$this->teacherLast = 	$teacherInfo[0]['lastname'];
+		$this->teacherLast = $teacherInfo[0]['lastname'];
 		$this->database = $db;
 	}
 	

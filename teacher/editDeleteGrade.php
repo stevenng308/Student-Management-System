@@ -92,7 +92,32 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit/Delete
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script>
-$(function(){
+var checkbox = []; //array to know if grades are being deleted
+$('input[id^="delete"]').change(function() { //adds the values to the array called values
+    var length = checkbox.length;
+	if (length == 0) //if nothing in array push it
+	{
+		//alert($(this).val());
+		checkbox.push($(this).val());
+	}
+	else
+	{
+		while (length) //checking if the value already exist in the array
+		{
+			length--; //last index is length - 1
+			//alert(length);
+			if (checkbox[length] == $(this).val())
+			{
+				checkbox.splice(length, 1); //remove the value if unselecting and return control
+				return;
+				//alert(checkbox[length]);
+			}
+		}
+		checkbox.push($(this).val()); //value does not exist in array add it
+	}
+	//alert(checkbox.length);
+});
+/*$(function(){
 	// bind change event to select
 	$('#field').bind('change', function () {
 		var field = $(this).val(); // get selected value
@@ -103,7 +128,7 @@ $(function(){
 		}
 		return false;
 	});
-});
+});*/
 
 $(document).ready(function () {
 
@@ -124,10 +149,62 @@ $(document).ready(function () {
 		"Grade label is being used in this form"
 	 );
 	 
+	//rule for allowing up to 2 decimal places
+	$.validator.addMethod("twoDecimals", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp(/^[1-9]\d*(\.\d{1,2})?$/);
+			var regexText = new RegExp("^[A-DF]+$");
+			var key = value;
+			
+			/*if (!regex.test(key)) {
+			   return false;
+			}
+			return true;*/
+			if (regexText.test(key))
+			{
+				return true;
+			}
+			else
+			{
+				if (!regex.test(key)) {
+				   return false;
+				}
+				else
+				{
+					return true;
+				}
+			}
+		},
+		"Invalid format. Only two decimal places (99.99) and letters A-D and F allowed"
+	);
+	
+	//overloading range rule
+	$.validator.addMethod("range", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp("^[A-DF]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   if (key < 0 || key > 100)
+			   {
+					return false;
+			   }
+			   else
+			   {
+					return true
+			   }
+			}
+			return true;
+		},
+		"Please enter a value between 0-100"
+	);
+	 
 	//rule for allowing spaces but no symbols
 	$.validator.addMethod("noSpecial", 
         function(value, element, regexp) {
-			var regex = new RegExp("^[A-Z0-9.]+$");
+			var regex = new RegExp("^[A-DF0-9.]+$");
 			var key = value;
 			
 			if (!regex.test(key)) {
@@ -135,7 +212,7 @@ $(document).ready(function () {
 			}
 			return true;
 		},
-		"Capital letters and Numbers Only"
+		"Letters A-D and F allowed"
 	);
 	
 	//rule for allowing spaces
@@ -177,6 +254,8 @@ $(document).ready(function () {
 	$('input[name^="grade"]').each(function () { //use .each on every input with name beginning grade to add the rules to each of them
 		$(this).rules("add", {
 			required: true,
+			range: true,
+			twoDecimals: true,
 			maxlength: 6,
 			noSpecial: true
 		});
@@ -205,16 +284,38 @@ $(document).ready(function () {
 	$(function () {
 		$('#grade-form').submit(function () {
 			if($(this).valid()) {
-				//alert('Successful Validation');
-				$.post(
-					'../classes/processChangeGrade.php',
-					$(this).serialize(),
-					function(data){
-					  $("#result").html(data);
-					  //console.log(data);
+				if (checkbox.length > 0)
+				{
+					if (window.confirm("You have " + checkbox.length + " pending grade deletion/s. Do you want to continue?"))
+					{
+						//alert('Successful Validation');
+						$.post(
+							'../classes/processChangeGrade.php',
+							$(this).serialize(),
+							function(data){
+							  $("#result").html(data);
+							  //console.log(data);
+							}
+						  );
+					  return false;
 					}
-				  );
-              return false;
+					else { 
+						; //do nothing
+					}
+				}
+				else
+				{
+					//alert('Successful Validation');
+					$.post(
+						'../classes/processChangeGrade.php',
+						$(this).serialize(),
+						function(data){
+						  $("#result").html(data);
+						  //console.log(data);
+						}
+					  );
+				  return false;
+				}
 			}
 			else
 			{
