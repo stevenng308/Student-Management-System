@@ -5,7 +5,7 @@
 <?php
 class Topic
 {
-	private $topicID, $forumName, $topic_subject, $topic_message, $author_user, $author_first, $suthor_last, $suthor_role, $date_posted, $last_post, $numMsgs;
+	private $topicID, $forumName, $topic_subject, $topic_message, $author_user, $author_first, $author_last, $author_role, $date_posted, $last_post, $numMsgs;
 	public function __construct($topicinfo, $num)
 	{
 		$this->topicID = $topicinfo['topicID'];
