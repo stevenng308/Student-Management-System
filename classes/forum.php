@@ -61,9 +61,16 @@ $class = new Classroom($result[0], $teach, $database);
 				</div>
 				<thead>
 					<tr>
-						<th class="no-sort" style="text-align: center;">
-							<input type="checkbox" onClick="checkAllForum(this)" />
-						</th>
+						<?php
+						if ($_SESSION['sess_role'] != 3)
+						{
+							echo '
+								<th class="no-sort" style="text-align: center;">
+									<input type="checkbox" onClick="checkAllForum(this)" />
+								</th>
+								';
+						}
+						?>
 						<th style="text-align: center;">
 							Topic
 						</th>
@@ -86,7 +93,7 @@ $class = new Classroom($result[0], $teach, $database);
 							$num = $database->query("SELECT * FROM response WHERE topicid = " . $row['topicID'] . "");
 							$topic = new Topic($row, $num->rowCount());
 							//var_dump($email);
-							echo $layout->loadTopicRow($topic, $count);
+							echo $layout->loadTopicRow($topic, $count, $session->getUserType());
 							$count++;
 						}
 					?>

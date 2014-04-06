@@ -153,7 +153,8 @@ $(document).ready(function () {
                 async: false,
                 url: "../classes/checkStudentGrade.php", // script to validate in server side
                 data: { label: value,
-						id: <?php echo $id; ?>
+						id: <?php echo $id; ?>,
+						classid: <?php echo $class; ?>
 						},
                 success: function(data) {
 					//alert(data);
@@ -200,7 +201,7 @@ $(document).ready(function () {
 				}
 			}
 		},
-		"Invalid format. Only two decimal places (99.99) and letters A-D and F allowed"
+		"Invalid format. Up to decimal places (99.99) and letters A-D and F allowed"
 	);
 	
 	//overloading range rule

@@ -34,19 +34,8 @@ $classroom = new Classroom($result[0], $teacher, $database);
 <div class="table-responsive">
 	<h3 align="center"><?php echo $classroom->getCourseNumber() . " " . $classroom->getCourseName(); ?> - Class Roster</h3>
 	<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="studentTable">
-		<div class="row">
-			<div class="col-xs-3 col-sm-1">
-				<button class="btn btn-danger btn-sm" onclick="unregister()">Del</button>
-			</div>
-		</div>
 		<thead>
 			<tr>
-				<th class="no-sort" style="text-align: center;">
-					<input type="checkbox" onClick="checkAll(this)" />
-				</th>
-				<th style="text-align: center;">
-					Student ID
-				</th>
 				<th style="text-align: center;">
 					Username
 				</th>
@@ -56,30 +45,14 @@ $classroom = new Classroom($result[0], $teacher, $database);
 				<th style="text-align: center;">
 					Last Name
 				</th>
-				<th style="text-align: center;">
-					Active
-				</th>
-				<th class="no-sort" style="text-align: center;">
-					Grades
-				</th>
-				<th class="no-sort" style="text-align: center;">
-					Grades
-				</th>
-				<th class="no-sort" style="text-align: center;">
-					Grades
-				</th>
 			</tr>
 		</thead>
 		<tbody>
 			<?php 
-				$count = 0;
 				foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
 				{
 					//var_dump($row);
-					$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");
-					$grade = $query->fetchAll(PDO::FETCH_ASSOC);
-					echo $layout->loadRosterRow($row['studentID'], $row['username'], $row['firstName'], $row['lastName'], $row['status'], $grade, $classid, $count);
-					$count++;
+					echo $layout->loadRosterStudentRow($row['username'], $row['firstName'], $row['lastName']);
 				}
 			?>
 		</tbody>
@@ -88,61 +61,10 @@ $classroom = new Classroom($result[0], $teacher, $database);
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#studentTable').dataTable(
 {
-	"aaSorting": [[1, 'asc']],
+	"aaSorting": [[2, 'asc']],
 	"aoColumnDefs" : [ {
 		'bSortable' : false,
 		'aTargets' : [ "no-sort" ]
 	}]
 });
-
-var values = 0; //global array of the id's values
-$('input[id^="delete"]').on('change', function() { //adds the values to the array called values
-    values = $('input:checked').map(function() {
-        return this.value;
-    }).get();
-    
-    //alert(values);
-});
-
-function unregister()
-{
-	if (!values)
-	{
-		alert("No students were selected.");
-	}
-	else
-	{
-		if (window.confirm("Do you want to unregister?"))
-		{
-			//alert(values);
-			//alert($('#box').val());
-			$.post(
-				'classes/unregisterStudents.php',
-				{
-					'checkbox' : values, 
-				},
-				function(data){
-				  //$("#mainDiv").html(data);
-				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //refresh the roster
-				  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load/unload all grades of the new students if they had existing grades
-				}
-			  );
-		  return false;
-		}
-		else
-		{
-			;//do nothing
-		}
-	}
-}
-
-function checkAll(source) {
-  var checkboxes = $('input[id^="delete"]').not(":hidden"); //insert into an array of all checkboxes that have the id=delete but are not hidden from the fitering
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked; //check all of them
-	values = $('input:checked').map(function() {
-        return this.value; //updating the global variable values
-    }).get();
-  }
-}   
 </script>

@@ -926,12 +926,21 @@ class Layout
 			$add = '<button type="button" class="btn btn-primary" disabled="disabled" onclick="location.href=\'teacher/addGrade.php?id=' . $id . '&class=' . $class . '\';">Add</button>';
 		}
 		$gradeRow = '';
-		for ($j = 0; $j < count($grade); $j++)
+		if (!count($grade))
 		{
-			$gradeRow = $gradeRow . "<tr>
-										<td>" . $grade[$j]['label'] . "</td>
-										<td>" . $grade[$j]['grade'] . "</td>
-									</tr> ";
+			$gradeRow = "<tr>
+							<td colspan='2' style='text-align: center;'>No grades available</td>
+						</tr> ";
+		}
+		else
+		{
+			for ($j = 0; $j < count($grade); $j++)
+			{
+				$gradeRow = $gradeRow . "<tr>
+											<td>" . $grade[$j]['label'] . "</td>
+											<td>" . $grade[$j]['grade'] . "</td>
+										</tr> ";
+			}
 		}
 		$grade =  '
 					<button class="btn btn-info" data-toggle="modal" data-target="#myModal' . $modalNum . '">
@@ -1001,6 +1010,25 @@ class Layout
 		return $func;
 	}
 	
+	public function loadRosterStudentRow($user, $first, $last)
+	{	
+		$func = '
+			<tr class="searchable">
+				<td style="text-align: center;">
+					' . $user . '
+				</td>
+				<td style="text-align: center;">
+					' . $first . '
+				</td>
+				<td style="text-align: center;">
+					' . $last . '
+				</td>
+			</tr>
+			';
+			
+		return $func;
+	}
+	
 	public function loadGradeRow($id, $user, $first, $last, $grade)
 	{
 		$name = $first . ' ' . $last;
@@ -1018,14 +1046,24 @@ class Layout
 		return $gradeRow;
 	}
 	
-	public function loadTopicRow($topic, $num)
+	public function loadTopicRow($topic, $num, $role)
 	{
-		$func = '
-			<tr class="searchable">
+		if ($role == 3)
+		{
+			$checkbox = '';
+		}
+		else
+		{
+			$checkbox = '
 				<td style="text-align: center;">
 					<input name="delete" id="remove' . $num . '" type="checkbox" value="' . $topic->getTopicID() . '">
 				</td>
-				<td style="text-align: center; width: 60%;">
+				';
+		}
+		$func = '
+			<tr class="searchable">
+				' . $checkbox . '
+				<td style="width: 60%;">
 					<button class="btn btn-link" onclick="loadClassPages(\'#forum\', \'classes/topicPage.php?topicid=\', ' . $topic->getTopicID() . ')">' . $topic->getTopicSubjectFormatted() . '</button>
 				</td>
 				<td style="text-align: center;">
@@ -1043,24 +1081,30 @@ class Layout
 		return $func;
 	}
 	
-	public function loadDiscussionRow($topic, $user)
+	public function loadDiscussionRow($topic, $user, $role)
 	{
 		$edit = '';
 		switch ($topic->getAuthorRole())
 		{
 			case 1: $panel = 'panel-danger';
-					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
 					break;
 			case 2: $panel = 'panel-success';
-					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
 					break;
 			case 3: $panel = 'panel-primary';
-					if ($user == $topic->getAuthorUser())
+					break;
+			default: $panel = 'panel-default';
+					break;
+		}
+		switch ($role)
+		{
+			case 1: $edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
+					break;
+			case 2: $edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
+					break;
+			case 3: if ($user == $topic->getAuthorUser())
 					{
 						$edit = '<button class="btn btn-info btn-info pull-right" onclick="editOPMessage(' . $topic->getTopicID() . ')">Edit</button>';
 					}
-					break;
-			default: $panel = 'panel-default';
 					break;
 		}
 		$func = '
@@ -1086,26 +1130,33 @@ class Layout
 		return $func;
 	}
 	
-	public function loadDiscussionResponseRow($reply, $user)
+	public function loadDiscussionResponseRow($reply, $user, $role)
 	{
 		$edit = '';
 		switch ($reply->getAuthorRole())
 		{
 			case 1: $panel = 'panel-danger';
-					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
-					$delete = '<button class="btn btn-danger" onclick="deleteMessage(' . $reply->getResponseID() . ')">Delete</button>';
 					break;
 			case 2: $panel = 'panel-success';
-					$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
-					$delete = '<button class="btn btn-danger" onclick="deleteMessage(' . $reply->getResponseID() . ')">Delete</button>';
 					break;
 			case 3: $panel = 'panel-primary';
-					if ($user == $reply->getAuthorUser())
-					{
-						$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getTopicID() . ')">Edit</button>';
-					}
 					break;
 			default: $panel = 'panel-default';
+					break;
+		}
+		switch ($role)
+		{
+			case 1: $edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
+					$delete = '<button class="btn btn-danger" onclick="deleteMessage(' . $reply->getResponseID() . ')">Delete</button>';
+					break;
+			case 2: $edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
+					$delete = '<button class="btn btn-danger" onclick="deleteMessage(' . $reply->getResponseID() . ')">Delete</button>';
+					break;
+			case 3: if ($user == $reply->getAuthorUser())
+					{
+						$edit = '<button class="btn btn-info btn-info pull-right" onclick="editMessage(' . $reply->getResponseID() . ')">Edit</button>';
+					}
+					$delete = '';
 					break;
 		}
 		$func = '

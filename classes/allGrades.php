@@ -60,7 +60,7 @@ $class= new Classroom($result[0], $teach, $database);
 					</tr>
 				</thead>
 				<tbody>
-					<?php 
+					<?php
 						foreach ($database->query('SELECT * FROM enrolled JOIN student ON enrolled.studentid = student.studentid WHERE enrolled.classid = ' . $classid . '') as $row)
 						{
 							$query = $database->query("SELECT gradeID, label, grade FROM grade WHERE studentid = " . $row['studentID'] . " AND classid = " . $classid . "");

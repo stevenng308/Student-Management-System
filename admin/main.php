@@ -151,7 +151,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Admin Main'
     </div>
     <div id="collapseTwo" class="panel-collapse collapse">
       <div class="panel-body">
-	<div class="jumbotron">
+	<div class="container messagetron">
 		<div class="table-responsive">
 			<table class="table table-condensed" id="messageTable">
 				<thead>

@@ -176,7 +176,7 @@ $(document).ready(function () {
 				}
 			}
 		},
-		"Invalid format. Only two decimal places (99.99) and letters A-D and F allowed"
+		"Invalid format. Up to two decimal places (99.99) and letters A-D and F allowed"
 	);
 	
 	//overloading range rule

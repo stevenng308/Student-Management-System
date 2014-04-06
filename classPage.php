@@ -62,9 +62,11 @@ if (!$classroom->getStatus() && $_SESSION['sess_role'] == 3)
 		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
 		style="text-align: center; vertical-align: middle"><p>Classroom is inactive. You cannot view the classroom\'s page.</p></div></body></html>');
 }
-if($_SESSION['sess_role'] == 3) //check if the student is registered in this class
+else if($_SESSION['sess_role'] == 3) //check if the student is registered in this class
 {
-	$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = ' . $session->getID() . ' AND classID = ' . $classid . ' LIMIT 1');
+	$query = $database->query('SELECT studentID FROM student WHERE accountID = ' . $session->getID() . '');
+	$result = $query->fetchAll(PDO::FETCH_ASSOC);
+	$query = $database->query('SELECT studentID FROM enrolled WHERE studentID = ' . $result[0]['studentID'] . ' AND classID = ' . $classid . ' LIMIT 1');
 	if ($query->rowCount() == 0)
 	{
 		header('Refresh: 1.5; url=index.php');
@@ -73,7 +75,7 @@ if($_SESSION['sess_role'] == 3) //check if the student is registered in this cla
 		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
 	}
 }	
-if($_SESSION['sess_role'] == 2) //check if the teacher is assigned to this class
+else if($_SESSION['sess_role'] == 2) //check if the teacher is assigned to this class
 {
 	$query = $database->query('SELECT teacherID FROM classroom WHERE teacherID = ' . $session->getID() . ' AND classID = ' .  $classid . ' LIMIT 1');
 	if ($query->rowCount() == 0)
@@ -108,37 +110,47 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 				}
 				else
 				{
-					echo '<li id="gradesTab"><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>';
+					echo '	
+						<li id="gradesTab"><a href="#grades" data-toggle="tab"><b>Grades</b></a></li>
+						<li id="rosterTab"><a href="#rosterList" tabindex="-1" data-toggle="tab"><b>Roster</b></a></li>
+						';
+					
 				}
 			  ?>
 		</ul>
 	<div id="myTabContent" class="tab-content">
 	  <div class="tab-pane fade in active" id="home">
-		
+		<br />
 
 <!----Begin Class Messageboard ---->
 
 <div class="panel-group" id="accordion">
-  <div class="panel panel-fb">
-    <div class="panel-heading">
-      <h2 class="panel-title" align="center">
-        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-          Create New <?php echo $classroom->getCourseNumber() . " " . $classroom->getCourseName(); ?> Message
-        </a>
-      </h2>
-    </div>
-    <div id="collapseOne" class="panel-collapse collapse in">
-      <div class="panel-body">
-	<div class="jumbotron">
-		<form name="compose" id="compose-form" action="#" method="post">
-			<pre><textarea id="classMessage" name="message" class="messageBoard"></textarea></pre>			
-		</form>
-		<button class="btn btn-lg btn-primary btn-block" onclick="postClassMsg(<?php echo $_GET['classid']; ?>)">Post Message</button> <!---Will have to do postClassMsg($classID)--->
-	</div>
-      </div>
-    </div>
-  </div>
-
+<?php
+	if ($session->getUserType() != 3)
+	{
+		echo '
+		  <div class="panel panel-fb">
+			<div class="panel-heading">
+			  <h2 class="panel-title" align="center">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+				  Create New ' . $classroom->getCourseNumber() . " " . $classroom->getCourseName() . ' Message
+				</a>
+			  </h2>
+			</div>
+			<div id="collapseOne" class="panel-collapse collapse in">
+			  <div class="panel-body">
+			<div class="container messagetron">
+				<form name="compose" id="compose-form" action="#" method="post">
+					<pre><textarea id="classMessage" name="message" class="messageBoard"></textarea></pre>			
+				</form>
+				<button class="btn btn-lg btn-primary btn-block" onclick="postClassMsg(' . $_GET['classid'] . ')">Post Message</button> <!---Will have to do postClassMsg($classID)--->
+			</div>
+			  </div>
+			</div>
+		  </div>
+		  ';
+	}
+?>
 
   <div class="panel panel-success">
     <div class="panel-heading">
@@ -148,7 +160,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 	</a>
       </h3>
     </div>
-    <div id="collapseTwo" class="panel-collapse collapse">
+    <div id="collapseTwo" class="panel-collapse collapse <?php echo ($session->getUserType() == 3) ? 'in' : ''; ?>">
       <div class="panel-body">
 	<div class="jumbotron">
 		<div class="table-responsive">
@@ -172,15 +184,32 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 					<?php
 						$count = 0;
 						$classid = $_GET['classid'];
-						foreach ($database->query("SELECT * FROM class_messageboard  WHERE classID = " . $classid . " ORDER BY messageDate DESC") as $row)
+						$query = $database->query("SELECT * FROM class_messageboard  WHERE classID = " . $classid . " ORDER BY messageDate DESC");
+						if ($query->rowCount() == 0)
 						{
-							$message = new ClassMessage($row);
-							echo $layout->loadClassMessages($message, $classid, $count, $session->getUserType());
-							$count++;
-							if ($count > 4)
-								break;
+							echo '
+									<tr>
+										<td></td><td></td>
+										<td>
+											No class message available.
+										</td>
+										<td></td><td></td>
+									</tr>
+								';
+						}
+						else
+						{
+							foreach ($query as $row)
+							{
+									$message = new ClassMessage($row);
+									echo $layout->loadClassMessages($message, $classid, $count, $session->getUserType());
+									$count++;
+									if ($count > 4)
+										break;
+							}
 						}
 					?>
+					<tr>
 				</tbody>
 			</table>
 		</div>
@@ -255,7 +284,7 @@ $(window).load(function(){
 		loadClassPages('#rosterList', 'classes/roster.php?classid=', <?php echo $classid; ?>);
 		$('#rosterTab a[href="#rosterList"]').tab('show');
 		<?php 
-			//session_regenerate_id();
+			//session_regenerate_id();	
 			$_SESSION['roster'] = 0; //set the session[roster] variable to zero so it won't load the topic page on refresh
 			session_write_close();
 		?>;
@@ -272,6 +301,7 @@ $(window).load(function(){
 	else if (role == 3)
 	{
 		loadClassPages('#grades', 'classes/studentClassGrades.php?classid=', <?php echo $classid; ?>); //load students grade in grade div
+		loadClassPages('#rosterList', 'classes/rosterStudent.php?classid=', <?php echo $classid; ?>); //load students view of the roster in div
 	}
 });
 

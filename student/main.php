@@ -28,6 +28,16 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
+$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . "");
+if ($query->rowCount() == 1)
+{
+	$new = $session->getID();
+}
+else
+{
+	$new = 0;
+}
+
 $query = $database->query("SELECT * FROM subscribe WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . "");
 $subscription = $query->fetchAll(PDO::FETCH_ASSOC);
 $topic_arr = [];
@@ -90,6 +100,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
 
  
 <!-- Begin collapse -->
+<div class="panel-group" id="accordion">
   <div class="panel panel-success">
     <div class="panel-heading">
       <h3 class="panel-title" align="center">
@@ -100,7 +111,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
     </div>
     <div id="collapseOne" class="panel-collapse collapse in">
       <div class="panel-body">
-	<div class="jumbotron">
+	<div class="container messagetron">
 		<div class="table-responsive">
 			<table class="table table-condensed" id="messageTable">
 				<thead>
@@ -142,7 +153,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
 <div class="container bottomMargin">
 	<div class="table-responsive">
 		<h3 align="center">Assigned Classes</h3>
-		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="classTable">
 			<div class="row">
 				<div class="col-xs-3 col-sm-1">
 					<!--<button class="btn btn-danger btn-sm" onclick="deactivate()">Deactive</button>-->
@@ -227,18 +238,27 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
 		</table>
 	</div>
 </div>
-<!--<script src="../bootstrap/js/searchFilter.js"></script>-->
-<script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
-<script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
-<script type="text/javascript" language="javascript" src="../bootstrap/js/statusClass.js"></script>
-
-
-
-
-
-
-
 <?php
 	echo $layout->loadFooter('../');
 ?>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" language="javascript" charset="utf-8">
+$('#classTable').dataTable(
+{
+	"aaSorting": [[0, 'asc']],
+	"aoColumnDefs" : [ {
+		'bSortable' : false,
+		'aTargets' : [ "no-sort" ]
+	}]
+});
+
+if (<?php echo $new ?>)
+{
+	if (window.confirm('Please consider changing your password for account integrity.'))
+	{
+		window.location.replace('../changePassword.php?id=' + <?php echo $new ?>);
+	}
+}
+</script>
 </html>

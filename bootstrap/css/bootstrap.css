@@ -4959,6 +4959,13 @@ a.list-group-item.active > .badge,
   background-color: #eeeeee;
 }
 
+.messagetron {
+  font-size: 21px;
+  font-weight: 200;
+  color: inherit;
+  background-color: #eeeeee;
+}
+
 .jumbotron h1 {
   line-height: 1;
   color: inherit;
@@ -4972,6 +4979,10 @@ a.list-group-item.active > .badge,
   border-radius: 6px;
 }
 
+.container .messagetron {
+  border-radius: 6px;
+}
+
 @media screen and (min-width: 768px) {
   .jumbotron {
     padding-top: 48px;
@@ -4982,6 +4993,20 @@ a.list-group-item.active > .badge,
     padding-left: 60px;
   }
   .jumbotron h1 {
+    font-size: 63px;
+  }
+  
+  .messagetron {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  
+  .container .messagetron {
+	padding-right: 60px;
+    padding-left: 60px;
+  }
+  
+  .messagetron h1 {
     font-size: 63px;
   }
 }

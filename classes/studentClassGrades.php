@@ -32,26 +32,47 @@ $class= new Classroom($result[0], $teach, $database);*/
 $query = $database->query("SELECT studentID FROM student WHERE accountID = " . $session->getID() . "");
 $student = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
+<br />
 <div class="container">
 	<div class="row">
 		<div class="col-xs-6 col-sm-4"></div>
 		<div class="table-responsive col-xs-6 col-sm-4">
-			<table class="table table-condensed">
+			<table class="table-bordered table-hover">
 				<thead>
 					<tr>
 						<th style="text-align: center;" colspan="6">
 							<h3><?php echo $session->getFirstName() . ' ' . $session->getLastName() . '\'s Grades'; ?></h3>
 						</th>
 					</tr>
+					<tr>
+						<th style="text-align: center;">
+							<h4>Label</h4>
+						</th>
+						<th style="text-align: center;">
+							<h4>Grade</h4>
+						</th>
+					</tr>
 				</thead>
 				<tbody>
 				<?php 
-					foreach ($database->query('SELECT * FROM grade WHERE studentID = ' . $student[0]['studentID'] . '') as $row) //change 12 later
+					$query = $database->query('SELECT * FROM grade WHERE studentID = ' . $student[0]['studentID'] . ' AND classID = ' . $classid . '');
+					if ($query->rowCount() == 0)
 					{
 						echo '<tr>
-								<td style="text-align: right; width: 25%;">' . $row['label'] . '</td>
-								<td style="width: 25%;">' . $row['grade'] . '</td>
-							  </tr>';
+								<td colspan="2" style="text-align: center;">
+									No Grades available.
+								</td>
+							</tr>';
+					}
+					else
+					{
+						foreach ($query as $row) //change 12 later
+						{
+							echo '<tr>
+									<td style="text-align: center; width: 25%;">' . $row['label'] . '</td>
+									<td style="text-align: center; width: 25%;">' . $row['grade'] . '</td>
+								  </tr>';
+						}
 					}
 				?>
 				</tbody>

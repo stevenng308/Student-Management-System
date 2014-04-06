@@ -86,11 +86,11 @@ else
 				<tbody>
 					<?php
 						$count = 0;
-						echo $layout->loadDiscussionRow($topic, $session->getUserType(), $session->getUserName());
+						echo $layout->loadDiscussionRow($topic, $session->getUserName(), $session->getUserType());
 						foreach ($database->query("SELECT * FROM response WHERE topicID = '" . $topicid . "'") as $row)
 						{
 							$reply = new Reply($row);
-							echo $layout->loadDiscussionResponseRow($reply, $session->getUserName());
+							echo $layout->loadDiscussionResponseRow($reply, $session->getUserName(), $session->getUserType());
 						}
 					?>
 				</tbody>

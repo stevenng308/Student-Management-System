@@ -11,7 +11,7 @@ if(!isset($_SESSION)){
 }
 
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
-$query = $database->query("SELECT * FROM grade WHERE label = '" . $_POST['label'] . "' AND studentID = " . $_POST['id'] . " LIMIT 1");
+$query = $database->query("SELECT * FROM grade WHERE label = '" . $_POST['label'] . "' AND studentID = " . $_POST['id'] . " AND classID = " . $_POST['classid'] . " LIMIT 1");
 if ($query->rowCount() == 0)
 {
 	echo "true";
