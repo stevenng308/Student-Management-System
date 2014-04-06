@@ -696,7 +696,7 @@ class Layout
 		}
 		else if ($role == 2)
 		{
-			$edit = '<button type="button" class="btn btn-info" disabled="disabled">Edit</button>';
+			$edit = '<button type="button" class="btn btn-info" disabled="disabled">Edit</button>'; //left maybe teacher might want to edit the class info
 			$checkbox = '';
 		}
 		else
