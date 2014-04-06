@@ -138,6 +138,106 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
     </div>
   </div>
 </div>
+
+<div class="container bottomMargin">
+	<div class="table-responsive">
+		<h3 align="center">Assigned Classes</h3>
+		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
+			<div class="row">
+				<div class="col-xs-3 col-sm-1">
+					<!--<button class="btn btn-danger btn-sm" onclick="deactivate()">Deactive</button>-->
+				</div>
+				<div class="col-xs-3 col-sm-1">
+					<!--<button class="btn btn-info btn-sm" onclick="activate()">Active</button>-->
+				</div>
+			</div>
+			<br/>
+			<thead>
+				<tr>
+					<th style="text-align: center;">
+						Course Number
+					</th>
+					<th style="text-align: center;">
+						Course Name
+					</th>
+					<th style="text-align: center;">
+						Teacher
+					</th>
+					<th style="text-align: center;">
+						Semester
+					</th>
+					<th style="text-align: center;">
+						School Year
+					</th>
+					<th style="text-align: center;">
+						Active
+					</th>
+					<th class="no-sort" style="text-align: center;">
+						Info
+					</th>
+					<th class="no-sort" style="text-align: center;">
+						Class Page
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+					<?php 
+						/*
+						//$stdID = $database->query('SELECT studentID FROM student WHERE accountID = ' . $session->getID() . '');
+						$query = $database->query("SELECT studentID FROM student WHERE accountID = " . $session->getID() . "");
+						$student = $query->fetchAll(PDO::FETCH_ASSOC);
+						$count = 0;
+						//foreach ($database->query('SELECT * FROM classroom WHERE teacherID = ' . $session->getID() . '') as $row)
+						//foreach ($database->query('SELECT * FROM enrolled WHERE studentID = ' . $stdID . '') as $cls)
+						foreach ($database->query('SELECT * FROM enrolled WHERE studentID = ' . $student[0]['studentID'] . '') as $cls)
+						{
+							$tchr = $database->query('SELECT * FROM classroom WHERE classID = "' . $cls['classID'] . '"');
+							//$tchrr = $tchr->fetchAll(PDO::FETCH_ASSOC);
+							$clss = ($database->query('SELECT * FROM classroom WHERE teacherID = "' . $tchr['teacherID'] . '"'));
+							$clss2 = $clss->fetchALL(PDO::FETCH_ASSOC);
+							$stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $tchrr[0]['teacherID'] . '"');
+							$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+							$classroom = new Classroom($clss2, $result, $database);
+							echo $layout->loadClassRow($classroom, $count, $session->getUserType());
+							$count++;
+						}
+						*/
+						//$stdID = $database->query('SELECT studentID FROM student WHERE accountID = ' . $session->getID() . '');
+						$query = $database->query("SELECT studentID FROM student WHERE accountID = " . $session->getID() . "");
+						$student = $query->fetchAll(PDO::FETCH_ASSOC);
+						$count = 0;
+						//$listOfEnrolled = $database->query('SELECT classID FROM enrolled WHERE studentID = ' . $student[0]['studentID'] . '');
+						//$precursor = $database->query("SELECT * FROM classroom WHERE classID = " . $listOfEnrolled . "");
+						foreach ($database->query('SELECT classID FROM enrolled WHERE studentID = ' . $student[0]['studentID'] . '') as $enrolled)
+						{
+						//foreach ($database->query('SELECT * FROM classroom WHERE classID = ' . $listOfEnrolled['studentID'] . '') as $class)
+							foreach ($database->query('SELECT * FROM classroom WHERE classID = ' . $enrolled[0] . '') as $class)
+							{
+								$cls = $database->query('SELECT * FROM classroom WHERE classID = "' . $class['classID'] . '"');
+								$clss = $cls->fetchAll(PDO::FETCH_ASSOC);
+								$stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $clss[0]['teacherID'] . '"');
+								$teacher = $stmt->fetchAll(PDO::FETCH_ASSOC);
+								$classroom = new Classroom($class, $teacher, $database);
+								echo $layout->loadClassRow($classroom, $count, $session->getUserType());
+								$count++;
+							}
+						}
+					?>
+			</tbody>
+		</table>
+	</div>
+</div>
+<!--<script src="../bootstrap/js/searchFilter.js"></script>-->
+<script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
+<script type="text/javascript" language="javascript" src="../bootstrap/js/statusClass.js"></script>
+
+
+
+
+
+
+
 <?php
 	echo $layout->loadFooter('../');
 ?>
