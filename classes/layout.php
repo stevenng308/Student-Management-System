@@ -694,9 +694,14 @@ class Layout
 						<input name="status" id="status' . $modalNum . '" type="checkbox" value="' . $class->getClassID() . '">
 						</td>';
 		}
-		else
+		else if ($role == 2)
 		{
 			$edit = '<button type="button" class="btn btn-info" disabled="disabled">Edit</button>';
+			$checkbox = '';
+		}
+		else
+		{
+			$edit = '';
 			$checkbox = '';
 		}
 		$view = '

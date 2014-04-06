@@ -224,8 +224,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
 						//foreach ($database->query('SELECT * FROM classroom WHERE classID = ' . $listOfEnrolled['studentID'] . '') as $class)
 							foreach ($database->query('SELECT * FROM classroom WHERE classID = ' . $enrolled[0] . '') as $class)
 							{
-								$cls = $database->query('SELECT * FROM classroom WHERE classID = "' . $class['classID'] . '"');
-								$clss = $cls->fetchAll(PDO::FETCH_ASSOC);
+								$clss = $database->query('SELECT * FROM classroom WHERE classID = "' . $class['classID'] . '"');
+								$clss = $clss->fetchAll(PDO::FETCH_ASSOC);
 								$stmt =  $database->query('SELECT username, firstname, lastname FROM teacher WHERE accountID = "' . $clss[0]['teacherID'] . '"');
 								$teacher = $stmt->fetchAll(PDO::FETCH_ASSOC);
 								$classroom = new Classroom($class, $teacher, $database);
