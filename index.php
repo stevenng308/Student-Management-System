@@ -13,7 +13,7 @@ if(!isset($_SESSION)){
 }
 if(!(empty($_SESSION)))
 {
-	switch ($_SESSION[sess_role])
+	switch ($_SESSION['sess_role'])
 	{
 		case 1: header('Location: admin/main.php');
 				break;

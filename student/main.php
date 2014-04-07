@@ -57,6 +57,8 @@ for ($i = 0; $i < count($subscription); $i++)
 
 	}
 }
+
+$user = new User($database, $session->getID(), 'Student');
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Main', '../');
 ?>
 <!-- Custom CSS for this page -->
@@ -76,6 +78,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Student Mai
 	  <a class="navbar-brand">Hello <?php echo $session->getFirstName(); ?>.</a>
 	</div>
 	<ul class="nav navbar-nav navbar-right">
+	<li><p class="navbar-text"><?php echo $user->getBalanceFormatted(); ?></p></li> 
 	<li class="dropdown">
 	  <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="badge badge-danger"><?php echo $posts . ' '; ?></span> New Forum Msgs <b class="caret"></b></a>
 	  <ul class="dropdown-menu">
