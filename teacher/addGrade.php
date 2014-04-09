@@ -178,7 +178,7 @@ $(document).ready(function () {
 	$.validator.addMethod("twoDecimals", 
         function(value, element, regexp) {
 			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
-			var regex = new RegExp(/^[1-9]\d*(\.\d{1,2})?$/);
+			var regex = new RegExp(/^([0]\d{0}?)?([1-9]\d*)?(\.\d{1,2})?$/);
 			var regexText = new RegExp("^[A-DF]+$");
 			var key = value;
 			
@@ -201,7 +201,24 @@ $(document).ready(function () {
 				}
 			}
 		},
-		"Invalid format. Up to decimal places (99.99) and letters A-D and F allowed"
+		"Invalid format. One leading 0, up to two decimal places (99.99) and letters A-D and F allowed"
+	);
+	
+	//rule for allowing only 1 zero preceding decimal or just 0
+	$.validator.addMethod("leadZero", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regexNum = new RegExp(/^\d$/);
+			var key = value;
+
+			//alert(key.charAt(2));
+			if (regexNum.test(key.charAt(1)))
+			{
+				return false;
+			}
+			return true;
+		},
+		"Invalid format. Remove leading zeroes if the number is not less than 1 or is not a decimal number"
 	);
 	
 	//overloading range rule
@@ -224,6 +241,38 @@ $(document).ready(function () {
 			return true;
 		},
 		"Please enter a value between 0-100"
+	);
+	
+	//overloading maxlength rule
+	$.validator.addMethod("maxlength", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp("^[A-DF]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   if (key.length < 7)
+			   {
+					return true;
+			   }
+			   else
+			   {
+					return false;
+			   }
+			}
+			else
+			{
+				if (key.length < 2)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		},
+		"Max length for letter grades is 1. Max length for numerical grades is 6 (including decimal)"
 	);
 	 
 	//rule for allowing certain characters for grades
@@ -280,6 +329,7 @@ $(document).ready(function () {
 			maxlength: 6,
 			range: true,
 			twoDecimals: true,
+			leadZero: true,
 			noSpecial: true
 		});
 	});

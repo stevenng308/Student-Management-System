@@ -144,13 +144,27 @@ $(document).ready(function () {
 			}
 			return true;
 		},
-		"Only alphabetic characters, apostrophe and dash"
+		"Only alphabetic characters, apostrophe and hyphen"
+	);
+	
+	//rule for allowing some symbols in the city
+	$.validator.addMethod("cityRule", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[a-zA-Z'. ]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   return false;
+			}
+			return true;
+		},
+		"Invalid character entered"
 	);
 	
 	//rule for allowing spaces but no symbols in street field
 	$.validator.addMethod("allowSpaces", 
         function(value, element, regexp) {
-			var regex = new RegExp("^[a-zA-Z0-9 ]+$");
+			var regex = new RegExp("^[a-zA-Z0-9. ]+$");
 			var key = value;
 			
 			if (!regex.test(key)) {
@@ -159,6 +173,20 @@ $(document).ready(function () {
 			return true;
 		},
 		"No special characters allowed"
+	);
+	
+	//rule for not allowing spaces in password
+	$.validator.addMethod("noSpaces", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[^ ]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   return false;
+			}
+			return true;
+		},
+		"No spaces allowed"
 	);
 	
 	//rule for allowing some symbols in the first and last name field
@@ -207,7 +235,7 @@ $(document).ready(function () {
 			city: {
                 minlength: 2,
 				maxlength: 20,
-				noSpecialChars: true,
+				cityRule: true,
                 required: true
             },
 			zip: {
@@ -238,13 +266,17 @@ $(document).ready(function () {
             },
 			password: {
                 required: true,
-				alphanumeric: true,
-				minlength: 6
+				//alphanumeric: true,
+				noSpaces: true,
+				minlength: 6,
+				maxlength: 16
             },
 			password2: {
                 required: true,
 				minlength: 6,
-				alphanumeric: true,
+				maxlength: 16,
+				//alphanumeric: true,
+				noSpaces: true,
 				equalTo: "#password"
             },
 			studentid: {

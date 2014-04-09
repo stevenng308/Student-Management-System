@@ -36,6 +36,7 @@ echo $layout->loadFixedNavBar('Password Recovery Form', '');
 <div class="formDiv" id="result">
 	<form name="recoverPassword" id="recoverPassword-form" class="form-signin" action="#" method="post">
 		<h3>Recover Password</h3>
+		<h6>The fields are case sensitive</h6>
 		<input type="text" class="form-control" name="role" id = "role" value="<?php echo $table; ?>" readonly></input>
 		<div class="control-group">
 			<input type="text" class="form-control" name="username" id = "username" value="" placeholder="Username On Account"/>

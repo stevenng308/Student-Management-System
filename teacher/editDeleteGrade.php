@@ -153,7 +153,7 @@ $(document).ready(function () {
 	$.validator.addMethod("twoDecimals", 
         function(value, element, regexp) {
 			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
-			var regex = new RegExp(/^[1-9]\d*(\.\d{1,2})?$/);
+			var regex = new RegExp(/^([0]\d{0}?)?([1-9]\d*)?(\.\d{1,2})?$/);
 			var regexText = new RegExp("^[A-DF]+$");
 			var key = value;
 			
@@ -199,6 +199,38 @@ $(document).ready(function () {
 			return true;
 		},
 		"Please enter a value between 0-100"
+	);
+	
+	//overloading maxlength rule
+	$.validator.addMethod("maxlength", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regex = new RegExp("^[A-DF]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   if (key.length < 7)
+			   {
+					return true;
+			   }
+			   else
+			   {
+					return false;
+			   }
+			}
+			else
+			{
+				if (key.length < 2)
+				{
+					return true;
+				}
+				else
+				{
+					return false;
+				}
+			}
+		},
+		"Max length for letter grades is 1. Max length for numerical grades is 6 (including decimal)"
 	);
 	 
 	//rule for allowing spaces but no symbols

@@ -25,6 +25,7 @@ echo $layout->loadFixedNavBar('Student Username Recovery Form', '');
 <div class="formDiv" id="result">
 	<form name="recoverUser" id="recoverUser-form" class="form-signin" action="#" method="post">
 		<h3>Recover Username</h3>
+		<h6>The fields are case sensitive</h6>
 		<input type="text" class="form-control" name="role" id = "role" value="Student" readonly></input>
 		<div class="control-group">
 			<input type="text" class="form-control" name="studentid" id = "studentid" value="" placeholder="Student ID On Account"/>
