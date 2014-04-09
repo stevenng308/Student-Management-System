@@ -104,14 +104,28 @@ $class = new Classroom($result[0], $teach, $database);
 </div>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
-$('#forumTable').dataTable(
+if (<?php echo $session->getUserType(); ?> == 3)
 {
-	"aaSorting": [[4, 'desc']],
-	"aoColumnDefs" : [ {
-		'bSortable' : false,
-		'aTargets' : [ "no-sort" ]
-	}]
-});
+	$('#forumTable').dataTable(
+	{
+		"aaSorting": [[3, 'desc']],
+		"aoColumnDefs" : [ {
+			'bSortable' : false,
+			'aTargets' : [ "no-sort" ]
+		}]
+	});
+}
+else
+{
+	$('#forumTable').dataTable(
+	{
+		"aaSorting": [[4, 'desc']],
+		"aoColumnDefs" : [ {
+			'bSortable' : false,
+			'aTargets' : [ "no-sort" ]
+		}]
+	});
+}
 
 var vals = 0; //global array of the id's values
 $('input[id^="remove"]').on('change', function() { //adds the values to the array called vals

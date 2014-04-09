@@ -26,7 +26,7 @@ else if ($session->getUserType() == 2)
 }
 else if ($session->getUserType() == 3)
 {
-	$stmt = "SELECT * FROM student WHERE studentID = " . $session->getID() . "";
+	$stmt = "SELECT * FROM student WHERE accountID = " . $session->getID() . "";
 }
 else
 {

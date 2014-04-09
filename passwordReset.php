@@ -83,17 +83,33 @@ $(document).ready(function () {
 		return arg != value;
 	 }, "Value must not equal arg.");
 	
+	//rule for not allowing spaces in password
+	$.validator.addMethod("noSpaces", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[^ ]+$");
+			var key = value;
+			
+			if (!regex.test(key)) {
+			   return false;
+			}
+			return true;
+		},
+		"No spaces allowed"
+	);
+	
 	$('#changePassword-form').validate({
         rules: {
 			password: {
                 required: true,
-				alphanumeric: true,
+				noSpaces: true,
+				maxlength: 16,
 				minlength: 6
             },
 			password2: {
                 required: true,
 				minlength: 6,
-				alphanumeric: true,
+				maxlength: 16,
+				noSpaces: true,
 				equalTo: "#password"
             }
 		},
