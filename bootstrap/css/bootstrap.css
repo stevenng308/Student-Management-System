@@ -442,8 +442,12 @@ cite {
   font-style: normal;
 }
 
-.text-muted {
+/*.text-muted {
   color: #999999;
+}*/
+
+.text-muted {
+  color: #fff;
 }
 
 .text-primary {
@@ -4400,12 +4404,17 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
 }
 
-.navbar-default {
+/*.navbar-default {
   background-color: #f8f8f8;
   border-color: #e7e7e7;
+}*/
+
+.navbar-default {
+  background-color: #1d84bf;
+  border-color: #309fdf;
 }
 
-.navbar-default .navbar-brand {
+/*.navbar-default .navbar-brand {
   color: #777777;
 }
 
@@ -4417,9 +4426,23 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-default .navbar-text {
   color: #777777;
+}*/
+
+.navbar-default .navbar-brand {
+  color: #FFF;
 }
 
-.navbar-default .navbar-nav > li > a {
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color: #ddd;
+  background-color: transparent;
+}
+
+.navbar-default .navbar-text {
+  color: #FFF;
+}
+
+/*.navbar-default .navbar-nav > li > a {
   color: #777777;
 }
 
@@ -4434,9 +4457,26 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .active > a:focus {
   color: #555555;
   background-color: #e7e7e7;
+}*/
+
+.navbar-default .navbar-nav > li > a {
+  color: #FFF;
 }
 
-.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #ddd;
+  background-color: transparent;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #FFF;
+  background-color: #309fdf;
+}
+
+/*.navbar-default .navbar-nav > .disabled > a,
 .navbar-default .navbar-nav > .disabled > a:hover,
 .navbar-default .navbar-nav > .disabled > a:focus {
   color: #cccccc;
@@ -4454,9 +4494,29 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-default .navbar-toggle .icon-bar {
   background-color: #cccccc;
+}*/
+
+.navbar-default .navbar-nav > .disabled > a,
+.navbar-default .navbar-nav > .disabled > a:hover,
+.navbar-default .navbar-nav > .disabled > a:focus {
+  color: #e7e7e7;
+  background-color: transparent;
 }
 
-.navbar-default .navbar-collapse,
+.navbar-default .navbar-toggle {
+  border-color: #FFF;
+}
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: #fff;
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: #e7e7e7;
+}
+
+/*.navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
   border-color: #e6e6e6;
 }
@@ -4484,6 +4544,36 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .dropdown > a .caret {
   border-top-color: #777777;
   border-bottom-color: #777777;
+}*/
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+  border-color: #fff;
+}
+
+.navbar-default .navbar-nav > .dropdown > a:hover .caret,
+.navbar-default .navbar-nav > .dropdown > a:focus .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
+}
+
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover,
+.navbar-default .navbar-nav > .open > a:focus {
+  color: #555555;
+  background-color: #fff;
+}
+
+.navbar-default .navbar-nav > .open > a .caret,
+.navbar-default .navbar-nav > .open > a:hover .caret,
+.navbar-default .navbar-nav > .open > a:focus .caret {
+  border-top-color: #555555;
+  border-bottom-color: #555555;
+}
+
+.navbar-default .navbar-nav > .dropdown > a .caret {
+  border-top-color: #fff;
+  border-bottom-color: #fff;
 }
 
 @media (max-width: 767px) {
@@ -4964,6 +5054,16 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   color: inherit;
   background-color: #eeeeee;
+  overflow-y: scroll; 
+  height: 35%;
+}
+
+.admintron {
+  padding: 30px;
+  font-size: 21px;
+  font-weight: 200;
+  color: inherit;
+  background-color: #eeeeee;
 }
 
 .jumbotron h1 {
@@ -4980,6 +5080,10 @@ a.list-group-item.active > .badge,
 }
 
 .container .messagetron {
+  border-radius: 6px;
+}
+
+.container .admintron {
   border-radius: 6px;
 }
 
@@ -5007,6 +5111,20 @@ a.list-group-item.active > .badge,
   }
   
   .messagetron h1 {
+    font-size: 63px;
+  }
+  
+  .admintron {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  
+  .container .admintron {
+	padding-right: 60px;
+    padding-left: 60px;
+  }
+  
+  .admintron h1 {
     font-size: 63px;
   }
 }

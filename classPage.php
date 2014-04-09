@@ -139,7 +139,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 			</div>
 			<div id="collapseOne" class="panel-collapse collapse in">
 			  <div class="panel-body">
-			<div class="container messagetron">
+			<div class="container admintron">
 				<form name="compose" id="compose-form" action="#" method="post">
 					<pre><textarea id="classMessage" name="message" class="messageBoard"></textarea></pre>			
 				</form>
