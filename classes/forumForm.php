@@ -30,6 +30,7 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 $classid = $_GET['classid'] or die(header('Location: error.php'));
 $forum = $classid . "_forum";
+//var_dump($forum);
 ?>
 <!-- Begin page content -->
 <div class="container jumbotron">

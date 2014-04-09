@@ -134,6 +134,11 @@ $(document).ready(function () {
 						);
 						return false;
 				}
+				else
+				{
+					window.location.href = 'index.php';
+					return false;
+				}
 			}
 			else
 			{

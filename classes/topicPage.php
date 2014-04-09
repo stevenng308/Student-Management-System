@@ -44,12 +44,13 @@ else
 	$topic = new Topic($result[0], $respond->rowCount());
 	//$classid = preg_split("/_+/", $topic->getForumName());
 	$classid = $topic->getClassID();
+	//var_dump($classid);
 }
 ?>
 <div class="container bottomMargin">
 	<br />
 	<ol class="breadcrumb" id="top">
-	  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid[0]; ?>)">Discussion Topics</a></li>
+	  <li><a class="btn btn-link" onclick="loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>)">Discussion Topics</a></li>
 	  <li class="active"><?php echo $topic->getTopicSubject(); ?></li>
 	</ol>
 	<div class="row">	

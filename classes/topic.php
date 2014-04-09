@@ -29,6 +29,7 @@ class Topic
 	public function getClassID()
 	{
 		$classid = preg_split("/_+/", $this->forumName);
+		//var_dump($classid);
 		return $classid[0];
 	}
 	
