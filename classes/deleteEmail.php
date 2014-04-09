@@ -31,5 +31,8 @@ else
 	{
 		$database->exec("DELETE FROM email WHERE emailID = '" . $id . "'");
 	}
+	$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+	$inboxNum = $query->rowCount();
+	echo $inboxNum;
 }
 ?>

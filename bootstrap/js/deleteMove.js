@@ -28,9 +28,9 @@ function deleteEmail(page) //deletes from the box views
 				  //$("#mainDiv").html(data);
 				  //console.log(data);
 				  $('#inboxNum').text(data);
-				  $(lastBtn).toggleClass("active");
-				  $('#inbox').toggleClass("active");
-				  lastBtn = "inbox";
+				  //$(lastBtn).toggleClass("active");
+				  //$('#inbox').toggleClass("active");
+				  //lastBtn = page;
 				  loadIn(page);
 				}
 			  );
