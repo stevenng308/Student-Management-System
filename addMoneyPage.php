@@ -52,7 +52,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Add Money F
 ?>
 	<!-- Custom styles for this template -->
 	<link href="bootstrap/css/register.css" rel="stylesheet">
-	<div class=" container formDiv" id="result">
+	<div class="formDiv" id="result">
 	<form name="addBalance" id="addBalance-form" class="form-signin" action="#" method="post">
 		<h2 class="form-signin-heading" style="text-align: center;"><?php echo $user->getFirstName() . ' ' . $user->getLastName() . ' ';?></h2>
 		<div class="table-responsive">
