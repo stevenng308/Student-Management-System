@@ -212,7 +212,7 @@ $(document).ready(function () {
 			var key = value;
 
 			//alert(key.charAt(2));
-			if (regexNum.test(key.charAt(1)))
+			if (key.charAt(0) == 0 && regexNum.test(key.charAt(1)))
 			{
 				return false;
 			}
@@ -244,7 +244,7 @@ $(document).ready(function () {
 	);
 	
 	//overloading maxlength rule
-	$.validator.addMethod("maxlength", 
+	$.validator.addMethod("maxlengthGrade", 
         function(value, element, regexp) {
 			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
 			var regex = new RegExp("^[A-DF]+$");
@@ -326,7 +326,7 @@ $(document).ready(function () {
 	$('input[name^="grade"]').each(function () { //use .each on every input with name beginning grade to add the rules to each of them
 		$(this).rules("add", {
 			required: true,
-			maxlength: 6,
+			maxlengthGrade: true,
 			range: true,
 			twoDecimals: true,
 			leadZero: true,

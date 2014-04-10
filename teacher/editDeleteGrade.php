@@ -202,7 +202,7 @@ $(document).ready(function () {
 	);
 	
 	//overloading maxlength rule
-	$.validator.addMethod("maxlength", 
+	$.validator.addMethod("maxlengthGrade", 
         function(value, element, regexp) {
 			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
 			var regex = new RegExp("^[A-DF]+$");
@@ -288,7 +288,7 @@ $(document).ready(function () {
 			required: true,
 			range: true,
 			twoDecimals: true,
-			maxlength: 6,
+			maxlengthGrade: true,
 			noSpecial: true
 		});
 	});
