@@ -31,14 +31,16 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
 //var_dump($_SESSION);
 //var_dump($session);
-$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . "");
+$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . "");
 if ($query->rowCount() == 1)
 {
 	$new = $session->getID();
+	//echo $new;
 }
 else
 {
 	$new = 0;
+	//echo $new;
 }
 
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Parent Main', '../');

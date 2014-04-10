@@ -149,6 +149,6 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit Class 
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script src="../bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
 <script src="../bootstrap/js/jquery.ui.timepicker.js"></script>
-<script src="../bootstrap/js/classForm.js"></script>
+<script src="../bootstrap/js/classFormEdit.js"></script>
 <script src="../bootstrap/js/validateClassEdit.js"></script>
 </html>

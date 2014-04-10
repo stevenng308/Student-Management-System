@@ -41,7 +41,7 @@ function createSalt()
 	$text = md5(uniqid(rand(), true));
 	return substr($text, 0, 3);
 }
-$hash = hash('whirlpool', $pass);		
+$hash = hash('sha256', $pass);		
 $salt = createSalt();
 //while (true)
 //echo $salt;

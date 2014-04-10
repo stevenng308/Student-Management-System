@@ -144,7 +144,7 @@ $session = new Session($_SESSION, $database);
 			<tbody>
 				<?php
 					$count = 0;
-					foreach ($database->query("SELECT * FROM email WHERE from_username = '" . $session->getUserName() . "' AND box = '2'") as $row)
+					foreach ($database->query("SELECT * FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '2'") as $row)
 					{
 						$email = new Email($row);
 						//var_dump($email);

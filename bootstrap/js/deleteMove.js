@@ -9,7 +9,7 @@ $('input[id^="delete"]').on('change', function() { //adds the values to the arra
 
 function deleteEmail(page) //deletes from the box views
 {
-	if (!values)
+	if (!values.length)
 	{
 		alert("No emails were selected.");
 	}

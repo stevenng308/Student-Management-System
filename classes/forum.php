@@ -148,7 +148,7 @@ function checkAllForum(source) {
 
 function deleteTopic()
 {
-	if (!vals)
+	if (!vals.length)
 	{
 		alert("No topics were selected.");
 	}

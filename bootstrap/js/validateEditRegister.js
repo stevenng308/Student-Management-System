@@ -177,6 +177,20 @@ $(document).ready(function () {
 		"No special characters allowed"
 	);
 	
+	//rule for not allowing spaces in password
+	$.validator.addMethod("noSpaces", 
+        function(value, element, regexp) {
+			var regex = new RegExp("^[^ ]+$");
+			var key = value;
+			
+			if (!regex.test(key) && key.length != 0) {
+			   return false;
+			}
+			return true;
+		},
+		"No spaces allowed"
+	);
+	
 	//rule for allowing some symbols in the first and last name field
 	$.validator.addMethod("allowCommas", 
         function(value, element, regexp) {

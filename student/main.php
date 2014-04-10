@@ -28,7 +28,7 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . "");
+$query = $database->query("SELECT accountID FROM newuser WHERE accountID = " . $session->getID() . " AND role = " . $session->getUserType() . "");
 if ($query->rowCount() == 1)
 {
 	$new = $session->getID();

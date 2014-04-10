@@ -106,7 +106,7 @@ $('input[id^="delete"]').on('change', function() { //adds the values to the arra
 
 function unregister()
 {
-	if (!values)
+	if (!values.length)
 	{
 		alert("No students were selected.");
 	}
