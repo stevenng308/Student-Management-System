@@ -36,6 +36,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 ?>
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
+<link href="../bootstrap/css/background.css" rel="stylesheet">
 
 <div class="container bottomMargin">
 	<div class="table-responsive">

@@ -32,6 +32,7 @@ $query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . 
 $inboxNum = $query->rowCount();
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '');
 ?>
+<link href="bootstrap/css/background.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container">

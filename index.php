@@ -33,11 +33,12 @@ echo $layout->loadFixedNavBar('Home', '');
 ?>
 <!-- Custom styles for this template -->
 <link href="bootstrap/css/signin.css" rel="stylesheet">
+<link href="bootstrap/css/background.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container bottomMargin">
   <form name="signin" class="form-signin" action="<?php echo $_SERVER['SCRIPT_NAME'] ?>" method="post">
-		<h2 class="form-signin-heading">SMS Portal Login</h2>
+		<h2 class="form-signin-heading">SWCH Portal Login</h2>
 			<input type="text" class="form-control" name="user" id = "user" placeholder="Username" autofocus>
 			<input type="password" class="form-control" name="password" id = "password" placeholder="Password">
 			<br/>

@@ -36,10 +36,11 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 ?>
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
+<link href="../bootstrap/css/background.css" rel="stylesheet">
 
 <div class="container bottomMargin">
 	<div class="table-responsive">
-		<h3 align="center">All Classes in the Student Management System</h3>
+		<h3 align="center">All Classes in the School Wide Communications Hub</h3>
 		<table cellpadding="0" cellspacing="0" border="0" class="table table-hover" id="userTable">
 			<div class="row">
 				<div class="col-xs-3 col-sm-1">

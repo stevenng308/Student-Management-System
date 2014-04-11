@@ -68,6 +68,10 @@ $query = $database->query("SELECT * FROM student WHERE studentid = " . $id . "")
 $result = $query->fetchAll(PDO::FETCH_ASSOC);
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['firstName'] . '  ' . $result[0]['lastName'] . '\'s Grades', '../');
 ?>
+
+<link href="../bootstrap/css/background.css" rel="stylesheet">
+<link href="../bootstrap/css/background.css" rel="stylesheet">
+
 <div class="container bottomMargin">
 	<div class="row">
 		<div class="col-xs-6 col-md-3">

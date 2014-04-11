@@ -47,6 +47,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Parent Main
 ?>
 <!-- Custom CSS for this page -->
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
+<link href="../bootstrap/css/background.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container">

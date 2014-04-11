@@ -91,6 +91,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 ?>
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/dataTables.bootstrap.css">
+<link href="bootstrap/css/background.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container bottomMargin">

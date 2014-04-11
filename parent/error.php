@@ -34,6 +34,7 @@ $session = new Session($_SESSION, $database);
 
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Error', '../');
 ?>
+<link href="../bootstrap/css/background.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container">

@@ -19,6 +19,7 @@ $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 
 echo $layout->loadFixedNavBar('Error', '');
 ?>
+<link href="bootstrap/css/background.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container">
