@@ -20,7 +20,7 @@ if ($_POST['box'] == "inbox" || $_POST['box'] == "sent") //move mail to trash if
 	{
 		$database->exec("UPDATE email SET box = '3' WHERE emailID = " . $id . "");
 	}
-	$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+	$query = $database->query("SELECT emailID FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '1'");
 	$inboxNum = $query->rowCount();
 	echo $inboxNum;
 }
@@ -31,7 +31,7 @@ else
 	{
 		$database->exec("DELETE FROM email WHERE emailID = '" . $id . "'");
 	}
-	$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+	$query = $database->query("SELECT emailID FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '1'");
 	$inboxNum = $query->rowCount();
 	echo $inboxNum;
 }

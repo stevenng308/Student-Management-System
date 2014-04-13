@@ -19,7 +19,7 @@ foreach ($_POST['checkbox'] as $id)
 	$database->exec("UPDATE email SET box = '" . $_POST['box'] . "' WHERE emailID = " . $id . "");
 }
 
-$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+$query = $database->query("SELECT emailID FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '1'");
 $inboxNum = $query->rowCount();
 echo $inboxNum;
 ?>

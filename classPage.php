@@ -423,7 +423,7 @@ function registerStudents()
 				function(data){
 				  //$("#register").html(data);
 				  //loadIn(page);
-				  alert("Registered.");
+				  //alert("Registered.");
 				  //alert(data);
 				  $('#studentID').val("");
 				  //location.reload();

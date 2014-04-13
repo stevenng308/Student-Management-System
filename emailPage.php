@@ -28,7 +28,7 @@ else
 $layout = new Layout();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
-$query = $database->query("SELECT emailID FROM email WHERE dest_username = '" . $session->getUserName() . "' AND box = '1'");
+$query = $database->query("SELECT emailID FROM email WHERE owner = '" . $session->getUserName() . "' AND box = '1'");
 $inboxNum = $query->rowCount();
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '');
 ?>

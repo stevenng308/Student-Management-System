@@ -1,8 +1,7 @@
 $(document).ready(function () {
 	var searchRequest = null;
-	var schoolYear = '';
-	var tempYear = $('#schoolYear').val();
-	tempYear = tempYear.split("-");
+	var schoolYear = $('#schoolYear').val();
+	var tempYear = schoolYear.split("-");
 	$("#startDate").datepicker({
 		minDate: 0,
 		onSelect: function() { //after selection focus on that input box so validation can refresh
@@ -32,6 +31,7 @@ $(document).ready(function () {
 	});
 	$("#endDate").datepicker({
 		minDate: new Date(tempYear[1], 0, 1),
+		maxDate: new Date(tempYear[1], 11, 31),
 		onSelect: function() { //after selection focus on that input box so validation can refresh
 			this.focus();
 			this.trigger('blur');
@@ -42,7 +42,7 @@ $(document).ready(function () {
 			var date = selectedDate.split('/'); //spliting the selected date to get the year
 			var tempDate = schoolYear.split('-'); //remove the end year that was assumed in the startDate
 			schoolYear = tempDate[0] + "-" + date[2]; //add the actual end year
-			$('#schoolYear').val(schoolYear); //select the select box as schoolYear
+			//$('#schoolYear').val(schoolYear); //select the select box as schoolYear
 			tempDate = schoolYear.split('-'); //remove the end year in case user picks endDate again right after selecting an end date
 			schoolYear = tempDate[0] + "-";
 			//schoolYear = '';
