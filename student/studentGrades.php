@@ -13,13 +13,13 @@ if(!isset($_SESSION)){
 }
 if(!(empty($_SESSION)))
 {
-	/*if($_SESSION['sess_role'] == 2)
+	if($_SESSION['sess_role'] != 3)
 	{
 		header('Refresh: 1.5; url=../index.php');
 		echo '<link href="../bootstrap/css/confirmationAccount.css" rel="stylesheet">';
 		exit('<html><body style="background-color: white; font-size: 20px; font-weight: bold; color: black;"><div class="form-wrapper" 
 		style="text-align: center; vertical-align: middle"><p>You do not have the correct privileges to access this page.</p></div></body></html>');
-	}*/
+	}
 }
 else
 {
@@ -29,29 +29,8 @@ $layout = new Layout();
 //$database = new Database();
 $database = new PDO('mysql:host=localhost;dbname=sms;charset=utf8', 'root', '');
 $session = new Session($_SESSION, $database);
+$header = "Location: error.php";
 
-if ($session->getUserType() == 1)
-{
-	$header = "Location: ../admin/error.php";
-}
-else if ($session->getUserType() == 2)
-{
-	$header = "Location: ../teacher/error.php";
-}
-else if ($session->getUserType() == 3)
-{
-	$header = "Location: ../student/error.php";
-}
-else if ($session->getUserType() == 4)
-{
-	$header = "Location: ../parent/error.php";
-}
-
-else
-{
-	$header = "Location: error.php";
-}
-$id = $_GET['id'] or die(header($header));
 if (isset($_GET['field']))
 {
 	$field = $_GET['field'];
@@ -62,16 +41,14 @@ else
 	$field = 0;
 	$year = "Select a school year";
 }
-$query = $database->query("SELECT studentID FROM parent_student_assoc WHERE guardianID =" . $session->getID() ." AND role =" . $session->getUserType(). " AND studentID =" . $id . "");
-if ($query->rowCount() == 0)
-{
-	die(header($header));
-}
+$query = $database->query("SELECT studentID FROM student WHERE accountID =" . $session->getID() . "");
+$result = $query->fetchAll(PDO::FETCH_ASSOC);
+$id = $result[0]['studentID'];
+
 //var_dump($_SESSION);
 //var_dump($session);
-$query = $database->query("SELECT * FROM student WHERE studentid = " . $id . "");
-$result = $query->fetchAll(PDO::FETCH_ASSOC);
-echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['firstName'] . '  ' . $result[0]['lastName'] . '\'s Grades', '../');
+
+echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Grades', '../');
 ?>
 
 <link href="../bootstrap/css/background.css" rel="stylesheet">
@@ -125,7 +102,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $result[0]['
 				<thead>
 					<tr>
 						<th style="text-align: center;" colspan="2">
-							<h3><?php echo $result[0]['firstName'] . '  ' . $result[0]['lastName'] . '\'s Grades'; ?></h3>
+							<h3><?php echo $session->getFirstName() . '  ' . $session->getLastName() . '\'s Grades'; ?></h3>
 						</th>
 					</tr>
 				</thead>
@@ -206,7 +183,7 @@ $(function(){
 		var field = $(this).val(); // get selected value
 		var id = <?php echo $id ?>;
 		if (field) { // require a URL
-			window.location = "studentAllGrades.php?id=" + id + "&field=" + field ; // redirect
+			window.location = "studentGrades.php?&field=" + field ; // redirect
 		}
 		return false;
 	});

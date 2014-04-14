@@ -153,19 +153,29 @@ class Layout
 			{
 				$links = '
 						<li class="active"><a href="'. $dir .'student/main.php">Home</a></li>
-						<li><a href="'. $dir .'emailPage.php">Email</a></li>';
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>
+						<li><a href="'. $dir .'student/studentGrades.php">Grades</a></li>';
 			}
 			else if ($title == "Email")
 			{
 				$links = '
 						<li><a href="'. $dir .'student/main.php">Home</a></li>
-						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>';
+						<li class="active"><a href="'. $dir .'emailPage.php">Email</a></li>
+						<li><a href="'. $dir .'student/studentGrades.php">Grades</a></li>';
+			}
+			else if ($title == "Grades")
+			{
+				$links = '
+						<li><a href="'. $dir .'student/main.php">Home</a></li>
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>
+						<li class="active"><a href="'. $dir .'student/studentGrades.php">Grades</a></li>';
 			}
 			else
 			{
 				$links = '
 						<li><a href="'. $dir .'student/main.php">Home</a></li>
-						<li><a href="'. $dir .'emailPage.php">Email</a></li>';
+						<li><a href="'. $dir .'emailPage.php">Email</a></li>
+						<li><a href="'. $dir .'student/studentGrades.php">Grades</a></li>';
 			}
 		}
 		else if ($type == "Parent")
@@ -900,7 +910,7 @@ class Layout
 					<input name="delete" id="delete' . $modalNum . '" type="checkbox" value="' . $mail->getID() . '">
 				</td>
 				<td style="text-align: center;">
-					' . $mail->getFromUser() . ' <' . $mail->getFromFirst() . ' ' . $mail->getFromLast() . '>' . '
+					' . $mail->getDestUser() . '
 				</td>
 				<td>
 					<button id="loadSavedMail" class="btn btn-link" onclick="loadSavedMail(\'' . $box . '\', ' . $mail->getID() . ')">' . $mail->getSubjectFormatted() . '</button>

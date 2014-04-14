@@ -43,6 +43,11 @@ else
 	$header = "Location: parent/error.php";
 }
 $id = $_GET['id'] or die(header($header));
+$query = $database->query("SELECT studentID FROM parent_student_assoc WHERE guardianID =" . $session->getID() ." AND role =" . $session->getUserType(). " AND studentID =" . $id . "");
+if ($query->rowCount() == 0)
+{
+	die(header($header));
+}
 //var_dump($_SESSION);
 //var_dump($session);
 $query = $database->query("SELECT * FROM student WHERE studentID = " . $id . "");
