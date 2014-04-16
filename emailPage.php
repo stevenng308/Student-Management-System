@@ -57,7 +57,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 <div id="dialog-error2" title="No Box Selected" hidden="hidden">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please specify a box.</p>
 </div>
-<div id="dialog-error3" title="Invalid Fields" hidden="hidden">
+<div id="dialog-error3" title="Invalid Field" hidden="hidden">
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a username, subject and message.</p>
 </div>
 <div id="dialog-confirm" title="Delete Email?" hidden="hidden">

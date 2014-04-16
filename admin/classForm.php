@@ -117,6 +117,9 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Add Class F
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="Register">Submit</button>
 	</form>
 </div>
+<div id="dialog-error" title="Invalid Field" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please correct the error/s indicated.</p>
+</div>
 <?php
 	echo $layout->loadFooter('../');
 ?>

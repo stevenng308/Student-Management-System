@@ -333,7 +333,17 @@ $(document).ready(function () {
 			}
 			else
 			{
-				alert('Please correct the errors indicated.');
+				//alert('Please correct the errors indicated.');
+				$(function() {
+					$( "#dialog-error" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+					});
 				return false;
 			}
 		});
