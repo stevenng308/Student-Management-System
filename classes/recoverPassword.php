@@ -72,11 +72,11 @@ else
 	
 	$message = '<html><body>';
 	$message .= '<table rules="all" style="border-color: #666;" cellpadding="10">';
-	$message .= '<th><h2>SMS - Password Reset Request</h2></th>';
+	$message .= '<th><h2>SWCH - Password Reset Request</h2></th>';
 	$message .= '<tr style="background: #eee;">';
 	$message .= '<td><p>A password request has been issued. If you did not authorize this please ignore this message. If you did authorize this please 
 				click on the included <a href="http://ngine.dyndns.org/sms/passwordReset.php?id=' . $database->lastInsertId() . '&myKey=' . $key . '"  target="_blank">link</a> to reset your password.<br />The link will only be active for <strong>24 hours</strong>.<br /><br />
-				Please do not reply to this message. This is an auto-generated message and the email address is not being monitored.</p></td>';
+				Please do not reply to this message. This is an auto-generated message by the School Wide Communications Hub system and this email address is not being monitored.</p></td>';
 	$message .= '</tr><tr style="background: #eee;">';
 	$message .= '<td><a href="http://ngine.dyndns.org/sms/passwordReset.php?id=' . $database->lastInsertId() . '&myKey=' . $key . '"  target="_blank">Reset Password</a></td></tr>';
 	$message .= '</table></body></html>';

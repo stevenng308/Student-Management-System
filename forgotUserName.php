@@ -31,7 +31,6 @@ echo $layout->loadFixedNavBar('Username Recovery Form', '');
 <!-- Custom styles for this template -->
 <link href="bootstrap/css/grade.css" rel="stylesheet">
 <link href="bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
-<link href="bootstrap/css/jquery.ui.timepicker.css" rel="stylesheet">
 	
 <div class="formDiv" id="result">
 	<form name="recoverUser" id="recoverUser-form" class="form-signin" action="#" method="post">
@@ -53,6 +52,10 @@ echo $layout->loadFixedNavBar('Username Recovery Form', '');
 		<br />				
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="recover" id="recover" value="recover username">Recover Username</button>
 	</form>
+</div>
+
+<div id="dialog-error" title="Invalid Fields" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please correct the errors indicated.</p>
 </div>
 <?php
 	echo $layout->loadFooter('');
@@ -145,7 +148,17 @@ $(document).ready(function () {
 			}
 			else
 			{
-				alert('Please correct the errors indicated.');
+				//alert('Please correct the errors indicated.');
+				$(function() {
+					$( "#dialog-error" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				});
 				return false;
 			}
 		});

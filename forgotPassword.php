@@ -32,6 +32,7 @@ echo $layout->loadFixedNavBar('Password Recovery Form', '');
 ?>
 <!-- Custom styles for this template -->
 <link href="bootstrap/css/grade.css" rel="stylesheet">
+<link href="bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 	
 <div class="formDiv" id="result">
 	<form name="recoverPassword" id="recoverPassword-form" class="form-signin" action="#" method="post">
@@ -48,11 +49,15 @@ echo $layout->loadFixedNavBar('Password Recovery Form', '');
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="recover" id="recover" value="recover password">Recover Password</button>
 	</form>
 </div>
+<div id="dialog-error" title="Invalid Fields" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please correct the errors indicated.</p>
+</div>
 <?php
 	echo $layout->loadFooter('');
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
 <script>
 $(document).ready(function () {
 
@@ -111,7 +116,17 @@ $(document).ready(function () {
 			}
 			else
 			{
-				alert('Please correct the errors indicated.');
+				//alert('Please correct the errors indicated.');
+				$(function() {
+					$( "#dialog-error" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				});
 				return false;
 			}
 		});
