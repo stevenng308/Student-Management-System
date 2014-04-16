@@ -67,6 +67,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Teacher Mai
 <!-- Custom CSS for this page -->
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 <link href="../bootstrap/css/background.css" rel="stylesheet">
+<link href="../bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container">
@@ -206,6 +207,10 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Teacher Mai
 		</table>
 	</div>
 </div>
+
+<div id="dialog-confirm" title="First time password change?">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Please consider changing your password for account integrity.</p>
+</div>
 <?php
 	echo $layout->loadFooter('../');
 ?>
@@ -213,6 +218,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Teacher Mai
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="../bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
 <script src="../bootstrap/js/handleMessage.js"></script>
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#lunchTable').dataTable(
@@ -226,10 +232,21 @@ $('#lunchTable').dataTable(
 
 if (<?php echo $new ?>)
 {
-	if (window.confirm('Please consider changing your password for account integrity.'))
-	{
-		window.location.replace('../changePassword.php?id=' + <?php echo $new ?>);
-	}
+	 $(function() {
+		$( "#dialog-confirm" ).dialog({
+			resizable: false,
+			height:180,
+			modal: true,
+			buttons: {
+				"Change Password": function() {
+					window.location.replace('../changePassword.php?id=' + <?php echo $new ?>);
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
 }
 </script>
 </html>

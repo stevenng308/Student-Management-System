@@ -6,7 +6,7 @@ $(document).ready(function () {
 		minDate: 0,
 		onSelect: function() { //after selection focus on that input box so validation can refresh
 			this.focus();
-			this.trigger('blur');
+			$(this).trigger('blur');
 		},
 		onClose: function( selectedDate ) {
 			//this.focus();
@@ -34,7 +34,7 @@ $(document).ready(function () {
 		maxDate: new Date(tempYear[1], 11, 31),
 		onSelect: function() { //after selection focus on that input box so validation can refresh
 			this.focus();
-			this.trigger('blur');
+			$(this).trigger('blur');
 		},
 		onClose: function( selectedDate ) {
 			//this.focus();

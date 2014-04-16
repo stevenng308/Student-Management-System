@@ -63,7 +63,17 @@ $(function () {
 				function(data){
 				  //$("#mainDiv").html(data);
 				  //console.log(data);
-				  alert("Email sent.");
+				  //alert("Email sent.");
+				  $(function() {
+						$( "#dialog-message" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+					});
 				  $('#inboxNum').text(data);
 				  $('#compose').toggleClass("active");
 				  $('#inbox').toggleClass("active");
@@ -75,7 +85,17 @@ $(function () {
 		}
 		else
 		{
-			alert('Please include a username, subject and message.');
+			//alert('Please include a username, subject and message.');
+			$(function() {
+			$( "#dialog-error3" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 			return false;
 		}
 	});
@@ -95,7 +115,17 @@ function save()
 		function(data){
 		  //$("#mainDiv").html(data);
 		  //$('#inboxNum').text(data);
-		  alert("Email saved in draft box.");
+		  //alert("Email saved in draft box.");
+		  $(function() {
+				$( "#dialog-message2" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 		  $('#compose').toggleClass("active");
 		  $('#inbox').toggleClass("active");
 		  lastBtn = "inbox";

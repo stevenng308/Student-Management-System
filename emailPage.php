@@ -33,6 +33,7 @@ $inboxNum = $query->rowCount();
 echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '');
 ?>
 <link href="bootstrap/css/background.css" rel="stylesheet">
+<link href="bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container">
@@ -50,9 +51,31 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Email', '')
 		</div>
 	</div>
 </div>
+<div id="dialog-error" title="No Emails Selected" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>No emails were selected.</p>
+</div>
+<div id="dialog-error2" title="No Box Selected" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please specify a box.</p>
+</div>
+<div id="dialog-error3" title="Invalid Fields" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a username, subject and message.</p>
+</div>
+<div id="dialog-confirm" title="Delete Email?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to delete?</p>
+</div>
+<div id="dialog-confirm2" title="Move Email?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to move the message/s?</p>
+</div>
+<div id="dialog-message" title="Email Sent" hidden="hidden">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Email sent.</p>
+</div>
+<div id="dialog-message2" title="Email Saved" hidden="hidden">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Email saved in draft box.</p>
+</div>
 <?php
 	echo $layout->loadFooter('');
 ?>
+<script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>	
 <script src="bootstrap/js/loadInPage.js"></script>
 <!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>-->
