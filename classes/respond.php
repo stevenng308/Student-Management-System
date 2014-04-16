@@ -46,7 +46,9 @@ $classid = $topic->getClassID();
 		<button class="btn btn-lg btn-primary btn-block" name="reply" id="reply" onclick="sendReply()">Respond</button>
 	</div>
 </div>
-
+<div id="dialog-error-topicPage" title="Invalid Field" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a message.</p>
+</div>
 <script type="text/javascript" language="javascript" charset="utf-8">
 function sendReply()
 {
@@ -67,7 +69,17 @@ function sendReply()
 	}
 	else
 	{
-		alert('Please include a message.');
+		//alert('Please include a message.');
+		$(function() {
+			$( "#dialog-error-topicPage" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 		return false;
 	}
 }

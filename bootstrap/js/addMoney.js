@@ -119,7 +119,7 @@ $(document).ready(function () {
 	$(function () {
 		$('#addBalance-form').submit(function () {
 			if($(this).valid()) {
-				if (window.confirm('Do you wish to process this transaction?'))
+				/*if (window.confirm('Do you wish to process this transaction?'))
 				{
 					//alert('Successful Validation');
 					  $.post(
@@ -138,11 +138,50 @@ $(document).ready(function () {
 				{
 					window.location.href = 'index.php';
 					return false;
-				}
+				}*/
+				$(function() {
+					$( "#dialog-confirm" ).dialog({
+						resizable: false,
+						height:180,
+						modal: true,
+						buttons: {
+							"Confirm": function() {
+								var $dialog = $(this); //lose context of this once in post. Save it here
+								$.post(
+									'classes/addMoney.php',
+									$('#addBalance-form').serialize(),
+									function(data){
+										$dialog.dialog( "close" );
+										//alert("Amount has been added.");
+										$("#result").html(data);
+										//$('#inboxNum').text(data);
+										//location.window();
+									}
+								);
+							},
+							"Deny": function() {
+								$( this ).dialog( "close" );
+								window.location.href = 'index.php';
+								return false;
+							}
+						}
+					});
+				});
+				return false;
 			}
 			else
 			{
-				alert('Please correct the errors indicated.');
+				//alert('Please correct the errors indicated.');
+				$(function() {
+					$( "#dialog-error" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				});
 				return false;
 			}
 		});

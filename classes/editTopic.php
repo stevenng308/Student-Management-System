@@ -49,6 +49,12 @@ $topic = new Topic($result[0], $num->rowCount());
 	</form>
 </div>
 
+<div id="dialog-error-edittopic" title="Invalid Fields" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a subject and message.</p>
+</div>
+<div id="dialog-message-edittopic" title="Topic Edited" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Discussion Topic Edited.</p>
+</div>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script type="text/javascript" language="javascript" charset="utf-8">
@@ -77,15 +83,36 @@ $(function () {
 				function(data){
 				  //$("#forum").html(data);
 				  //console.log(data);
-				  alert("Discussion Topic Edited.");
-				  loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+				  //alert("Discussion Topic Edited.");
+				  //loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+				  $(function() {
+						$( "#dialog-message-edittopic" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+									loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+								}
+							}
+						});
+					});
 				}
 			  );
 		  return false;
 		}
 		else
 		{
-			alert('Please include a subject and message.');
+			//alert('Please include a subject and message.');
+			$(function() {
+				$( "#dialog-error-edittopic" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 			return false;
 		}
 	});

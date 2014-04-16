@@ -85,6 +85,13 @@ $classroom = new Classroom($result[0], $teacher, $database);
 		</tbody>
 	</table>
 </div>
+<div id="dialog-error-roster" title="No student selection" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>No students were selected.</p>
+</div>
+<div id="dialog-confirm-roster" title="Unregister students?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Do you want to unregister?</p>
+</div>
+
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#studentTable').dataTable(
 {
@@ -108,11 +115,21 @@ function unregister()
 {
 	if (!values.length)
 	{
-		alert("No students were selected.");
+		//alert("No students were selected.");
+		$(function() {
+			$( "#dialog-error-roster" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 	else
 	{
-		if (window.confirm("Do you want to unregister?"))
+		/*if (window.confirm("Do you want to unregister?"))
 		{
 			//alert(values);
 			//alert($('#box').val());
@@ -132,8 +149,36 @@ function unregister()
 		else
 		{
 			;//do nothing
-		}
-	}
+		}*/
+			$(function() {
+				$( "#dialog-confirm-roster" ).dialog({
+					resizable: false,
+					height:180,
+					modal: true,
+					buttons: {
+						"Delete": function() {
+							var $dialog = $(this); //lose context of this once in post. Save it here
+							$.post(
+								'classes/unregisterStudents.php',
+								{
+									'checkbox' : values, 
+								},
+								function(data){
+								  //$("#mainDiv").html(data);
+								  $dialog.dialog('close'); //use it here
+								  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //refresh the roster
+								  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //load/unload all grades of the new students if they had existing grades
+								}
+							  );
+						},
+						Cancel: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
+		  return false;	
+	  }
 }
 
 function checkAll(source) {

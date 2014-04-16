@@ -74,6 +74,10 @@ $class= new Classroom($result[0], $teach, $database);
 		</div>
 	</div>
 </div>
+<div id="dialog-confirm-allGrade" title="Delete Grades?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Do you want to delete all the grades in the class?</p>
+</div>
+
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#gradeTable').dataTable(
 {
@@ -86,7 +90,7 @@ $('#gradeTable').dataTable(
 
 function deleteAllGrades(id)
 {
-	if (window.confirm("Do you want to delete?"))
+	/*if (window.confirm("Do you want to delete?"))
 	{
 		$.post(
 			'classes/deleteGrades.php',
@@ -101,6 +105,35 @@ function deleteAllGrades(id)
 			}
 		  );
 		return false;
-	}
+	}*/
+	$(function() {
+		$( "#dialog-confirm-allGrade" ).dialog({
+			resizable: false,
+			height:180,
+			modal: true,
+			buttons: {
+				"Delete": function() {
+					//var $dialog = $(this); //lose context of this once in post. Save it here
+					$( "#dialog-confirm-allGrade" ).dialog('close');
+					$.post(
+						'classes/deleteGrades.php',
+						{
+							'class' : id
+						},
+						function(data){
+						  //$("#result").html(data);
+						  //console.log(data);
+						  loadClassPages('#allGrades', 'classes/allGrades.php?classid=', <?php echo $classid; ?>); //reload the grades div so that the grades don't show for the unregistered student
+						  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //refresh old content on the roster div
+						}
+					  );
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
+	return false;
 }
 </script>

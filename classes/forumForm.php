@@ -49,6 +49,12 @@ $forum = $classid . "_forum";
 	</form>
 </div>
 
+<div id="dialog-error-newtopic" title="Invalid Fields" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a subject and message.</p>
+</div>
+<div id="dialog-message-newtopic" title="New Topic Created" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Discussion Topic Created.</p>
+</div>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script type="text/javascript" language="javascript" charset="utf-8">
@@ -77,15 +83,36 @@ $(function () {
 				function(data){
 				  //$("#forum").html(data);
 				  //console.log(data);
-				  alert("Discussion Topic Created.");
-				  loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+				  //alert("Discussion Topic Created.");
+				  $(function() {
+						$( "#dialog-message-newtopic" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+									loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+								}
+							}
+						});
+					});
+				  //loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
 				}
 			  );
 		  return false;
 		}
 		else
 		{
-			alert('Please include a subject and message.');
+			//alert('Please include a subject and message.');
+			$(function() {
+				$( "#dialog-error-newtopic" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 			return false;
 		}
 	});

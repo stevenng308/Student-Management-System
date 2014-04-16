@@ -175,15 +175,40 @@ function postClassMsg($classID)
 			function(data){
 				//alert(data);
 			  //$("#mainDiv").html(data);
-			  alert("Message has been posted.");
-			  location.reload();
+			  //alert("Message has been posted.");
+			  //location.reload();
+			  $(function() {
+				$( "#dialog-message" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+							location.reload();
+						}
+					},
+					close : function() {
+						$( this ).dialog( "close" );
+						location.reload();
+					}
+				});
+				});
 			}
 		  );
 	  return false;
 	}
 	else
 	{
-		alert('Please include a message.');
+		//alert('Please include a message.');
+		$(function() {
+			$( "#dialog-error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 		return false;
 	}
 }
@@ -193,7 +218,7 @@ function editClassMsg($id, $mn)
 	$msg = "#edtMessage";
 	$msg = $msg + $mn;
 	//alert($msg);
-	if (window.confirm("Do you want to edit?"))
+	/*if (window.confirm("Do you want to edit?"))
 	{
 		$.post(
 			'classes/editClassMessage.php',
@@ -213,13 +238,55 @@ function editClassMsg($id, $mn)
 	else
 	{
 		; //do nothing
-	}
+	}*/
+	$(function() {
+		$( "#dialog-confirm3" ).dialog({
+			resizable: false,
+			height:180,
+			modal: true,
+			buttons: {
+				"Edit": function() {
+				$( "#dialog-confirm3" ).dialog("close");
+				$.post(
+					'classes/editClassMessage.php',
+					{
+						'msg' : $($msg).val(),
+						'id' : $id,
+					},
+					function(data){
+						//alert(data);
+					  //$("#mainDiv").html(data);
+					  $(function() {
+							  $( "#dialog-message3" ).dialog({
+									modal: true,
+									buttons: {
+										Ok: function() {
+											$( this ).dialog( "close" );
+											location.reload();
+										}
+									},
+									close : function() {
+										$( this ).dialog( "close" );
+										location.reload();
+									}
+							 });
+						  });
+						}
+				);
+				return false;
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
 }
 
 function deleteClassMsg($id)
 {
 	//alert('hey');
-	if (window.confirm("Do you want to delete?"))
+	/*if (window.confirm("Do you want to delete?"))
 	{
 		$.post(
 			'classes/deleteClassMessage.php',
@@ -238,5 +305,43 @@ function deleteClassMsg($id)
 	else
 	{
 		; //do nothing
-	}
+	}*/
+	$(function() {
+		$( "#dialog-confirm2" ).dialog({
+			resizable: false,
+			height:180,
+			modal: true,
+			buttons: {
+				"Delete": function() {
+					$( "#dialog-confirm2" ).dialog("close");
+					$.post(
+					'classes/deleteClassMessage.php',
+					{
+						'id' : $id
+					},
+					function(data){
+					$(function() {
+						  $( "#dialog-message2" ).dialog({
+								modal: true,
+								buttons: {
+									Ok: function() {
+										location.reload();
+										$( this ).dialog( "close" );
+									}
+								},
+								close : function() {
+									location.reload();
+								}
+						 });
+					  });
+					}
+				);
+				return false;
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
 }

@@ -103,6 +103,18 @@ $class = new Classroom($result[0], $teach, $database);
 	</div>
 </div>
 
+<div id="dialog-confirm-topic" title="Delete Topic?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to delete?</p>
+</div>
+<div id="dialog-confirm-topic2" title="Edit Topic?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to edit?</p>
+</div>
+<div id="dialog-error-topic" title="No topic selection" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>No topics were selected.</p>
+</div>
+<div id="dialog-error-topic2" title="Multiple topic selection" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Select one discussion topic to edit.</p>
+</div>
 <script type="text/javascript" language="javascript" charset="utf-8">
 if (<?php echo $session->getUserType(); ?> == 3)
 {
@@ -150,11 +162,21 @@ function deleteTopic()
 {
 	if (!vals.length)
 	{
-		alert("No topics were selected.");
+		//alert("No topics were selected.");
+		$(function() {
+			$( "#dialog-error-topic" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 	else
 	{
-		if (window.confirm("Do you want to delete?"))
+		/*if (window.confirm("Do you want to delete?"))
 		{
 			//alert(values);
 			$.post(
@@ -173,7 +195,34 @@ function deleteTopic()
 		else
 		{
 			;//do nothing
-		}
+		}*/
+		$(function() {
+			$( "#dialog-confirm-topic" ).dialog({
+				resizable: false,
+				height:180,
+				modal: true,
+				buttons: {
+					"Delete": function() {
+						$( this ).dialog( "close" );
+							$.post(
+								'classes/deleteTopic.php',
+								{
+									'checkbox' : vals, //sending the values
+								},
+								function(data){
+								  //$("#forum").html(data);
+								  //console.log(data);
+								  loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+								}
+							  );
+						  return false;
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 }
 
@@ -181,15 +230,35 @@ function editTopic()
 {
 	if (!vals)
 	{
-		alert("No topics were selected.");
+		//alert("No topics were selected.");
+		$(function() {
+			$( "#dialog-error-topic" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 	else if (vals.length > 1) //select only one
 	{
-		alert("Select one discussion topic to edit.");
+		//alert("Select one discussion topic to edit.");
+		$(function() {
+			$( "#dialog-error-topic2" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 	else
 	{
-		if (window.confirm("Do you want to edit?"))
+		/*if (window.confirm("Do you want to edit?"))
 		{
 			//alert(values);
 			$.post(
@@ -209,7 +278,35 @@ function editTopic()
 		else
 		{
 			;//do nothing
-		}
+		}*/
+		$(function() {
+			$( "#dialog-confirm-topic2" ).dialog({
+				resizable: false,
+				height:180,
+				modal: true,
+				buttons: {
+					"Edit": function() {
+						$( this ).dialog( "close" );
+							$.post(
+								'classes/editTopic.php',
+								{
+									'checkbox' : vals, //sending the values
+									'classID' : <?php echo $classid; ?>
+								},
+								function(data){
+								  $("#forum").html(data);
+								  //console.log(data);
+								  //loadClassPages('#forum', 'classes/forum.php?classid=', <?php echo $classid; ?>);
+								}
+							  );
+						  return false;
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 } 
 </script>

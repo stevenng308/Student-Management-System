@@ -64,6 +64,9 @@ else
 	</div>
 </div>
 
+<div id="dialog-error-topicPage" title="Invalid Field" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a message.</p>
+</div>
 <script type="text/javascript" language="javascript" charset="utf-8">
 function editReply()
 {
@@ -86,7 +89,17 @@ function editReply()
 	}
 	else
 	{
-		alert('Please include a message.');
+		//alert('Please include a message.');
+		$(function() {
+			$( "#dialog-error-topicPage" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 		return false;
 	}
 }

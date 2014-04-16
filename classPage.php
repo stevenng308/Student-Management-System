@@ -92,6 +92,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
 <link rel="stylesheet" type="text/css" href="bootstrap/css/dataTables.bootstrap.css">
 <link href="bootstrap/css/background.css" rel="stylesheet">
+<link href="bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 
 <!-- Begin page content -->
 <div class="container bottomMargin">
@@ -249,6 +250,33 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 	</div>
 	</div>
 </div>
+<div id="dialog-confirm" title="Register Students?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you wish to register these students?</p>
+</div>
+<div id="dialog-confirm2" title="Delete Message?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to delete this message?</p>
+</div>
+<div id="dialog-confirm3" title="Edit Message?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Do you want to edit this message?</p>
+</div>
+<div id="dialog-message" title="Message Post Successful" hidden="hidden">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Message has been posted.</p>
+</div>
+<div id="dialog-message2" title="Message Successfully Deleted" hidden="hidden">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Message has been deleted.</p>
+</div>
+<div id="dialog-message3" title="Message Successfully Edited" hidden="hidden">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Message has been edited.</p>
+</div>
+<div id="dialog-message4" title="Registration Successful" hidden="hidden">
+	<p><span class="ui-icon ui-icon-circle-check" style="float:left; margin:0 7px 50px 0;"></span>Registered.</p>
+</div>
+<div id="dialog-error" title="Message Post Unsuccessful" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a message.</p>
+</div>
+<div id="dialog-error2" title="Invalid Field" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please correct the error indicated.</p>
+</div>
 <?php
 	echo $layout->loadFooter('');
 ?>
@@ -256,6 +284,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), $classroom->
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
 <script type="text/javascript" language="javascript" src="bootstrap/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
 <script type="text/javascript" language="javascript" src="bootstrap/js/loadInPage.js"></script>
 <script type="text/javascript" language="javascript" src="bootstrap/js/handleMessage.js"></script>
 <script type="text/javascript" charset="utf-8">
@@ -410,7 +439,7 @@ function registerStudents()
 {
 	if($('#register-student').valid())
 	{
-		if (window.confirm("Do you want to register?"))
+		/*if (window.confirm("Do you want to register?"))
 		{
 			//alert(values);
 			//alert($('#box').val());
@@ -425,10 +454,23 @@ function registerStudents()
 				  //loadIn(page);
 				  //alert("Registered.");
 				  //alert(data);
-				  $('#studentID').val("");
+				  //$('#studentID').val("");
 				  //location.reload();
-				  loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //reload the class roster
-				  $('#rosterTab a[href="#rosterList"]').tab('show'); //display the roster tab
+				  //loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //reload the class roster
+				  //$('#rosterTab a[href="#rosterList"]').tab('show'); //display the roster tab
+				  $(function() {
+						$( "#dialog-message4" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+									$('#studentID').val("");
+									loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //reload the class roster
+									$('#rosterTab a[href="#rosterList"]').tab('show'); //display the roster tab
+								}
+							}
+						});
+					});
 				}
 			  );
 		  return false;
@@ -436,11 +478,59 @@ function registerStudents()
 		else
 		{
 			;//do nothing
-		}
+		}*/
+		$(function() {
+		$( "#dialog-confirm" ).dialog({
+			resizable: false,
+			height:180,
+			modal: true,
+			buttons: {
+				"Register": function() {
+					$( "#dialog-confirm" ).dialog("close");
+					$.post(
+					'classes/processClassRegistration.php',
+					{ 
+						'classID' : $('#classID').val(),
+						'studentID' : $('#studentID').val()
+					},
+					function(data){
+							$(function() {
+								$( "#dialog-message4" ).dialog({
+									modal: true,
+									buttons: {
+										Ok: function() {
+											$( this ).dialog( "close" );
+											$('#studentID').val("");
+											loadClassPages('#rosterList' , 'classes/roster.php?classid=', <?php echo $classid; ?>); //reload the class roster
+											$('#rosterTab a[href="#rosterList"]').tab('show'); //display the roster tab
+										}
+									}
+								});
+							});
+						}
+					  );
+				  return false;
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+	});
 	}
 	else
 	{
-		alert('Please correct the errors indicated.');
+		//alert('Please correct the errors indicated.');
+		$(function() {
+			$( "#dialog-error2" ).dialog({
+					modal: true,
+					buttons: {
+						Ok: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
 		return false;
 	}
 }       

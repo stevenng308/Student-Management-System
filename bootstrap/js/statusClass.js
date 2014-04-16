@@ -11,11 +11,21 @@ function deactivate()
 {
 	if (!values)
 	{
-		alert("No classes were selected.");
+		//alert("No classes were selected.");
+		$(function() {
+			$( "#dialog-error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 	else
 	{
-		if (window.confirm("Do you want to set active to false?"))
+		/*if (window.confirm("Do you want to set active to false?"))
 		{
 			//alert(values);
 			//alert($('#box').val());
@@ -36,7 +46,46 @@ function deactivate()
 		else
 		{
 			;//do nothing
-		}
+		}*/
+		$(function() {
+				$( "#dialog-confirm" ).dialog({
+					resizable: false,
+					height:180,
+					modal: true,
+					buttons: {
+						"Proceed": function() {
+							//var $dialog = $(this); //lose context of this once in post. Save it here
+							$( "#dialog-confirm" ).dialog('close');
+							$.post(
+								'../classes/deactivateClass.php',
+								{
+									'checkbox' : values
+								},
+								function(data){
+								  //$("#mainDiv").html(data);
+								  //loadIn(page);
+								  //alert("Class activated.");
+								  $(function() {
+										$( "#dialog-message" ).dialog({
+											modal: true,
+											buttons: {
+												Ok: function() {
+													$( this ).dialog( "close" );
+													location.reload();
+												}
+											}
+										});
+									});
+								}
+							  );
+						},
+						Cancel: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
+			return false;
 	}
 }
 
@@ -44,11 +93,21 @@ function activate()
 {
 	if (!values)
 	{
-		alert("No classes were selected.");
+		//alert("No classes were selected.");
+		$(function() {
+			$( "#dialog-error" ).dialog({
+				modal: true,
+				buttons: {
+					Ok: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	}
 	else
 	{
-		if (window.confirm("Do you want to set active to true?"))
+		/*if (window.confirm("Do you want to set active to true?"))
 		{
 			//alert(values);
 			//alert($('#box').val());
@@ -64,12 +123,50 @@ function activate()
 				  location.reload();
 				}
 			  );
-		  return false;
-		}
-		else
-		{
-			;//do nothing
-		}
+		  return false;*/
+		  $(function() {
+				$( "#dialog-confirm2" ).dialog({
+					resizable: false,
+					height:180,
+					modal: true,
+					buttons: {
+						"Proceed": function() {
+							//var $dialog = $(this); //lose context of this once in post. Save it here
+							$( "#dialog-confirm2" ).dialog('close');
+							$.post(
+								'../classes/activateClass.php',
+								{
+									'checkbox' : values
+								},
+								function(data){
+								  //$("#mainDiv").html(data);
+								  //loadIn(page);
+								  //alert("Class activated.");
+								  $(function() {
+										$( "#dialog-message2" ).dialog({
+											modal: true,
+											buttons: {
+												Ok: function() {
+													$( this ).dialog( "close" );
+													location.reload();
+												}
+											}
+										});
+									});
+								}
+							  );
+						},
+						Cancel: function() {
+							$( this ).dialog( "close" );
+						}
+					}
+				});
+			});
+			return false;
+		//else
+		//{
+		//	;//do nothing
+		//}
 	}
 }
 

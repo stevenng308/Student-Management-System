@@ -107,6 +107,18 @@ else
 	</div>
 </div>
 
+<div id="dialog-message-topicPage" title="New Subscription" hidden="hidden">
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 50px 0;"></span>Subscribed.</p>
+</div>
+<div id="dialog-message-topicPage2" title="Remove Subscription" hidden="hidden">
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 50px 0;"></span>Unsubscribed.</p>
+</div>
+<div id="dialog-error-topicPage" title="Cannot Subscribe" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>You are already subscribed.</p>
+</div>
+<div id="dialog-confirm-topicPage" title="Delete Response?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Do you want to delete this reply?</p>
+</div>
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#discussionTable').dataTable(
 {
@@ -206,7 +218,7 @@ function editMessage(id)
 
 function deleteMessage(id)
 {
-		$.post(
+		/*$.post(
 			'classes/processDeleteResponse.php',
 			{ 
 				'id' : id
@@ -215,7 +227,32 @@ function deleteMessage(id)
 			  //$("#forum").html(data);
 			  loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
 			}
-		  );
+		  );*/
+		 $(function() {
+			$( "#dialog-confirm-topicPage" ).dialog({
+				resizable: false,
+				height:180,
+				modal: true,
+				buttons: {
+					"Delete": function() {
+						$( "#dialog-confirm-topicPage" ).dialog("close");
+						$.post(
+							'classes/processDeleteResponse.php',
+							{ 
+								'id' : id
+							},
+							function(data){
+							  //$("#forum").html(data);
+							  loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+							}
+						  );
+					},
+					Cancel: function() {
+						$( this ).dialog( "close" );
+					}
+				}
+			});
+		});
 	  return false;
 }
 
@@ -230,12 +267,32 @@ function subscribe(id)
 			function(data){
 				if (data.match(/true/))
 				{
-					alert("Subscribed.");
-					loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+					//alert("Subscribed.");
+					//loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+					$(function() {
+						$( "#dialog-message-topicPage" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+									loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+								}
+							}
+						});
+					});
 				}
 				else
 				{
-					alert("You are already subscribed.");
+					$(function() {
+						$( "#dialog-error-topicPage" ).dialog({
+							modal: true,
+							buttons: {
+								Ok: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+					});
 				}
 			}
 		  );
@@ -250,8 +307,18 @@ function unsubscribe(id)
 				'id' : id,
 			},
 			function(data){
-				alert("Unsubscribed.");
-				loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+				$(function() {
+					$( "#dialog-message-topicPage2" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+								loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
+							}
+						}
+					});
+				});
+				//loadClassPages('#forum', 'classes/topicPage.php?topicid=', <?php echo $topic->getTopicID() ?>);
 			}
 		  );
 	  return false;

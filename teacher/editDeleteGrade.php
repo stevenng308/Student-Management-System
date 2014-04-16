@@ -52,6 +52,8 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit/Delete
 ?>
 	<!-- Custom styles for this template -->
 	<link href="../bootstrap/css/grade.css" rel="stylesheet">
+	<link href="../bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+	
 	<div class="formDiv" id="result">
 	<form name ="grade" id="grade-form" class="form-signin" action="#" method="post">
 		<h4 class="form-signin-heading" style="text-align: center;"><?php echo $result[0]['username'] . ' &lt' . $result[0]['firstname'] . ' ' . $result[0]['lastname'] . '&gt '?>Grades</h4>
@@ -86,11 +88,18 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'Edit/Delete
 		<button class="btn btn-lg btn-primary btn-block" type="submit" name="submit" value="addGrade">Submit</button>
 	</form>
 </div>
+<div id="dialog-confirm" title="Delete Grades?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Do you want to delete the selected grades and update the pending grades?</p>
+</div>
+<div id="dialog-error" title="Invalid Fields" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please correct the errors indicated.</p>
+</div>
 <?php
 	echo $layout->loadFooter('../');
 ?>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<script src="../bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
 <script>
 var checkbox = []; //array to know if grades are being deleted
 $('input[id^="delete"]').change(function() { //adds the values to the array called values
@@ -176,7 +185,24 @@ $(document).ready(function () {
 				}
 			}
 		},
-		"Invalid format. Up to two decimal places (99.99) and letters A-D and F allowed"
+		"Invalid format. One leading 0, up to two decimal places (99.99) and letters A-D and F allowed"
+	);
+	
+	//rule for allowing only 1 zero preceding decimal or just 0
+	$.validator.addMethod("leadZero", 
+        function(value, element, regexp) {
+			//var regex = new RegExp(/^(?!0\.00)[1-9](\d*\.\d{1,2}|\d+)$/);
+			var regexNum = new RegExp(/^\d$/);
+			var key = value;
+
+			//alert(key.charAt(2));
+			if (key.charAt(0) == 0 && regexNum.test(key.charAt(1)))
+			{
+				return false;
+			}
+			return true;
+		},
+		"Invalid format. Remove leading zeroes if the number is not less than 1 or is not a decimal number"
 	);
 	
 	//overloading range rule
@@ -288,6 +314,7 @@ $(document).ready(function () {
 			required: true,
 			range: true,
 			twoDecimals: true,
+			leadZero: true,
 			maxlengthGrade: true,
 			noSpecial: true
 		});
@@ -318,7 +345,7 @@ $(document).ready(function () {
 			if($(this).valid()) {
 				if (checkbox.length > 0)
 				{
-					if (window.confirm("You have " + checkbox.length + " pending grade deletion/s. Do you want to continue?"))
+					/*if (window.confirm("You have " + checkbox.length + " pending grade deletion/s. Do you want to continue?"))
 					{
 						//alert('Successful Validation');
 						$.post(
@@ -333,7 +360,33 @@ $(document).ready(function () {
 					}
 					else { 
 						; //do nothing
-					}
+					}*/
+					$(function() {
+						$( "#dialog-confirm" ).dialog({
+							resizable: false,
+							height:220,
+							modal: true,
+							buttons: {
+								"Proceed": function() {
+									//var $dialog = $(this); //lose context of this once in post. Save it here
+									$( "#dialog-confirm" ).dialog('close');
+									$.post(
+										'../classes/processChangeGrade.php',
+										$('#grade-form').serialize(),
+										function(data){
+										  //$("#result").html(data);
+										  //console.log(data);
+										  $("#result").html(data);
+										}
+									  );
+								},
+								Cancel: function() {
+									$( this ).dialog( "close" );
+								}
+							}
+						});
+					});
+					return false;
 				}
 				else
 				{
@@ -351,7 +404,17 @@ $(document).ready(function () {
 			}
 			else
 			{
-				alert('Please correct the errors indicated.');
+				//alert('Please correct the errors indicated.');
+				$(function() {
+					$( "#dialog-error" ).dialog({
+						modal: true,
+						buttons: {
+							Ok: function() {
+								$( this ).dialog( "close" );
+							}
+						}
+					});
+				});
 				return false;
 			}
 		});

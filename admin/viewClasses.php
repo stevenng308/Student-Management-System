@@ -37,6 +37,7 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 <!-- Custom CSS for the arrow buttons on the table columns to sort -->
 <link rel="stylesheet" type="text/css" href="../bootstrap/css/dataTables.bootstrap.css">
 <link href="../bootstrap/css/background.css" rel="stylesheet">
+<link href="../bootstrap/css/jquery-ui-1.10.4.custom.css" rel="stylesheet">
 
 <div class="container bottomMargin">
 	<div class="table-responsive">
@@ -98,12 +99,29 @@ echo $layout->loadFixedMainNavBar($session->getUserTypeFormatted(), 'View Classe
 		</table>
 	</div>
 </div>
+<div id="dialog-confirm" title="Deactivate class?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Do you want to set <b>Active</b> to false?</p>
+</div>
+<div id="dialog-confirm2" title="Activate class?" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Do you want to set <b>Active</b> to true?</p>
+</div>
+<div id="dialog-message" title="Deactivated" hidden="hidden">
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 50px 0;"></span>Class deactivated.</p>
+</div>
+<div id="dialog-message2" title="Activated" hidden="hidden">
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 50px 0;"></span>Class activated.</p>
+</div>
+<div id="dialog-error" title="No class selected" hidden="hidden">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>No classes were selected.</p>
+</div>
+
 <?php
 	echo $layout->loadFooter('../');
 ?>
 <!--<script src="../bootstrap/js/searchFilter.js"></script>-->
 <script type="text/javascript" language="javascript" src="../bootstrap/js/jquery.dataTables.js"></script>
 <script type="text/javascript" language="javascript" src="../bootstrap/js/dataTables.bootstrap.js"></script>
+<script src="../bootstrap/js/jquery-ui-1.10.4.custom.js"></script>
 <script type="text/javascript" language="javascript" src="../bootstrap/js/statusClass.js"></script>
 <script type="text/javascript" charset="utf-8">
 	$(document).ready(function() {
