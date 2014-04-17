@@ -64,7 +64,7 @@ else
 	$database->exec("INSERT INTO reset(accountID, role, myKey, expire) VALUES('" . $id . "', '" . $table . "', '" . $key . "', '" . $expire->format('Y-m-d H:i:s') . "')");
 	
 	//being creating email
-	$subject = 'SMS - Password Reset Request (24HR Response Window)';
+	$subject = 'SWCH - Password Reset Request (24HR Response Window)';
 
 	$headers = "From: sms-autoemail@sms.com\r\n";
 	$headers .= "MIME-Version: 1.0\r\n";
