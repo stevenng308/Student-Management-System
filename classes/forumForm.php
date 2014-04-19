@@ -53,10 +53,10 @@ $forum = $classid . "_forum";
 	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Please include a subject and message.</p>
 </div>
 <div id="dialog-message-newtopic" title="New Topic Created" hidden="hidden">
-	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Discussion Topic Created.</p>
+	<p><span class="ui-icon ui-icon-check" style="float:left; margin:0 7px 50px 0;"></span>Discussion Topic Created.</p>
 </div>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
-<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>-->
+<!--<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>-->
 <script type="text/javascript" language="javascript" charset="utf-8">
 $('#topic-form').validate({
 	rules: {
