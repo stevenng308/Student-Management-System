@@ -150,7 +150,7 @@ function deleteReadEmail(page, id) //deletes when reading the email
 
 function moveEmail(page)
 {
-	if (!values)
+	if (!values.length)
 	{
 		//alert("No emails were selected.");
 		 $(function() {
