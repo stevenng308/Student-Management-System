@@ -9,7 +9,7 @@ $('input[id^="status"]').on('change', function() { //adds the values to the arra
 
 function deactivate()
 {
-	if (!values)
+	if (!values.length)
 	{
 		//alert("No classes were selected.");
 		$(function() {
@@ -91,7 +91,7 @@ function deactivate()
 
 function activate()
 {
-	if (!values)
+	if (!values.length)
 	{
 		//alert("No classes were selected.");
 		$(function() {

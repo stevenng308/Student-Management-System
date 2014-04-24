@@ -228,7 +228,7 @@ function deleteTopic()
 
 function editTopic()
 {
-	if (!vals)
+	if (!vals.length)
 	{
 		//alert("No topics were selected.");
 		$(function() {
