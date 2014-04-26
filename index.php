@@ -149,7 +149,7 @@ echo $layout->loadFixedNavBar('Home', '');
 			{
 				echo '<div class="alert alert-danger alert-dismissable">
 					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-					<p><strong>Error!</strong> This account has been deactivated. Please contact your school\'s SMS administrator about this issue.</p>
+					<p><strong>Error!</strong> This account has been deactivated. Please contact your school\'s SWCH administrator about this issue.</p>
 				 </div>
 				 </form>
 				 </div>';

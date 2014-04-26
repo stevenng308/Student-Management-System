@@ -430,8 +430,10 @@ $(document).ready(function () {
         }
     });
 	
-	$('#register-student').keydown(function() {
-		$('#register-student').valid();
+	$('#register-student').keydown(function(e) {
+		if (e.which === 188)
+			$('#register-student').valid();
+		//$('#register-student').valid();
 	});
 });
 

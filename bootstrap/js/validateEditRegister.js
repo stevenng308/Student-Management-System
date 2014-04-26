@@ -308,8 +308,10 @@ $(document).ready(function () {
         }
     });
 	
-	$('#childrenID').keydown(function() {
-		$('#childrenID').valid();
+	$('#childrenID').keydown(function(e) {
+		if (e.which === 188)
+			$('#childrenID').valid();
+		//$('#childrenID').valid();
 	});
 	
 	//handles the submit button onclick action. POSTs the form for processing and 

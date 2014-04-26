@@ -110,6 +110,37 @@ $(document).ready(function () {
 		"Format the date as mm/dd/yyyy"
 	);
 	
+	//rule for checking time input
+	$.validator.addMethod("checkTime", 
+        function(value, element) {
+			var time1 = ($('#startTime').val()).split(":");
+			var time2 = value.split(":");
+			if (time2[0] >= time1[0])
+			{
+				if (time2[0] > time1[0])
+				{
+					return true;
+				}
+				else
+				{
+					if (time2[1] > time1[1])
+					{
+						return true;
+					}
+					else
+					{
+						return false;
+					}
+				}
+			}
+			else
+			{
+				return false;
+			}
+		},
+		"Please select a later time"
+	);
+	
     $('#register-form').validate({
         rules: {
             courseNum: {
@@ -147,6 +178,7 @@ $(document).ready(function () {
                 minlength: 5,
 				maxlength: 5,
 				//timeFormat: true,
+				checkTime: true,
                 required: true
             },
 			semester: {

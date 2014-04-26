@@ -235,7 +235,7 @@ function deleteMessage(id)
 				modal: true,
 				buttons: {
 					"Delete": function() {
-						$( "#dialog-confirm-topicPage" ).dialog("close");
+						$(this).dialog("close");
 						$.post(
 							'classes/processDeleteResponse.php',
 							{ 
@@ -248,7 +248,7 @@ function deleteMessage(id)
 						  );
 					},
 					Cancel: function() {
-						$( this ).dialog( "close" );
+						$(this).dialog( "close" );
 					}
 				}
 			});

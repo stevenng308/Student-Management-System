@@ -47,13 +47,33 @@ $(document).ready(function () {
 			$( "#startDate" ).datepicker( "option", "maxDate", selectedDate ); //set the max date to the end date
 		}
 	});
-	$('.time').timepicker(
+	
+	/*$('.time').timepicker(
 	{
 		onSelect: function() { //after selection focus on that input box so validation can refresh
-				this.focus();
-			}
+			this.focus();
+			$(this).trigger('blur');
+		}
+	});*/
+	$('#startTime').timepicker(
+	{
+		onSelect: function() { //after selection focus on that input box so validation can refresh
+			this.focus();
+			$(this).trigger('blur');
+			if ((($('#endTime').val()).length))
+				$('#endTime').valid();
+		}
 	});
-
+	
+	$('#endTime').timepicker(
+	{
+		onSelect: function() { //after selection focus on that input box so validation can refresh
+			this.focus();
+			$(this).trigger('blur');
+		}
+	});
+	
+	
 	$("#username").autocomplete({
 			minLength: 1,
 			source: function(request, response) {

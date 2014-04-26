@@ -311,7 +311,8 @@ $(document).ready(function () {
     });
 	
 	$('#childrenID').keydown(function() {
-		$('#childrenID').valid();
+		if (e.which === 188)
+			$('#childrenID').valid();
 	});
 	
 	//handles the submit button onclick action. POSTs the form for processing and 
