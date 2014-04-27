@@ -114,7 +114,11 @@ $(document).ready(function () {
         function(value, element) {
 			var time1 = ($('#startTime').val()).split(":");
 			var time2 = value.split(":");
-			if (time2[0] >= time1[0])
+			if (time1[0] == 23 && time2[0] < 23)
+			{
+				return true;
+			}
+			else if (time2[0] >= time1[0])
 			{
 				if (time2[0] > time1[0])
 				{

@@ -51,9 +51,3 @@ https://stackoverflow.com/questions/17205377/javascript-regular-expression-for-c
 https://stackoverflow.com/questions/11945412/regex-currency-format-javascript
 https://stackoverflow.com/questions/660682/regex-that-matches-numeric-with-up-to-2-decimal-places
 https://stackoverflow.com/questions/16217333/remove-items-from-array-with-splice-in-for-loop
-
-.Heelo; 'Test', "W%or!d"
-
-Testing; Test,
-
-He??o; 'World' .Test% & ** 
